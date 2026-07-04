@@ -379,18 +379,17 @@ const userSchema = new mongoose.Schema(
     versionKey: false,
   },
 );
-userSchema.index({ email: 1 });
-userSchema.index({ phone: 1 });
+
+// userSchema.index({ email: 1 });
+// userSchema.index({ phone: 1 });
 userSchema.index({ role: 1 });
 
-userSchema.pre("save", async function (next) {
+userSchema.pre("save", async function () {
   if (!this.isModified("password")) {
-    return next();
+    return;
   }
 
   this.password = await bcrypt.hash(this.password, 12);
-
-  next();
 });
 
 userSchema.methods.comparePassword = async function (enteredPassword) {

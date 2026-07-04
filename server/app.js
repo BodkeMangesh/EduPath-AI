@@ -3,6 +3,9 @@ const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
+const authRoutes = require("./routes/authRoutes");
+const userRoutes = require("./routes/userRoutes");
+const errorHandler = require("./middleware/errorMiddleware");
 
 const app = express();
 
@@ -14,6 +17,10 @@ app.use(helmet());
 app.use(morgan("dev"));
 app.use(cookieParser());
 
+app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/users", userRoutes);
+app.use(errorHandler);
+
 // Health Route
 app.get("/api/v1/health", (req, res) => {
   res.status(200).json({
@@ -23,3 +30,7 @@ app.get("/api/v1/health", (req, res) => {
 });
 
 module.exports = app;
+
+app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/users", userRoutes);
+app.use(errorHandler);
