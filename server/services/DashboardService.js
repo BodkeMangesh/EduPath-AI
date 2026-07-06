@@ -5,6 +5,7 @@ const Assessment = require("../models/Assessment");
 const AIMentorEngine = require("../intelligence/AIMentorEngine");
 const DailyLearningEngine = require("../intelligence/DailyLearningEngine");
 const CareerReadinessEngine = require("../intelligence/CareerReadinessEngine");
+const AIResourceService = require("./AIResourceService");
 
 class DashboardService {
   /**
@@ -57,6 +58,11 @@ class DashboardService {
 
     const dailyPlan = await DailyLearningEngine.generate(progress);
 
+    const resources = await AIResourceService.generate(
+      progress,
+      latestAssessment,
+    );
+
     return {
       user,
 
@@ -85,6 +91,8 @@ class DashboardService {
       mentor,
 
       dailyPlan,
+
+      resources,
     };
   }
 }

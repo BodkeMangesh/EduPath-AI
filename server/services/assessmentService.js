@@ -1,6 +1,7 @@
 const Assessment = require("../models/Assessment");
 const LearningProgressService = require("./LearningProgressService");
 const CareerIntelligenceEngine = require("../intelligence/CareerIntelligenceEngine");
+const AIProvider = require("../ai/AIProvider");
 
 class AssessmentService {
   /*
@@ -36,8 +37,38 @@ class AssessmentService {
 
     await assessment.save();
 
+    const assessmentContext = {
+      education: assessment.education,
+      interests: assessment.interests,
+      skills: assessment.skills,
+      strengths: assessment.strengths,
+      weaknesses: assessment.weaknesses,
+      preferredLearningStyle: assessment.preferredLearningStyle,
+      dailyStudyHours: assessment.dailyStudyHours,
+      careerGoal: assessment.careerGoal,
+    };
+
     // Run AI only once
-    const intelligence = await CareerIntelligenceEngine.analyze(assessment);
+    let intelligence;
+
+    try {
+      intelligence = await AIProvider.generate("assessment", assessmentContext);
+    } catch (error) {
+      console.log("Using Career Intelligence fallback..");
+
+      intelligence = await CareerIntelligenceEngine.analyze(assessment);
+    }
+
+    // AI career analysis
+    let aiAnalysis;
+
+    try {
+      aiAnalysis = await AIProvider.generate("assessment", assessmentContext);
+    } catch {
+      aiAnalysis = null;
+    }
+
+    // Existing engine still builds learning path
 
     await LearningProgressService.initializeProgress(
       assessment.user,
@@ -54,6 +85,7 @@ class AssessmentService {
       assessment,
       learningProgress,
       intelligence,
+      aiAnalysis,
     };
   }
 }

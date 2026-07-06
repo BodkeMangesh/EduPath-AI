@@ -14,10 +14,16 @@ class GeminiProvider {
     try {
       const prompt = PromptManager.getPrompt(feature, context);
 
+      console.log("Feature:", feature);
+      console.log(prompt);
+
       const response = await this.ai.models.generateContent({
         model: "gemini-2.5-flash",
         contents: prompt,
       });
+
+      console.log("RAW RESPONSE:");
+      console.log(response.text);
 
       return ResponseParser.parse(response.text);
     } catch (error) {

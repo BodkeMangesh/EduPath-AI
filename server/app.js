@@ -9,6 +9,7 @@ const errorHandler = require("./middleware/errorMiddleware");
 const assessmentRoutes = require("./routes/assessmentRoutes");
 const learningRoutes = require("./routes/learningRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
+const chatRoutes = require("./routes/chatRoutes");
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use(errorHandler);
 app.use("/api/v1/assessments", assessmentRoutes);
 app.use("/api/v1/learning", learningRoutes);
 app.use("/api/v1/dashboard", dashboardRoutes);
+app.use("/api/v1/chat", chatRoutes);
 
 // Health Route
 app.get("/api/v1/health", (req, res) => {
@@ -43,3 +45,4 @@ app.use(errorHandler);
 app.use("/api/v1/assessments", assessmentRoutes);
 app.use("/api/v1/learning", learningRoutes);
 app.use("/api/v1/dashboard", dashboardRoutes);
+app.use("/api/v1/chat", chatRoutes);
