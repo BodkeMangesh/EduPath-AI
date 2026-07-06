@@ -32,15 +32,28 @@ class DashboardService {
       latestAssessment,
     );
 
+    // Build Ai Context `
+    const context = {
+      career: progress.careerId,
+      completion: progress.overallCompletion,
+      streak: progress.currentStreak,
+      studyHours: progress.totalStudyHours,
+      readiness: readiness,
+      nextTopic: progress.pendingTopics[0],
+    };
+
+    let mentor;
     try {
       mentor = await AIProvider.generate("mentor", context);
-    } catch (err) {
-      mentor = await AIMentorEngine.generate(progress, context);
+    } catch (error) {
+      console.log(
+        "Using fallback mentor advice due to AI error:",
+        error.message,
+      );
+      mentor = await AIMentorEngine.generate(progress, {
+        careerReadiness: readiness,
+      });
     }
-
-    const mentor = await AIMentorEngine.generate(progress, {
-      careerReadiness: readiness,
-    });
 
     const dailyPlan = await DailyLearningEngine.generate(progress);
 

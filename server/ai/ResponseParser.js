@@ -1,11 +1,13 @@
 class ResponseParser {
-  try {
-    return JSON.parse(response);
-} catch {
-    return {
-        motivation: response
-    };
-}
+  parse(response) {
+    try {
+      return JSON.parse(response);
+    } catch (error) {
+      return {
+        motivation: response,
+      };
+    }
+  }
 }
 
 module.exports = new ResponseParser();
