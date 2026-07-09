@@ -1,49 +1,39 @@
 const LearningService = require("../services/LearningService");
+const asyncHandler = require("../middleware/asyncHandler");
 
 class LearningController {
   /**
    * Get Learning Progress
    */
-  async getProgress(req, res, next) {
-    try {
-      const { careerId } = req.query;
+  getProgress = asyncHandler(async (req, res) => {
+    const { careerId } = req.query;
 
-      const progress = await LearningService.getProgress(
-        req.user._id,
-        careerId,
-      );
+    const progress = await LearningService.getProgress(req.user._id, careerId);
 
-      return res.status(200).json({
-        success: true,
-        data: progress,
-      });
-    } catch (error) {
-      next(error);
-    }
-  }
+    res.status(200).json({
+      success: true,
+      data: progress,
+    });
+  });
 
   /**
    * Complete Topic
    */
-  async completeTopic(req, res, next) {
-    try {
-      const { careerId, topic } = req.body;
+  completeTopic = asyncHandler(async (req, res) => {
+    const { careerId, topic } = req.body;
 
-      const progress = await LearningService.completeTopic(
-        req.user._id,
-        careerId,
-        topic,
-      );
+    const progress = await LearningService.completeTopic(
+      req.user._id,
+      careerId,
+      topic,
+    );
 
-      return res.status(200).json({
-        success: true,
-        message: "Topic completed successfully.",
-        data: progress,
-      });
-    } catch (error) {
-      next(error);
-    }
-  }
+    res.status(200).json({
+      success: true,
+      message: "Topic completed successfully.",
+      data: progress,
+    });
+  });
 }
 
 module.exports = new LearningController();

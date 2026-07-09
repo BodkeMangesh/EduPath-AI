@@ -21,7 +21,7 @@ class LearningProgressService {
 
     const pendingTopics = [];
 
-    learningPath.phases.forEach((phase) => {
+   learningPath.phases.forEach((phase) => {
       pendingTopics.push(...phase.pendingTopics);
     });
 

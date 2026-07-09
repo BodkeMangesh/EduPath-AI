@@ -1,24 +1,21 @@
 const DashboardService = require("../services/DashboardService");
 
+const asyncHandler = require("../middleware/asyncHandler");
+
 class DashboardController {
-  async getDashboard(req, res, next) {
-    try {
-      const { careerId } = req.query;
+  getDashboard = asyncHandler(async (req, res) => {
+    const { careerId } = req.query;
 
-      const dashboard = await DashboardService.getDashboard(
-        req.user._id,
-        careerId,
-      );
+    const dashboard = await DashboardService.getDashboard(
+      req.user._id,
+      careerId,
+    );
 
-      return res.status(200).json({
-        success: true,
-
-        data: dashboard,
-      });
-    } catch (error) {
-      next(error);
-    }
-  }
+    res.status(200).json({
+      success: true,
+      data: dashboard,
+    });
+  });
 }
 
 module.exports = new DashboardController();

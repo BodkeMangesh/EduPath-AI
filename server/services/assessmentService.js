@@ -48,43 +48,33 @@ class AssessmentService {
       careerGoal: assessment.careerGoal,
     };
 
-    // Run AI only once
-    let intelligence;
-
-    try {
-      intelligence = await AIProvider.generate("assessment", assessmentContext);
-    } catch (error) {
-      console.log("Using Career Intelligence fallback..");
-
-      intelligence = await CareerIntelligenceEngine.analyze(assessment);
-    }
-
     // AI career analysis
     let aiAnalysis;
 
     try {
       aiAnalysis = await AIProvider.generate("assessment", assessmentContext);
     } catch {
-      aiAnalysis = null;
+      console.log("Using Career Intelligence fallback...");
+
+      aiAnalysis = await CareerIntelligenceEngine.analyze(assessment);
     }
 
     // Existing engine still builds learning path
 
     await LearningProgressService.initializeProgress(
       assessment.user,
-      intelligence.learningPath,
-      intelligence.careerAnalysis.recommendedCareer.careerId,
+      aiAnalysis.learningPath,
+      aiAnalysis.recommendedCareer.careerId,
     );
 
     const learningProgress = await LearningProgressService.getProgress(
       assessment.user,
-      intelligence.careerAnalysis.recommendedCareer.careerId,
+      aiAnalysis.recommendedCareer.careerId,
     );
 
     return {
       assessment,
       learningProgress,
-      intelligence,
       aiAnalysis,
     };
   }
