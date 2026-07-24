@@ -1,0 +1,29 @@
+.sidebar {
+  position: fixed;
+
+  top: 70px;
+  left: 0;
+
+  width: 250px;
+  min-height: calc(100vh - 70px);
+  background: #1e293b;
+  color: white;
+  padding: 20px 0;
+  overflow-y: auto;
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-menu li {
+  padding: 15px 25px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.sidebar-menu li:hover {
+  background: #334155;
+}

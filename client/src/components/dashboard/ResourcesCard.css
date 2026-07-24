@@ -1,0 +1,45 @@
+.resources-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.resources-card h3 {
+  margin-bottom: 20px;
+}
+
+.resource-item {
+  padding: 12px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.resource-item:last-child {
+  border-bottom: none;
+}
+
+.resource-item h4 {
+  color: #2563eb;
+  margin-bottom: 5px;
+}
+
+.resource-item p {
+  color: #64748b;
+  font-size: 14px;
+}
+
+.resource-btn {
+  width: 100%;
+  margin-top: 20px;
+  padding: 12px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.resource-btn:hover {
+  background: #1d4ed8;
+}

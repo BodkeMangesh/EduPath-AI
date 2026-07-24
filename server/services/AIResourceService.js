@@ -5,6 +5,8 @@ class AIResourceService {
    * Generate AI Learning Resources
    */
   async generate(progress, assessment = {}) {
+    assessment = assessment || {};
+
     try {
       const context = {
         currentTopic: progress.nextMilestone || "Java",

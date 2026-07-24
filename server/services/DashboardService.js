@@ -5,6 +5,7 @@ const Assessment = require("../models/Assessment");
 const AIMentorEngine = require("../intelligence/AIMentorEngine");
 const DailyLearningEngine = require("../intelligence/DailyLearningEngine");
 const CareerReadinessEngine = require("../intelligence/CareerReadinessEngine");
+const AIProvider = require("../ai/AIProvider");
 const AIResourceService = require("./AIResourceService");
 
 class DashboardService {
@@ -12,13 +13,15 @@ class DashboardService {
    * Get User Dashboard
    */
   async getDashboard(userId, careerId) {
-    const user = await User.findById(userId).select("name email");
+    const user = await User.findById(userId).select("fullName email");
 
+    console.log("User ID:", userId);
+    console.log("Career ID:", careerId);
     const progress = await LearningProgress.findOne({
       user: userId,
-      careerId,
+      status: "Active",
     });
-
+    console.log("Progress:", progress);
     const latestAssessment = await Assessment.findOne({
       user: userId,
       status: "completed",
@@ -65,6 +68,12 @@ class DashboardService {
 
     return {
       user,
+
+      id: user._id,
+
+      fullName: user.fullName,
+
+      email: user.email,
 
       career: progress.careerId,
 

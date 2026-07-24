@@ -18,13 +18,7 @@ const router = express.Router();
  *     tags: [Dashboard]
  *     security:
  *       - bearerAuth: []
- *     parameters:
- *       - in: query
- *         name: careerId
- *         required: true
- *         schema:
- *           type: string
- *         description: Career ID selected by the user
+ *
  *     responses:
  *       200:
  *         description: Dashboard data fetched successfully.

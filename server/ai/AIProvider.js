@@ -1,8 +1,8 @@
-const GeminiProvider = require("./GeminiProvider");
+const GroqProvider = require("./GroqProvider");
 
 class AIProvider {
   constructor() {
-    this.provider = new GeminiProvider();
+    this.provider = new GroqProvider();
   }
 
   async generate(feature, context) {

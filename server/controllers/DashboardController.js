@@ -4,6 +4,7 @@ const asyncHandler = require("../middleware/asyncHandler");
 
 class DashboardController {
   getDashboard = asyncHandler(async (req, res) => {
+    console.log("Query:", req.query);
     const { careerId } = req.query;
 
     const dashboard = await DashboardService.getDashboard(
