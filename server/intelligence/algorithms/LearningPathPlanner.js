@@ -48,6 +48,7 @@ class LearningPathPlanner {
         phase: phase.phase,
         title: phase.title,
         duration: phase.duration,
+        topics: phase.topics,
         completedTopics,
         pendingTopics,
         completion,

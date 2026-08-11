@@ -1,35 +1,120 @@
 .today-task-card {
-  background: white;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.today-task-card h3 {
-  margin-bottom: 20px;
+.today-task-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin-bottom: 18px;
+}
+
+.today-task-header > span {
+  font-size: 24px;
+}
+
+.today-task-header h3 {
+  margin: 0;
+
+  font-size: 18px;
+
+  color: #0f172a;
+}
+
+.today-task-header p {
+  margin: 3px 0 0;
+
+  font-size: 13px;
+
+  color: #64748b;
+}
+
+.task-box {
+  padding: 18px;
+
+  background: #f8fafc;
+
+  border-radius: 10px;
 }
 
 .task-box h4 {
-  margin-bottom: 10px;
-  color: #2563eb;
+  margin: 0 0 15px;
+
+  font-size: 16px;
+
+  color: #0f172a;
+
+  line-height: 1.5;
 }
 
-.task-box p {
+.task-info {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+
+  margin-bottom: 18px;
+}
+
+.task-info p {
+  margin: 0;
+
+  font-size: 13px;
+
   color: #64748b;
-  line-height: 1.6;
-  margin-bottom: 20px;
 }
 
-.task-box button {
-  background: #2563eb;
-  color: white;
+.task-info strong {
+  color: #334155;
+}
+
+.start-learning-btn {
+  width: 100%;
+
+  padding: 11px 15px;
+
   border: none;
-  padding: 10px 18px;
+
   border-radius: 8px;
+
+  background: #2563eb;
+
+  color: white;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
   cursor: pointer;
-  transition: 0.3s;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
 }
 
-.task-box button:hover {
+.start-learning-btn:hover {
   background: #1d4ed8;
+
+  transform: translateY(-1px);
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 480px) {
+  .task-box {
+    padding: 15px;
+  }
+
+  .today-task-header h3 {
+    font-size: 16px;
+  }
+
+  .task-box h4 {
+    font-size: 15px;
+  }
 }

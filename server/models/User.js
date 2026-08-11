@@ -356,6 +356,18 @@ const userSchema = new mongoose.Schema(
       },
     },
 
+    selectedCareer: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Career",
+      default: null,
+    },
+
+    careerStatus: {
+      type: String,
+      enum: ["not_selected", "selected"],
+      default: "not_selected",
+    },
+
     /*
 |--------------------------------------------------------------------------
 | Achievement Summary

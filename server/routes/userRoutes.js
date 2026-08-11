@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.get("/me", protect, UserController.getProfile);
 router.put("/profile", protect, UserController.updateProfile);
+router.post("/select-career", protect, UserController.selectCareer);
 router.put("/change-password", protect, UserController.changePassword);
 
 module.exports = router;

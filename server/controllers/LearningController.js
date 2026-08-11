@@ -34,6 +34,24 @@ class LearningController {
       data: progress,
     });
   });
+
+  /**
+   * Complete Today's Learning Plan
+   */
+  completeTodayPlan = asyncHandler(async (req, res) => {
+    const { careerId } = req.body;
+
+    const progress = await LearningService.completeTodayPlan(
+      req.user._id,
+      careerId,
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "Today's learning plan completed successfully.",
+      data: progress,
+    });
+  });
 }
 
 module.exports = new LearningController();

@@ -1,36 +1,128 @@
 .daily-plan-card {
-  background: white;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.daily-plan-card h3 {
+.daily-plan-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
   margin-bottom: 20px;
 }
 
+.daily-plan-header > span {
+  font-size: 25px;
+}
+
+.daily-plan-header h3 {
+  margin: 0;
+
+  font-size: 18px;
+  color: #0f172a;
+}
+
+.daily-plan-header p {
+  margin: 3px 0 0;
+
+  font-size: 13px;
+  color: #64748b;
+}
+
+/* =========================
+   PLAN LIST
+========================= */
+
 .plan-list {
   list-style: none;
+
+  margin: 0;
   padding: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
 }
 
 .plan-list li {
-  padding: 10px 0;
-  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+
+  padding: 11px 13px;
+
+  background: #f8fafc;
+
+  border-radius: 8px;
 }
+
+.plan-list li strong {
+  font-size: 13px;
+  color: #334155;
+}
+
+.plan-list li span {
+  font-size: 13px;
+
+  line-height: 1.5;
+
+  color: #64748b;
+}
+
+/* =========================
+   BUTTON
+========================= */
 
 .plan-btn {
-  margin-top: 20px;
   width: 100%;
+
+  margin-top: 20px;
+
   padding: 12px;
-  background: #10b981;
-  color: white;
+
   border: none;
+
   border-radius: 8px;
-  cursor: pointer;
+
+  background: #2563eb;
+
+  color: white;
+
+  font-size: 14px;
+
   font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
 }
 
-.plan-btn:hover {
-  background: #059669;
+.plan-btn:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.plan-btn:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 480px) {
+  .daily-plan-header h3 {
+    font-size: 16px;
+  }
+
+  .plan-list li {
+    padding: 10px;
+  }
+
+  .plan-list li span {
+    font-size: 12px;
+  }
 }

@@ -1,0 +1,394 @@
+/* =========================================
+   Career Discovery
+========================================= */
+
+.career-discovery {
+  width: 100%;
+  max-height: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* =========================================
+   Hero Section
+========================================= */
+
+.career-hero {
+  width: 100%;
+  min-height: 580px;
+
+  padding: 80px 60px;
+
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+
+  background: linear-gradient(135deg, #172554 0%, #1e3a8a 45%, #2563eb 100%);
+
+  color: white;
+
+  position: relative;
+  overflow: hidden;
+}
+
+.career-hero::after {
+  content: "";
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  right: -100px;
+  top: -100px;
+}
+
+.hero-content {
+  width: 100%;
+  max-width: 1020px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-badge {
+  display: inline-block;
+  padding: 8px 15px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 30px;
+  font-size: 14px;
+  margin-bottom: 20px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.hero-content h1 {
+  max-width: 750px;
+  font-size: clamp(36px, 5vw, 62px);
+  line-height: 1.08;
+  margin: 0 0 22px;
+  font-weight: 800;
+  letter-spacing: -1.5px;
+}
+
+.hero-content h1 span {
+  display: block;
+  color: #bfdbfe;
+}
+
+.hero-content > p {
+  max-width: 760px;
+  font-size: 18px;
+  line-height: 1.7;
+  color: #dbeafe;
+  margin-bottom: 35px;
+}
+
+/* =========================================
+   Hero Features
+========================================= */
+
+.hero-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.hero-feature {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 210px;
+  padding: 15px 18px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+}
+
+.hero-feature > span {
+  font-size: 25px;
+}
+
+.hero-feature strong {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.hero-feature small {
+  display: block;
+  color: #bfdbfe;
+  font-size: 12px;
+}
+
+/* =========================================
+   Common Section
+========================================= */
+
+.career-statistics-section,
+.career-explorer,
+.career-journey {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 70px 25px 0;
+}
+
+.section-heading {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 40px;
+}
+
+.section-heading > span {
+  display: inline-block;
+  color: #2563eb;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.section-heading h2 {
+  margin: 0 0 12px;
+  font-size: 32px;
+  line-height: 1.2;
+}
+
+.section-heading p {
+  margin: 0;
+  color: #64748b;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* =========================================
+   Career Explorer
+========================================= */
+
+.career-explorer {
+  margin-top: 40px;
+  padding-top: 65px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.explorer-heading {
+  margin-bottom: 35px;
+}
+
+.category-section {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 25px;
+  margin-bottom: 30px;
+  box-shadow: 0 5px 20px rgba(15, 23, 42, 0.04);
+}
+
+.category-section h3 {
+  margin: 0 0 18px;
+  font-size: 18px;
+}
+
+/* =========================================
+   Career Journey
+========================================= */
+
+.career-journey {
+  margin-top: 60px;
+  padding-top: 70px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.journey-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  align-items: stretch;
+}
+
+.journey-card {
+  position: relative;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 25px 20px;
+  box-shadow: 0 5px 20px rgba(15, 23, 42, 0.04);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.journey-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.1);
+}
+
+.journey-number {
+  color: #2563eb;
+  font-size: 13px;
+  font-weight: 800;
+  margin-bottom: 15px;
+}
+
+.journey-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 13px;
+  background: #eff6ff;
+  font-size: 23px;
+  margin-bottom: 18px;
+}
+
+.journey-card h3 {
+  font-size: 17px;
+  margin: 0 0 10px;
+}
+
+.journey-card p {
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.journey-line {
+  display: none;
+}
+
+/* =========================================
+   Bottom CTA
+========================================= */
+
+.career-cta {
+  max-width: 1100px;
+  margin: 80px auto 0;
+  padding: 45px 50px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, #eff6ff, #dbeafe);
+  border: 1px solid #bfdbfe;
+  text-align: center;
+}
+
+.career-cta span {
+  color: #2563eb;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.career-cta h2 {
+  margin: 10px 0;
+  font-size: 30px;
+}
+
+.career-cta p {
+  margin: 0 auto;
+  max-width: 650px;
+  color: #475569;
+  line-height: 1.6;
+}
+
+/* =========================================
+   Error State
+========================================= */
+
+.career-discovery-error {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 30px;
+}
+
+.error-icon {
+  font-size: 45px;
+  margin-bottom: 15px;
+}
+
+.career-discovery-error h2 {
+  margin-bottom: 10px;
+}
+
+.career-discovery-error p {
+  color: #64748b;
+  margin-bottom: 20px;
+}
+
+.career-discovery-error button {
+  border: none;
+  padding: 12px 24px;
+  border-radius: 10px;
+  background: #2563eb;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.career-discovery-error button:hover {
+  background: #1d4ed8;
+}
+
+/* =========================================
+   Responsive
+========================================= */
+
+@media (max-width: 1000px) {
+  .journey-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .hero-content h1 {
+    font-size: 46px;
+  }
+}
+
+@media (max-width: 700px) {
+  .career-hero {
+    padding: 50px 20px;
+  }
+
+  .hero-content h1 {
+    font-size: 38px;
+  }
+
+  .hero-content > p {
+    font-size: 16px;
+  }
+
+  .hero-features {
+    flex-direction: column;
+  }
+
+  .hero-feature {
+    width: 100%;
+  }
+
+  .career-statistics-section,
+  .career-explorer,
+  .career-journey {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .section-heading h2 {
+    font-size: 27px;
+  }
+
+  .journey-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .career-cta {
+    margin: 60px 18px 0;
+    padding: 35px 22px;
+  }
+
+  .career-cta h2 {
+    font-size: 25px;
+  }
+}

@@ -1,0 +1,29 @@
+.footer {
+  width: 100%;
+  min-height: 50px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  box-sizing: border-box;
+
+  padding: 12px 20px;
+
+  background: #ffffff;
+
+  border-top: 1px solid #e2e8f0;
+
+  color: #64748b;
+
+  font-size: 14px;
+
+  flex-shrink: 0;
+}
+
+.footer p {
+  margin: 0;
+  padding: 0;
+
+  text-align: center;
+}

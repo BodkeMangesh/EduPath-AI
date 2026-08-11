@@ -6,12 +6,14 @@ class LearningService {
    */
   async getProgress(userId, careerId) {
     console.log("User ID:", userId, "Career ID:", careerId);
+
     const progress = await LearningProgressService.getProgress(
       userId,
       careerId,
     );
 
     console.log("Retrieved Progress:", progress);
+
     if (!progress) {
       throw new Error("Learning progress not found.");
     }
@@ -24,6 +26,13 @@ class LearningService {
    */
   async completeTopic(userId, careerId, topic) {
     return await LearningProgressService.completeTopic(userId, careerId, topic);
+  }
+
+  /**
+   * Complete Today's Learning Plan
+   */
+  async completeTodayPlan(userId, careerId) {
+    return await LearningProgressService.completeTodayPlan(userId, careerId);
   }
 }
 

@@ -1,35 +1,129 @@
 .mentor-card {
-  background: white;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.mentor-card h3 {
+.mentor-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
   margin-bottom: 20px;
 }
 
-.mentor-message {
-  background: #f8fafc;
-  border-left: 4px solid #2563eb;
-  padding: 15px;
-  border-radius: 8px;
-  color: #475569;
-  line-height: 1.6;
+.mentor-header > span {
+  font-size: 25px;
 }
 
-.mentor-btn {
-  margin-top: 20px;
-  width: 100%;
-  padding: 12px;
-  border: none;
-  background: #2563eb;
-  color: white;
+.mentor-header h3 {
+  margin: 0;
+
+  font-size: 18px;
+
+  color: #0f172a;
+}
+
+.mentor-header p {
+  margin: 3px 0 0;
+
+  font-size: 13px;
+
+  color: #64748b;
+}
+
+/* =========================
+   MENTOR MESSAGE
+========================= */
+
+.mentor-message {
+  display: flex;
+  flex-direction: column;
+
+  gap: 14px;
+}
+
+.mentor-item {
+  padding: 12px 14px;
+
+  background: #f8fafc;
+
   border-radius: 8px;
-  cursor: pointer;
+
+  border-left: 3px solid #2563eb;
+}
+
+.mentor-item strong {
+  display: block;
+
+  margin-bottom: 5px;
+
+  font-size: 13px;
+
+  color: #334155;
+}
+
+.mentor-item p {
+  margin: 0;
+
+  font-size: 13px;
+
+  line-height: 1.5;
+
+  color: #64748b;
+}
+
+.warning-item {
+  border-left-color: #f59e0b;
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.mentor-btn {
+  width: 100%;
+
+  margin-top: 20px;
+
+  padding: 11px 15px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background: #2563eb;
+
+  color: white;
+
+  font-size: 14px;
+
   font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
 }
 
 .mentor-btn:hover {
   background: #1d4ed8;
+
+  transform: translateY(-1px);
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 480px) {
+  .mentor-header h3 {
+    font-size: 16px;
+  }
+
+  .mentor-item {
+    padding: 10px 12px;
+  }
+
+  .mentor-item p {
+    font-size: 12px;
+  }
 }

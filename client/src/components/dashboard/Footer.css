@@ -1,21 +1,46 @@
 .footer {
   position: fixed;
-
   left: 250px;
   right: 0;
   bottom: 0;
 
-  height: 45px;
+  min-height: 45px;
+  padding: 10px 20px;
 
-  background: white;
+  background: #ffffff;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
-  border-top: 1px solid #ddd;
+  border-top: 1px solid #e5e7eb;
 
   font-size: 14px;
-
   color: #64748b;
+
+  z-index: 100;
+  text-align: center;
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+  .footer {
+    left: 0;
+    font-size: 13px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .footer {
+    position: relative;
+    left: 0;
+    right: auto;
+    bottom: auto;
+
+    min-height: 50px;
+    padding: 12px 15px;
+
+    font-size: 12px;
+  }
 }

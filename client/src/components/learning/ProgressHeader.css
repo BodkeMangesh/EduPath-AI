@@ -1,0 +1,83 @@
+.progress-header {
+  background: linear-gradient(135deg, #2563eb, #4f46e5);
+  color: white;
+  border-radius: 18px;
+  padding: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.header-left {
+  flex: 1;
+}
+
+.header-left h1 {
+  font-size: 34px;
+  margin-bottom: 10px;
+}
+
+.header-left p {
+  font-size: 17px;
+  opacity: 0.9;
+}
+
+.header-right {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.header-card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 20px;
+  min-width: 180px;
+  text-align: center;
+}
+
+.header-card span {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.header-card h2 {
+  margin-top: 10px;
+  font-size: 28px;
+}
+
+.header-card h3 {
+  margin-top: 10px;
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+@media (max-width: 900px) {
+  .progress-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header-right {
+    width: 100%;
+  }
+
+  .header-card {
+    flex: 1;
+    min-width: 160px;
+  }
+}
+
+@media (max-width: 600px) {
+  .header-left h1 {
+    font-size: 28px;
+  }
+
+  .header-card {
+    width: 100%;
+  }
+}

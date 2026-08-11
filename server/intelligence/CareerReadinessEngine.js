@@ -17,7 +17,55 @@ class CareerReadinessEngine {
     // Assessment (10%)
     score += (assessment?.score || 0) * 0.1;
 
-    return Math.round(Math.min(score, 100));
+    score = Math.round(Math.min(score, 100));
+
+    let status = "";
+    let message = "";
+
+    if (score >= 80) {
+      status = "Job Ready";
+      message =
+        "Excellent progress! Keep building projects and preparing for interviews.";
+    } else if (score >= 60) {
+      status = "Intermediate";
+      message =
+        "You are progressing well. Focus on projects and advanced concepts.";
+    } else if (score >= 40) {
+      status = "Learning";
+      message = "Good foundation. Stay consistent and complete your roadmap.";
+    } else {
+      status = "Beginner";
+      message =
+        "Build a daily study habit and complete your current learning phase.";
+    }
+
+    const strengths = [];
+    const improvements = [];
+
+    if (progress.overallCompletion >= 50)
+      strengths.push("Strong learning progress");
+
+    if (progress.currentStreak >= 7) strengths.push("Consistent study habit");
+
+    if (progress.totalStudyHours >= 50)
+      strengths.push("Good practical experience");
+
+    if (progress.overallCompletion < 50)
+      improvements.push("Complete more learning topics");
+
+    if (progress.currentStreak < 7)
+      improvements.push("Increase your study streak");
+
+    if (progress.totalStudyHours < 50)
+      improvements.push("Spend more time on practical coding");
+
+    return {
+      score,
+      status,
+      message,
+      strengths,
+      improvements,
+    };
   }
 }
 

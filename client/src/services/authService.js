@@ -9,5 +9,15 @@ export const login = (data) => {
 };
 
 export const getProfile = () => {
-  return api.get("/auth/profile");
+  return api.get("/users/me");
+};
+
+// Update Profile
+export const updateProfile = (data) => {
+  return api.put("/users/profile", data);
+};
+
+// Change Password
+export const changePassword = (data) => {
+  return api.put("/users/change-password", data);
 };

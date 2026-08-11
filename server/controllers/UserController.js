@@ -49,6 +49,32 @@ class UserController {
   }
 
   /**
+   * Select Career
+   */
+  async selectCareer(req, res) {
+    try {
+      const { careerId } = req.body;
+
+      const updatedUser = await UserService.selectCareer(
+        req.user._id,
+        careerId,
+      );
+
+      return res.status(200).json({
+        success: true,
+        message: "Career selected successfully.",
+        data: updatedUser,
+      });
+    } catch (error) {
+      console.error("Error in UserController.selectCareer:", error);
+
+      return res.status(400).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  }
+  /**
    * Change User Password
    */
   async changePassword(req, res) {

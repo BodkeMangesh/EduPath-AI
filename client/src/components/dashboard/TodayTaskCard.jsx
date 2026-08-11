@@ -1,16 +1,50 @@
+import { useNavigate } from "react-router-dom";
 import "./TodayTaskCard.css";
 
-function TodayTaskCard() {
+function TodayTaskCard({ dashboard }) {
+  const navigate = useNavigate();
+
+  const handleStartLearning = () => {
+    navigate("/learning");
+  };
+
+  if (!dashboard) return null;
+
   return (
-    <div className="today-task-card">
-      <h3>📅 Today's Task</h3>
+    <div className="dashboard-card today-task-card">
+      {/* Header */}
+      <div className="today-task-header">
+        <span>📅</span>
 
+        <div>
+          <h3>Today's Learning</h3>
+          <p>Focus on your next step.</p>
+        </div>
+      </div>
+
+      {/* Task */}
       <div className="task-box">
-        <h4>React Router DOM</h4>
+        <h4>{dashboard.todayTask || "Continue your learning path"}</h4>
 
-        <p>Learn nested routing, protected routes and dynamic routes.</p>
+        <div className="task-info">
+          <p>
+            <strong>Current Phase:</strong>{" "}
+            {dashboard.currentPhase || "Not started"}
+          </p>
 
-        <button>Start Learning</button>
+          <p>
+            <strong>Next Milestone:</strong>{" "}
+            {dashboard.nextMilestone || "Keep Learning"}
+          </p>
+
+          <p>
+            <strong>Pending Topics:</strong> {dashboard.pendingTopics || 0}
+          </p>
+        </div>
+
+        <button className="start-learning-btn" onClick={handleStartLearning}>
+          Start Learning →
+        </button>
       </div>
     </div>
   );

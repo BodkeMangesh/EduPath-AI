@@ -68,7 +68,10 @@ router.get("/progress", protect, LearningController.getProgress);
  *       401:
  *         description: Unauthorized.
  */
+router.get("/progress", protect, LearningController.getProgress);
 
 router.post("/complete-topic", protect, LearningController.completeTopic);
+
+router.post("/complete-today", protect, LearningController.completeTodayPlan);
 
 module.exports = router;

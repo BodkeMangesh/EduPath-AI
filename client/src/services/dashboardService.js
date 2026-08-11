@@ -16,3 +16,9 @@ export const completeTopic = async (topic, careerId) => {
 
   return response.data;
 };
+
+export const saveStudySession = async (sessionData) => {
+  const response = await api.post("/study-session/save-session", sessionData);
+
+  return response.data;
+};

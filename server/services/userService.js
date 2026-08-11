@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const Career = require("../models/Career");
 
 class UserService {
   /**
@@ -57,6 +58,34 @@ class UserService {
     await user.save();
 
     return true;
+  }
+
+  async selectCareer(userId, careerId) {
+    // 1. Check if career exists
+    const career = await Career.findById(careerId);
+
+    if (!career) {
+      throw new Error("Career not found.");
+    }
+
+    // 2. Update user
+    const user = await User.findByIdAndUpdate(
+      userId,
+      {
+        selectedCareer: careerId,
+        careerStatus: "selected",
+        careerSelectedAt: new Date(), // if you added this field
+      },
+      {
+        new: true,
+      },
+    ).populate("selectedCareer");
+
+    if (!user) {
+      throw new Error("User not found.");
+    }
+
+    return user;
   }
 }
 

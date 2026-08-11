@@ -1,20 +1,59 @@
 import "./ReadinessCard.css";
 
-function ReadinessCard() {
-  return (
-    <div className="readiness-card">
-      <h3>🎯 Career Readiness</h3>
+function ReadinessCard({ dashboard }) {
+  const readiness = dashboard?.careerReadiness;
 
-      <div className="score-circle">
-        <span>72%</span>
+  const score = readiness?.score ?? 0;
+
+  let status = "Beginner";
+
+  if (score >= 80) {
+    status = "Job Ready";
+  } else if (score >= 60) {
+    status = "Intermediate";
+  } else if (score >= 40) {
+    status = "Learning";
+  }
+
+  return (
+    <div className="dashboard-card readiness-card">
+      {/* Header */}
+      <div className="readiness-header">
+        <span>🎯</span>
+
+        <div>
+          <h3>Career Readiness</h3>
+          <p>Your current career preparation level</p>
+        </div>
       </div>
 
-      <p className="status">You are on track to become job-ready.</p>
+      {/* Score */}
+      <div className="score-section">
+        <div className="score-circle">
+          <span>{score}%</span>
+        </div>
 
+        <div className="readiness-status">
+          <strong>{status}</strong>
+          <span>Career Readiness</span>
+        </div>
+      </div>
+
+      {/* Tips */}
       <div className="tips">
-        <p>✔ Complete React Projects</p>
-        <p>✔ Practice DSA Daily</p>
-        <p>✔ Improve Interview Skills</p>
+        {readiness?.improvements?.length > 0 ? (
+          readiness.improvements.map((item, index) => (
+            <p key={index}>📌 {item}</p>
+          ))
+        ) : (
+          <p>📌 Keep improving your technical skills.</p>
+        )}
+
+        <p>📚 Current Phase: {dashboard?.currentPhase || "Getting Started"}</p>
+
+        <p>🔥 Study Streak: {dashboard?.studyStreak || 0} Days</p>
+
+        <p>📈 Overall Progress: {dashboard?.overallCompletion || 0}%</p>
       </div>
     </div>
   );

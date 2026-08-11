@@ -2,13 +2,23 @@ import "./WelcomeCard.css";
 
 function WelcomeCard({ dashboard }) {
   return (
-    <div className="welcome-card">
-      <h2>👋 Welcome Back, {dashboard?.user?.fullName}</h2>
+    <section className="welcome-card">
+      <div className="welcome-content">
+        <span className="welcome-label">👋 Welcome Back</span>
 
-      <p>Current Phase : {dashboard?.currentPhase}</p>
+        <h1>{dashboard?.user?.fullName || "Learner"}</h1>
 
-      <div className="career-badge">Current Career {dashboard?.career}</div>
-    </div>
+        <p className="welcome-phase">
+          Current Phase:{" "}
+          <strong>{dashboard?.currentPhase || "Getting Started"}</strong>
+        </p>
+
+        <div className="career-badge">
+          🎯 Current Career:{" "}
+          <strong>{dashboard?.career || "Career Path"}</strong>
+        </div>
+      </div>
+    </section>
   );
 }
 

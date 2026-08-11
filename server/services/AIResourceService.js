@@ -1,4 +1,5 @@
 const AIProvider = require("../ai/AIProvider");
+const ResourceLinkMapper = require("../utils/ResourceLinkMapper");
 
 class AIResourceService {
   /**
@@ -26,6 +27,32 @@ class AIResourceService {
       };
 
       const resources = await AIProvider.generate("resources", context);
+
+      // --------------------
+      // Attach URLs
+      // --------------------
+
+      resources.youtube = (resources.youtube || []).map((item) => ({
+        ...item,
+        url: ResourceLinkMapper.getYouTubeLink(item.title),
+      }));
+
+      resources.documentation = (resources.documentation || []).map((item) => ({
+        ...item,
+        url: ResourceLinkMapper.getDocumentationLink(item.title),
+      }));
+
+      resources.practice = (resources.practice || []).map((item) => ({
+        ...item,
+        url: ResourceLinkMapper.getPracticeLink(item.title),
+      }));
+
+      if (resources.project) {
+        resources.project = {
+          ...resources.project,
+          url: ResourceLinkMapper.getProjectLink(resources.project.title),
+        };
+      }
 
       return resources;
     } catch (error) {

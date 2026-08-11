@@ -13,6 +13,8 @@ const protect = async (req, res, next) => {
       token = req.headers.authorization.split(" ")[1];
     }
 
+    console.log("AUTH HEADER:", req.headers.authorization);
+
     // No Token
     if (!token) {
       return res.status(401).json({
@@ -23,6 +25,9 @@ const protect = async (req, res, next) => {
 
     // Verify Token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    console.log("TOKEN:", token);
+    console.log("SECRET:", process.env.JWT_SECRET);
 
     // Find User
     const user = await User.findById(decoded.id).select("-password");

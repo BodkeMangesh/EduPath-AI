@@ -1,0 +1,426 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  width: 100%;
+
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+
+  box-shadow: var(--shadow-sm);
+}
+
+.navbar-container {
+  width: 100%;
+  max-width: var(--container-width);
+
+  min-height: 70px;
+
+  margin: 0 auto;
+  padding: 0 var(--page-padding);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 24px;
+}
+
+/* =========================
+   LOGO
+========================= */
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  font-size: 20px;
+  font-weight: 700;
+
+  color: var(--color-text);
+
+  white-space: nowrap;
+}
+
+.logo-icon {
+  font-size: 24px;
+}
+
+/* =========================
+   DESKTOP LINKS
+========================= */
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  flex: 1;
+}
+
+.navbar-link {
+  padding: 8px 12px;
+
+  border-radius: var(--radius-md);
+
+  color: var(--color-text-secondary);
+
+  font-size: 14px;
+  font-weight: 500;
+
+  transition:
+    color 0.2s ease,
+    background 0.2s ease;
+}
+
+.navbar-link:hover {
+  color: var(--color-primary);
+  background: #eff6ff;
+}
+
+.navbar-link.active {
+  color: var(--color-primary);
+  background: #eff6ff;
+  font-weight: 600;
+}
+
+/* ================================
+   Notification
+================================ */
+
+.notification-wrapper {
+  position: relative;
+}
+
+.notification-btn {
+  position: relative;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 20px;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.notification-btn:hover {
+  background: #f1f5f9;
+}
+
+.notification-badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+
+  min-width: 18px;
+  height: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 4px;
+
+  background: #ef4444;
+  color: white;
+
+  border-radius: 50%;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  border: 2px solid white;
+}
+
+/* Dropdown */
+
+.notification-dropdown {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+
+  width: 360px;
+  max-height: 450px;
+
+  background: white;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+
+  z-index: 1000;
+
+  overflow: hidden;
+}
+
+/* Header */
+
+.notification-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 15px 16px;
+
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.notification-header strong {
+  font-size: 16px;
+  color: #111827;
+}
+
+.mark-all-btn {
+  border: none;
+  background: transparent;
+
+  color: #2563eb;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.mark-all-btn:hover {
+  text-decoration: underline;
+}
+
+/* Notification List */
+
+.notification-list {
+  max-height: 380px;
+  overflow-y: auto;
+}
+
+/* Notification Item */
+
+.notification-item {
+  padding: 14px 16px;
+
+  border-bottom: 1px solid #f1f5f9;
+
+  cursor: pointer;
+
+  transition: background 0.2s ease;
+}
+
+.notification-item:hover {
+  background: #f8fafc;
+}
+
+.notification-item.unread {
+  background: #eff6ff;
+}
+
+.notification-item.unread:hover {
+  background: #e0f2fe;
+}
+
+.notification-item h4 {
+  margin: 0 0 5px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  color: #111827;
+}
+
+.notification-item p {
+  margin: 0 0 7px;
+
+  font-size: 13px;
+  line-height: 1.5;
+
+  color: #4b5563;
+}
+
+.notification-item small {
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+/* Empty State */
+
+.no-notifications {
+  padding: 30px 20px;
+
+  margin: 0;
+
+  text-align: center;
+
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+  .notification-dropdown {
+    position: fixed;
+
+    top: 70px;
+    right: 15px;
+    left: 15px;
+
+    width: auto;
+
+    max-height: 70vh;
+  }
+}
+
+/* =========================
+   LOGOUT
+========================= */
+
+.navbar-logout {
+  border: 1px solid var(--color-border);
+
+  background: transparent;
+
+  color: var(--color-text);
+
+  padding: 9px 16px;
+
+  border-radius: var(--radius-md);
+
+  font-weight: 600;
+
+  transition: all 0.2s ease;
+}
+
+.navbar-logout:hover {
+  background: var(--color-danger);
+  border-color: var(--color-danger);
+  color: #ffffff;
+}
+
+/* =========================
+   MOBILE BUTTON
+========================= */
+
+.navbar-menu-button {
+  display: none;
+
+  border: none;
+  background: transparent;
+
+  font-size: 26px;
+
+  color: var(--color-text);
+
+  padding: 4px;
+}
+
+/* =========================
+   MOBILE NAVIGATION
+========================= */
+
+.mobile-navbar {
+  display: none;
+}
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 900px) {
+  .navbar-links {
+    gap: 2px;
+  }
+
+  .navbar-link {
+    padding: 8px;
+    font-size: 13px;
+  }
+
+  .navbar-logout {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+  .navbar-container {
+    min-height: 64px;
+  }
+
+  .navbar-links,
+  .navbar-logout {
+    display: none;
+  }
+
+  .navbar-menu-button {
+    display: block;
+  }
+
+  .mobile-navbar {
+    display: flex;
+
+    flex-direction: column;
+
+    padding: 12px var(--page-padding) 20px;
+
+    border-top: 1px solid var(--color-border);
+
+    background: var(--color-surface);
+
+    box-shadow: var(--shadow-md);
+  }
+
+  .mobile-navbar-link {
+    padding: 14px 12px;
+
+    border-radius: var(--radius-md);
+
+    color: var(--color-text);
+
+    font-weight: 500;
+  }
+
+  .mobile-navbar-link:hover,
+  .mobile-navbar-link.active {
+    background: #eff6ff;
+    color: var(--color-primary);
+  }
+
+  .mobile-logout {
+    margin-top: 8px;
+
+    padding: 12px;
+
+    border: none;
+    border-radius: var(--radius-md);
+
+    background: var(--color-danger);
+    color: #ffffff;
+
+    font-weight: 600;
+  }
+}
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 480px) {
+  .navbar-logo {
+    font-size: 18px;
+  }
+
+  .logo-icon {
+    font-size: 21px;
+  }
+
+  .navbar-container {
+    min-height: 60px;
+  }
+}

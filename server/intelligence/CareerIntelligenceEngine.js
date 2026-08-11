@@ -35,6 +35,7 @@ class CareerIntelligenceEngine {
     const resources = await ResourceRecommendationEngine.recommend(
       assessment,
       careerAnalysis,
+      progress,
     );
 
     return {
