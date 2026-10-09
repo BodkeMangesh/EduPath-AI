@@ -1,30 +1,18 @@
 class SkillGapAnalyzer {
-  async analyze(assessment) {
-    const technicalSkills = assessment.technicalSkills || [];
+  async analyze(user) {
+    const skills = user?.professional?.skills || [];
 
-    const strengths = [];
-    const weaknesses = [];
-
-    technicalSkills.forEach((skill) => {
-      if (skill.score >= 7) {
-        strengths.push(skill.skill);
-      } else {
-        weaknesses.push(skill.skill);
-      }
-    });
-
-    const overallScore =
-      technicalSkills.length > 0
-        ? Math.round(
-            technicalSkills.reduce((sum, skill) => sum + skill.score, 0) /
-              technicalSkills.length,
-          )
-        : 0;
+    const normalizedSkills = skills
+      .filter(Boolean)
+      .map((skill) => String(skill).trim())
+      .filter(Boolean);
 
     return {
-      overallScore,
-      strengths,
-      weaknesses,
+      overallScore: 0,
+
+      strengths: normalizedSkills,
+
+      weaknesses: [],
     };
   }
 }

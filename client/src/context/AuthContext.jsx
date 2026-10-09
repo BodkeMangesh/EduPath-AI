@@ -18,8 +18,15 @@ export function AuthProvider({ children }) {
     setUser({ token });
   };
 
+  const register = async (userData) => {
+    const response = await registerService(userData);
+
+    return response;
+  };
+
   const logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("onboardingToken");
     setUser(null);
   };
 
@@ -28,6 +35,7 @@ export function AuthProvider({ children }) {
       value={{
         user,
         login,
+        register,
         logout,
       }}
     >

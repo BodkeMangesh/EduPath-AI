@@ -46,39 +46,43 @@ function DailyPlanCard({ dashboard, refreshDashboard }) {
         </div>
       </div>
 
-      <ul className="plan-list">
-        <li>
-          <strong>🎯 Goal</strong>
-          <span>{plan?.todayGoal || "Complete today's learning goal."}</span>
-        </li>
+      <div className="daily-plan-content">
+        <ul className="plan-list">
+          <li>
+            <strong>🎯 Goal</strong>
+            <span>{plan?.todayGoal || "Complete today's learning goal."}</span>
+          </li>
 
-        <li>
-          <strong>⏰ Study Duration</strong>
-          <span>{plan?.studyDuration || "Not specified"}</span>
-        </li>
+          <li>
+            <strong>⏰ Study Duration</strong>
+            <span>{plan?.studyDuration || "Not specified"}</span>
+          </li>
 
-        <li>
-          <strong>💻 Practice</strong>
-          <span>{plan?.practiceTask || "Practice today's topic."}</span>
-        </li>
+          <li>
+            <strong>💻 Practice</strong>
+            <span>{plan?.practiceTask || "Practice today's topic."}</span>
+          </li>
 
-        <li>
-          <strong>🚀 Project</strong>
-          <span>{plan?.projectTask || "Continue your project."}</span>
-        </li>
+          <li>
+            <strong>🚀 Project</strong>
+            <span>{plan?.projectTask || "Continue your project."}</span>
+          </li>
 
-        <li>
-          <strong>📖 Revision</strong>
-          <span>{plan?.revision || "Revise previously learned concepts."}</span>
-        </li>
+          <li>
+            <strong>📖 Revision</strong>
+            <span>
+              {plan?.revision || "Revise previously learned concepts."}
+            </span>
+          </li>
 
-        <li>
-          <strong>🔥 Motivation</strong>
-          <span>
-            {plan?.motivation || "Stay consistent and keep learning."}
-          </span>
-        </li>
-      </ul>
+          <li>
+            <strong>🔥 Motivation</strong>
+            <span>
+              {plan?.motivation || "Stay consistent and keep learning."}
+            </span>
+          </li>
+        </ul>
+      </div>
 
       <button className="plan-btn" onClick={handleComplete} disabled={loading}>
         {loading ? "Completing..." : "✓ Mark Today's Plan Complete"}

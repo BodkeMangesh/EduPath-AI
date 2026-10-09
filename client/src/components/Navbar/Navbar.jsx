@@ -13,14 +13,17 @@ import {
 
 import "./Navbar.css";
 
-function Navbar() {
+function Navbar({ sidebarOpen, onSidebarToggle, onSidebarClose }) {
   const navigate = useNavigate();
   const { logout } = useContext(AuthContext);
 
-  const [menuOpen, setMenuOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
   const [notificationOpen, setNotificationOpen] = useState(false);
+
+  /* =====================================================
+     LOAD NOTIFICATIONS
+  ===================================================== */
 
   const loadNotifications = async () => {
     try {
@@ -35,6 +38,14 @@ function Navbar() {
       console.error("Failed to load notifications:", error);
     }
   };
+
+  useEffect(() => {
+    loadNotifications();
+  }, []);
+
+  /* =====================================================
+     NOTIFICATION
+  ===================================================== */
 
   const handleNotificationClick = async (notification) => {
     try {
@@ -71,183 +82,266 @@ function Navbar() {
     }
   };
 
-  useEffect(() => {
-    loadNotifications();
-  }, []);
+  /* =====================================================
+     NAVIGATION CONTROLS
+  ===================================================== */
+
+  const closeNotifications = () => {
+    setNotificationOpen(false);
+  };
+
+  const handleSidebarToggle = () => {
+    setNotificationOpen(false);
+    onSidebarToggle();
+  };
+
+  const handleNavigation = () => {
+    closeNotifications();
+    onSidebarClose();
+  };
+
+  /* =====================================================
+     LOGOUT
+  ===================================================== */
 
   const handleLogout = () => {
     logout();
 
-    setMenuOpen(false);
+    onSidebarClose();
+    setNotificationOpen(false);
 
     toast.success("Logged out successfully.");
 
     navigate("/login");
   };
 
-  const closeMenu = () => {
-    setMenuOpen(false);
-  };
-
   return (
     <header className="navbar">
       <div className="navbar-container">
-        {/* Logo */}
-        <NavLink to="/dashboard" className="navbar-logo" onClick={closeMenu}>
-          <span className="logo-icon">🎓</span>
-          <span>EduPath AI</span>
-        </NavLink>
+        {/* =================================================
+            LOGO
+        ================================================= */}
 
-        {/* Desktop Navigation */}
-        <nav className="navbar-links">
-          <NavLink to="/dashboard" className="navbar-link">
-            Dashboard
-          </NavLink>
-
-          <NavLink to="/career-discovery" className="navbar-link">
-            Career Discovery
-          </NavLink>
-
-          <NavLink to="/skill-assessment" className="navbar-link">
-            Skill Assessment
-          </NavLink>
-
-          <NavLink to="/learning" className="navbar-link">
-            Learning
-          </NavLink>
-
-          <NavLink to="/progress" className="navbar-link">
-            Progress
-          </NavLink>
-        </nav>
-
-        <NavLink to="/roadmap" className="navbar-link">
-          Roadmap
-        </NavLink>
-
-        <NavLink to="/resources" className="navbar-link">
-          Resources
-        </NavLink>
-
-        {/* Notifications */}
-        <div className="notification-wrapper">
-          <button
-            className="notification-btn"
-            onClick={() => setNotificationOpen(!notificationOpen)}
-          >
-            🔔
-            {unreadCount > 0 && (
-              <span className="notification-badge">
-                {unreadCount > 9 ? "9+" : unreadCount}
-              </span>
-            )}
-          </button>
-
-          {notificationOpen && (
-            <div className="notification-dropdown">
-              <div className="notification-header">
-                <strong>Notifications</strong>
-
-                {unreadCount > 0 && (
-                  <button
-                    onClick={handleMarkAllAsRead}
-                    className="mark-all-btn"
-                  >
-                    Mark all read
-                  </button>
-                )}
-              </div>
-
-              <div className="notification-list">
-                {notifications.length === 0 ? (
-                  <p className="no-notifications">No notifications yet.</p>
-                ) : (
-                  notifications.map((notification) => (
-                    <div
-                      key={notification._id}
-                      className={`notification-item ${
-                        !notification.isRead ? "unread" : ""
-                      }`}
-                      onClick={() => handleNotificationClick(notification)}
-                    >
-                      <h4>{notification.title}</h4>
-
-                      <p>{notification.message}</p>
-
-                      <small>
-                        {new Date(notification.createdAt).toLocaleString()}
-                      </small>
-                    </div>
-                  ))
-                )}
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Desktop Logout */}
-        <button className="navbar-logout" onClick={handleLogout}>
-          Logout
-        </button>
-
-        {/* Mobile Menu Button */}
-        <button
-          className="navbar-menu-button"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle navigation"
+        <NavLink
+          to="/dashboard"
+          className="navbar-logo"
+          onClick={handleNavigation}
+          aria-label="EduPath AI Dashboard"
         >
-          {menuOpen ? "✕" : "☰"}
-        </button>
-      </div>
+          <span className="logo-icon" aria-hidden="true">
+            🎓
+          </span>
 
-      {/* Mobile Navigation */}
-      {menuOpen && (
-        <nav className="mobile-navbar">
+          <div className="logo-text">
+            <span className="logo-title">EduPath AI</span>
+
+            <span className="logo-subtitle">
+              Personalized Learning Platform
+            </span>
+          </div>
+        </NavLink>
+
+        {/* =================================================
+            DESKTOP NAVIGATION
+        ================================================= */}
+
+        <nav className="navbar-links" aria-label="Primary navigation">
           <NavLink
             to="/dashboard"
-            className="mobile-navbar-link"
-            onClick={closeMenu}
+            className="navbar-link"
+            onClick={handleNavigation}
           >
-            Dashboard
+            <span className="navbar-link-icon" aria-hidden="true">
+              🏠
+            </span>
+
+            <span>Dashboard</span>
           </NavLink>
 
           <NavLink
-            to="/career-discovery"
-            className="mobile-navbar-link"
-            onClick={closeMenu}
+            to="/roadmap"
+            className="navbar-link"
+            onClick={handleNavigation}
           >
-            Career Discovery
-          </NavLink>
+            <span className="navbar-link-icon" aria-hidden="true">
+              🗺️
+            </span>
 
-          <NavLink
-            to="/skill-assessment"
-            className="mobile-navbar-link"
-            onClick={closeMenu}
-          >
-            Skill Assessment
+            <span>Roadmap</span>
           </NavLink>
 
           <NavLink
             to="/learning"
-            className="mobile-navbar-link"
-            onClick={closeMenu}
+            className="navbar-link"
+            onClick={handleNavigation}
           >
-            Learning
+            <span className="navbar-link-icon" aria-hidden="true">
+              📚
+            </span>
+
+            <span>Learning</span>
+          </NavLink>
+
+          <NavLink
+            to="/resources"
+            className="navbar-link"
+            onClick={handleNavigation}
+          >
+            <span className="navbar-link-icon" aria-hidden="true">
+              📁
+            </span>
+
+            <span>Resources</span>
           </NavLink>
 
           <NavLink
             to="/progress"
-            className="mobile-navbar-link"
-            onClick={closeMenu}
+            className="navbar-link"
+            onClick={handleNavigation}
           >
-            Progress
-          </NavLink>
+            <span className="navbar-link-icon" aria-hidden="true">
+              📈
+            </span>
 
-          <button className="mobile-logout" onClick={handleLogout}>
-            Logout
-          </button>
+            <span>Progress</span>
+          </NavLink>
         </nav>
-      )}
+
+        {/* =================================================
+            RIGHT ACTIONS
+        ================================================= */}
+
+        <div className="navbar-actions">
+          {/* -------------------------------------------------
+              Notification
+          ------------------------------------------------- */}
+
+          <div className="notification-wrapper">
+            <button
+              type="button"
+              className={`notification-btn ${notificationOpen ? "active" : ""}`}
+              onClick={() => {
+                setNotificationOpen((prev) => !prev);
+                onSidebarClose();
+              }}
+              aria-label="Notifications"
+              aria-expanded={notificationOpen}
+              aria-haspopup="true"
+            >
+              <span className="notification-icon" aria-hidden="true">
+                🔔
+              </span>
+
+              {unreadCount > 0 && (
+                <span className="notification-badge">
+                  {unreadCount > 9 ? "9+" : unreadCount}
+                </span>
+              )}
+            </button>
+
+            {/* -------------------------------------------------
+                Notification Dropdown
+            ------------------------------------------------- */}
+
+            {notificationOpen && (
+              <div className="notification-dropdown">
+                <div className="notification-header">
+                  <div>
+                    <strong>Notifications</strong>
+
+                    {unreadCount > 0 && (
+                      <span className="notification-count-label">
+                        {unreadCount} unread
+                      </span>
+                    )}
+                  </div>
+
+                  {unreadCount > 0 && (
+                    <button
+                      type="button"
+                      onClick={handleMarkAllAsRead}
+                      className="mark-all-btn"
+                    >
+                      Mark all read
+                    </button>
+                  )}
+                </div>
+
+                <div className="notification-list">
+                  {notifications.length === 0 ? (
+                    <div className="no-notifications">
+                      <span
+                        className="no-notifications-icon"
+                        aria-hidden="true"
+                      >
+                        🔔
+                      </span>
+
+                      <p>No notifications yet.</p>
+                    </div>
+                  ) : (
+                    notifications.map((notification) => (
+                      <button
+                        type="button"
+                        key={notification._id}
+                        className={`notification-item ${
+                          !notification.isRead ? "unread" : ""
+                        }`}
+                        onClick={() => handleNotificationClick(notification)}
+                      >
+                        <div className="notification-item-content">
+                          <h4>{notification.title}</h4>
+
+                          <p>{notification.message}</p>
+
+                          <small>
+                            {new Date(notification.createdAt).toLocaleString()}
+                          </small>
+                        </div>
+
+                        {!notification.isRead && (
+                          <span
+                            className="notification-unread-dot"
+                            aria-label="Unread"
+                          />
+                        )}
+                      </button>
+                    ))
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* -------------------------------------------------
+              Desktop Logout
+          ------------------------------------------------- */}
+
+          <button
+            type="button"
+            className="navbar-logout"
+            onClick={handleLogout}
+          >
+            <span aria-hidden="true">↪</span>
+            <span>Logout</span>
+          </button>
+
+          {/* -------------------------------------------------
+              Mobile Sidebar Toggle
+          ------------------------------------------------- */}
+
+          <button
+            type="button"
+            className={`navbar-menu-button ${sidebarOpen ? "active" : ""}`}
+            onClick={handleSidebarToggle}
+            aria-label="Toggle sidebar"
+            aria-expanded={sidebarOpen}
+            aria-controls="app-sidebar"
+          >
+            <span aria-hidden="true">{sidebarOpen ? "✕" : "☰"}</span>
+          </button>
+        </div>
+      </div>
     </header>
   );
 }

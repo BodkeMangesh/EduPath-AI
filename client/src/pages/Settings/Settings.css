@@ -1,204 +1,311 @@
+/* =========================================================
+   EduPath AI — Settings
+   Premium Dark Dashboard Design
+   ========================================================= */
+
 .settings-page {
+  --settings-bg: #0f172a;
+  --settings-surface: #151e2f;
+  --settings-surface-2: #192338;
+  --settings-surface-hover: #1c2840;
+
+  --settings-border: #273449;
+  --settings-border-strong: #334155;
+
+  --settings-text: #f8fafc;
+  --settings-text-secondary: #cbd5e1;
+  --settings-text-muted: #64748b;
+
+  --settings-primary: #818cf8;
+  --settings-primary-dark: #6366f1;
+  --settings-primary-soft: rgba(99, 102, 241, 0.12);
+  --settings-primary-border: rgba(129, 140, 248, 0.35);
+
+  --settings-success: #10b981;
+  --settings-success-soft: rgba(16, 185, 129, 0.12);
+
+  --settings-warning: #f59e0b;
+  --settings-warning-soft: rgba(245, 158, 11, 0.12);
+
+  --settings-danger: #ef4444;
+  --settings-danger-soft: rgba(239, 68, 68, 0.1);
+
+  --settings-radius-sm: 8px;
+  --settings-radius-md: 12px;
+  --settings-radius-lg: 16px;
+
+  min-height: 100vh;
   width: 100%;
-  min-height: calc(100vh - 120px);
-  padding: 45px 60px 80px;
+
+  background: var(--settings-bg);
+  color: var(--settings-text);
+
+  padding: 28px 24px 56px;
+
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
 
   box-sizing: border-box;
-
-  background: #f8fafc;
 }
 
+/* =========================================================
+   GLOBAL BOX SIZING
+   ========================================================= */
+
+.settings-page *,
+.settings-page *::before,
+.settings-page *::after {
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
 .settings-header {
-  max-width: 1100px;
-  margin: 0 auto 35px;
+  width: min(1180px, 100%);
+  margin: 0 auto 24px;
 }
 
 .settings-label {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
 
-  padding: 8px 16px;
+  min-height: 34px;
+  padding: 7px 12px;
 
-  border-radius: 20px;
+  border: 1px solid var(--settings-primary-border);
+  border-radius: 8px;
 
-  background: #eff6ff;
-  color: #2563eb;
+  background: var(--settings-primary-soft);
 
-  font-size: 14px;
-  font-weight: 600;
+  color: var(--settings-primary);
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  margin-bottom: 12px;
 }
 
 .settings-header h1 {
-  margin: 15px 0 8px;
-
-  font-size: 34px;
-  color: #0f172a;
-}
-
-.settings-header p {
   margin: 0;
 
-  font-size: 16px;
-  color: #64748b;
+  color: var(--settings-text);
+
+  font-size: clamp(28px, 3vw, 38px);
+  line-height: 1.15;
+  font-weight: 750;
+  letter-spacing: -0.025em;
 }
+
+.settings-header > p {
+  margin: 9px 0 0;
+
+  max-width: 760px;
+
+  color: var(--settings-text-secondary);
+
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* =========================================================
+   MAIN CONTAINER
+   ========================================================= */
 
 .settings-container {
-  max-width: 1100px;
+  width: min(1180px, 100%);
   margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 18px;
 }
+
+/* =========================================================
+   SETTINGS CARD
+   ========================================================= */
 
 .settings-card {
-  margin-bottom: 22px;
+  width: 100%;
 
-  padding: 26px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.015), rgba(255, 255, 255, 0)),
+    var(--settings-surface);
 
-  background: #ffffff;
+  border: 1px solid var(--settings-border);
+  border-radius: var(--settings-radius-lg);
 
-  border: 1px solid #e2e8f0;
-  border-radius: 16px;
+  padding: 22px 24px;
 
-  box-shadow: 0 4px 15px rgba(15, 23, 42, 0.05);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.14),
+    0 1px 2px rgba(0, 0, 0, 0.18);
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
 }
+
+.settings-card:hover {
+  border-color: var(--settings-border-strong);
+
+  box-shadow:
+    0 14px 34px rgba(0, 0, 0, 0.18),
+    0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* =========================================================
+   CARD HEADER
+   ========================================================= */
 
 .settings-card-header {
   display: flex;
   align-items: center;
+  gap: 14px;
 
-  gap: 15px;
+  padding-bottom: 18px;
+  margin-bottom: 4px;
 
-  margin-bottom: 10px;
+  border-bottom: 1px solid rgba(51, 65, 85, 0.55);
 }
 
 .settings-icon {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
+
+  flex: 0 0 44px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  border-radius: 12px;
+  border-radius: 10px;
 
-  background: #eff6ff;
+  background: var(--settings-primary-soft);
+  border: 1px solid var(--settings-primary-border);
 
-  font-size: 24px;
+  font-size: 20px;
 }
 
 .settings-card-header h2 {
-  margin: 0 0 4px;
+  margin: 0;
 
-  font-size: 20px;
-  color: #0f172a;
+  color: var(--settings-text);
+
+  font-size: 18px;
+  line-height: 1.3;
+  font-weight: 700;
 }
 
 .settings-card-header p {
-  margin: 0;
+  margin: 4px 0 0;
 
-  color: #64748b;
-  font-size: 14px;
+  color: var(--settings-text-muted);
+
+  font-size: 13px;
+  line-height: 1.5;
 }
 
+/* =========================================================
+   SETTING ROW
+   ========================================================= */
+
 .setting-row {
-  min-height: 70px;
+  min-height: 72px;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  gap: 25px;
+  gap: 24px;
 
-  padding: 18px 0;
+  padding: 17px 0;
 
-  border-top: 1px solid #f1f5f9;
+  border-bottom: 1px solid rgba(51, 65, 85, 0.4);
+}
+
+.setting-row:last-child {
+  border-bottom: none;
+  padding-bottom: 4px;
+}
+
+.setting-row > div:first-child {
+  min-width: 0;
+  flex: 1;
 }
 
 .setting-row h3 {
-  margin: 0 0 5px;
+  margin: 0;
 
-  font-size: 16px;
-  color: #1e293b;
+  color: var(--settings-text);
+
+  font-size: 14px;
+  line-height: 1.4;
+  font-weight: 650;
 }
 
 .setting-row p {
-  margin: 0;
+  margin: 5px 0 0;
 
-  color: #64748b;
+  max-width: 720px;
 
-  font-size: 14px;
+  color: var(--settings-text-muted);
+
+  font-size: 12.5px;
+  line-height: 1.55;
 }
 
-.settings-select {
-  min-width: 150px;
-
-  padding: 10px 14px;
-
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-
-  background: #ffffff;
-
-  color: #334155;
-
-  font-size: 14px;
-
-  cursor: pointer;
-}
-
-.settings-actions {
-  display: flex;
-  justify-content: flex-end;
-
-  margin-top: 25px;
-}
-
-.save-settings-btn {
-  padding: 12px 28px;
-
-  border: none;
-  border-radius: 9px;
-
-  background: #2563eb;
-  color: #ffffff;
-
-  font-size: 15px;
-  font-weight: 600;
-
-  cursor: pointer;
-
-  transition: 0.2s;
-}
-
-.save-settings-btn:hover {
-  background: #1d4ed8;
-  transform: translateY(-1px);
-}
-
-/* Toggle */
+/* =========================================================
+   TOGGLE SWITCH
+   ========================================================= */
 
 .switch {
   position: relative;
 
-  width: 48px;
-  height: 26px;
+  display: inline-flex;
 
-  flex-shrink: 0;
+  width: 46px;
+  height: 25px;
+
+  flex: 0 0 46px;
+
+  cursor: pointer;
 }
 
 .switch input {
-  display: none;
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  opacity: 0;
+  pointer-events: none;
 }
 
 .slider {
   position: absolute;
-
   inset: 0;
 
-  border-radius: 30px;
+  background: #263247;
 
-  background: #cbd5e1;
+  border: 1px solid #3a4960;
+  border-radius: 999px;
 
-  cursor: pointer;
-
-  transition: 0.25s;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .slider::before {
@@ -206,62 +313,862 @@
 
   position: absolute;
 
-  width: 20px;
-  height: 20px;
+  width: 17px;
+  height: 17px;
 
   left: 3px;
   top: 3px;
 
   border-radius: 50%;
 
-  background: #ffffff;
+  background: #94a3b8;
 
-  transition: 0.25s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
 }
 
 .switch input:checked + .slider {
-  background: #2563eb;
+  background: var(--settings-primary-dark);
+  border-color: var(--settings-primary);
 }
 
 .switch input:checked + .slider::before {
-  transform: translateX(22px);
+  transform: translateX(21px);
+  background: #ffffff;
 }
 
-/* Responsive */
+.switch input:focus-visible + .slider {
+  outline: 2px solid var(--settings-primary);
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   SELECT
+   ========================================================= */
+
+.settings-select {
+  width: 190px;
+  min-height: 40px;
+
+  flex: 0 0 190px;
+
+  padding: 0 36px 0 12px;
+
+  appearance: none;
+
+  color: var(--settings-text);
+
+  background-color: var(--settings-surface-2);
+
+  border: 1px solid var(--settings-border-strong);
+  border-radius: var(--settings-radius-sm);
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 550;
+
+  cursor: pointer;
+
+  background-image:
+    linear-gradient(45deg, transparent 50%, #94a3b8 50%),
+    linear-gradient(135deg, #94a3b8 50%, transparent 50%);
+
+  background-position:
+    calc(100% - 15px) 17px,
+    calc(100% - 10px) 17px;
+
+  background-size:
+    5px 5px,
+    5px 5px;
+
+  background-repeat: no-repeat;
+
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.settings-select:hover {
+  background-color: var(--settings-surface-hover);
+  border-color: #475569;
+}
+
+.settings-select:focus {
+  outline: none;
+
+  border-color: var(--settings-primary);
+
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+}
+
+.settings-select option {
+  background: #151e2f;
+  color: #f8fafc;
+}
+
+/* =========================================================
+   SECURITY ACTIONS
+   ========================================================= */
+
+.security-action {
+  min-height: 78px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 24px;
+
+  padding: 18px 0;
+
+  border-bottom: 1px solid rgba(51, 65, 85, 0.4);
+}
+
+.security-action:last-child {
+  border-bottom: none;
+  padding-bottom: 4px;
+}
+
+.security-action > div:first-child {
+  min-width: 0;
+  flex: 1;
+}
+
+.security-action h3 {
+  margin: 0;
+
+  color: var(--settings-text);
+
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.security-action p {
+  margin: 5px 0 0;
+
+  color: var(--settings-text-muted);
+
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.secondary-settings-btn,
+.save-settings-btn,
+.delete-account-btn,
+.cancel-danger-btn,
+.delete-confirm-btn {
+  min-height: 40px;
+
+  border-radius: 8px;
+
+  padding: 0 15px;
+
+  border: 1px solid transparent;
+
+  font-family: inherit;
+
+  font-size: 13px;
+  font-weight: 650;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.15s ease,
+    box-shadow 0.2s ease;
+}
+
+.secondary-settings-btn {
+  background: #1b263a;
+
+  color: #dbe4f0;
+
+  border-color: #334155;
+}
+
+.secondary-settings-btn:hover:not(:disabled) {
+  background: #243149;
+  border-color: #475569;
+
+  transform: translateY(-1px);
+}
+
+.secondary-settings-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.save-settings-btn {
+  background: var(--settings-primary-dark);
+
+  color: #ffffff;
+
+  border-color: rgba(129, 140, 248, 0.55);
+
+  box-shadow: 0 6px 18px rgba(79, 70, 229, 0.18);
+}
+
+.save-settings-btn:hover:not(:disabled) {
+  background: #4f46e5;
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 8px 22px rgba(79, 70, 229, 0.25);
+}
+
+.secondary-settings-btn:focus-visible,
+.save-settings-btn:focus-visible,
+.delete-account-btn:focus-visible,
+.cancel-danger-btn:focus-visible,
+.delete-confirm-btn:focus-visible {
+  outline: 2px solid var(--settings-primary);
+  outline-offset: 3px;
+}
+
+.secondary-settings-btn:disabled,
+.save-settings-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+
+  transform: none;
+}
+
+/* =========================================================
+   SECURITY NOTICE
+   ========================================================= */
+
+.settings-notice {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 12px;
+
+  margin: 6px 0 8px;
+  padding: 13px 14px;
+
+  border-radius: 9px;
+
+  background: rgba(99, 102, 241, 0.08);
+
+  border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+.settings-notice > span {
+  flex: 0 0 auto;
+
+  font-size: 18px;
+}
+
+.settings-notice strong {
+  display: block;
+
+  color: var(--settings-text);
+
+  font-size: 13px;
+}
+
+.settings-notice p {
+  margin: 4px 0 0;
+
+  color: var(--settings-text-muted);
+
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+/* =========================================================
+   DANGER OUTLINE
+   ========================================================= */
+
+.danger-outline-btn {
+  color: #fca5a5;
+
+  border-color: rgba(239, 68, 68, 0.3);
+
+  background: rgba(239, 68, 68, 0.06);
+}
+
+.danger-outline-btn:hover:not(:disabled) {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.5);
+
+  color: #fecaca;
+}
+
+/* =========================================================
+   DANGER ZONE
+   ========================================================= */
+
+.danger-zone {
+  border-color: rgba(239, 68, 68, 0.28);
+
+  background:
+    linear-gradient(180deg, rgba(239, 68, 68, 0.025), rgba(239, 68, 68, 0)),
+    var(--settings-surface);
+}
+
+.danger-zone:hover {
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+.danger-icon {
+  background: var(--settings-danger-soft);
+
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.danger-content {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 24px;
+
+  padding-top: 16px;
+}
+
+.danger-content > div:first-child {
+  min-width: 0;
+  flex: 1;
+}
+
+.danger-content h3 {
+  margin: 0;
+
+  color: #fca5a5;
+
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.danger-content > div:first-child > p {
+  margin: 5px 0 0;
+
+  max-width: 720px;
+
+  color: var(--settings-text-muted);
+
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+
+.delete-account-btn {
+  flex: 0 0 auto;
+
+  color: #fecaca;
+
+  background: rgba(239, 68, 68, 0.1);
+
+  border-color: rgba(239, 68, 68, 0.35);
+}
+
+.delete-account-btn:hover {
+  background: rgba(239, 68, 68, 0.18);
+
+  border-color: rgba(239, 68, 68, 0.55);
+
+  color: #fee2e2;
+
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+   DELETE CONFIRMATION
+   ========================================================= */
+
+.delete-confirmation {
+  width: min(520px, 100%);
+
+  padding: 14px;
+
+  border-radius: 10px;
+
+  background: rgba(239, 68, 68, 0.07);
+
+  border: 1px solid rgba(239, 68, 68, 0.28);
+}
+
+.delete-confirmation > p {
+  margin: 0 0 12px;
+
+  color: #fca5a5;
+
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.delete-confirmation-actions {
+  display: flex;
+  justify-content: flex-end;
+
+  gap: 8px;
+}
+
+.cancel-danger-btn {
+  background: #1b263a;
+
+  color: #cbd5e1;
+
+  border-color: #334155;
+}
+
+.cancel-danger-btn:hover {
+  background: #243149;
+}
+
+.delete-confirm-btn {
+  background: #dc2626;
+
+  color: #ffffff;
+
+  border-color: #ef4444;
+}
+
+.delete-confirm-btn:hover {
+  background: #b91c1c;
+
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+   SAVE / RESET ACTIONS
+   ========================================================= */
+
+.settings-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  padding-top: 4px;
+}
+
+.settings-actions .secondary-settings-btn,
+.settings-actions .save-settings-btn {
+  min-width: 150px;
+}
+
+/* =========================================================
+   LOADING STATE
+   ========================================================= */
+
+.settings-page .settings-header + .settings-container {
+  animation: settingsFadeIn 0.3s ease;
+}
+
+@keyframes settingsFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================================================
+   LIGHT MODE
+   =========================================================
+   Dark is the default.
+   These styles remain available if dark mode is disabled.
+   ========================================================= */
+
+html:not(.dark-theme) .settings-page {
+  --settings-bg: #f4f6fb;
+  --settings-surface: #ffffff;
+  --settings-surface-2: #f8fafc;
+  --settings-surface-hover: #f1f5f9;
+
+  --settings-border: #e2e8f0;
+  --settings-border-strong: #cbd5e1;
+
+  --settings-text: #0f172a;
+  --settings-text-secondary: #475569;
+  --settings-text-muted: #64748b;
+
+  --settings-primary: #6366f1;
+  --settings-primary-dark: #4f46e5;
+  --settings-primary-soft: rgba(99, 102, 241, 0.08);
+  --settings-primary-border: rgba(99, 102, 241, 0.25);
+}
+
+html:not(.dark-theme) .settings-page {
+  background: var(--settings-bg);
+}
+
+html:not(.dark-theme) .settings-card {
+  background: var(--settings-surface);
+
+  box-shadow:
+    0 4px 18px rgba(15, 23, 42, 0.05),
+    0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+html:not(.dark-theme) .settings-card:hover {
+  box-shadow:
+    0 8px 24px rgba(15, 23, 42, 0.07),
+    0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+html:not(.dark-theme) .settings-select {
+  color: #0f172a;
+  background-color: #ffffff;
+}
+
+html:not(.dark-theme) .settings-select option {
+  background: #ffffff;
+  color: #0f172a;
+}
+
+html:not(.dark-theme) .slider {
+  background: #e2e8f0;
+  border-color: #cbd5e1;
+}
+
+html:not(.dark-theme) .slider::before {
+  background: #64748b;
+}
+
+html:not(.dark-theme) .secondary-settings-btn {
+  background: #f8fafc;
+  color: #334155;
+  border-color: #cbd5e1;
+}
+
+html:not(.dark-theme) .secondary-settings-btn:hover:not(:disabled) {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+}
+
+html:not(.dark-theme) .danger-outline-btn {
+  color: #dc2626;
+  background: #fff5f5;
+  border-color: rgba(239, 68, 68, 0.25);
+}
+
+/* =========================================================
+   DARK THEME — FORCE FULL PAGE
+   ========================================================= */
+
+html.dark-theme,
+html.dark-theme body {
+  background: #0f172a;
+  color: #f8fafc;
+}
+
+/* =========================================================
+   RESPONSIVE — TABLET
+   ========================================================= */
 
 @media (max-width: 768px) {
   .settings-page {
-    padding: 30px 20px 60px;
+    padding: 22px 16px 42px;
+  }
+
+  .settings-header {
+    margin-bottom: 20px;
   }
 
   .settings-header h1 {
-    font-size: 28px;
+    font-size: 30px;
+  }
+
+  .settings-card {
+    padding: 20px;
+  }
+
+  .setting-row {
+    gap: 18px;
+  }
+
+  .security-action,
+  .danger-content {
+    gap: 18px;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+  .settings-page {
+    padding: 18px 12px 34px;
+  }
+
+  .settings-header h1 {
+    font-size: 27px;
+  }
+
+  .settings-header > p {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .settings-card {
+    padding: 17px;
+    border-radius: 13px;
+  }
+
+  .settings-card-header {
+    align-items: flex-start;
+    gap: 11px;
+
+    padding-bottom: 15px;
+  }
+
+  .settings-icon {
+    width: 40px;
+    height: 40px;
+    flex-basis: 40px;
+
+    font-size: 18px;
+  }
+
+  .settings-card-header h2 {
+    font-size: 16px;
+  }
+
+  .settings-card-header p {
+    font-size: 12px;
   }
 
   .setting-row {
     align-items: flex-start;
+
+    padding: 15px 0;
+
+    gap: 14px;
+  }
+
+  .setting-row h3,
+  .security-action h3,
+  .danger-content h3 {
+    font-size: 13px;
+  }
+
+  .setting-row p,
+  .security-action p,
+  .danger-content > div:first-child > p {
+    font-size: 11.5px;
   }
 
   .settings-select {
-    min-width: 120px;
+    width: 150px;
+    flex-basis: 150px;
+    min-height: 38px;
+
+    font-size: 12px;
+  }
+
+  .security-action {
+    align-items: flex-start;
+
+    padding: 15px 0;
+  }
+
+  .security-action .secondary-settings-btn {
+    flex: 0 0 auto;
+  }
+
+  .danger-content {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .delete-account-btn {
+    align-self: flex-start;
+  }
+
+  .delete-confirmation {
+    width: 100%;
+  }
+
+  .settings-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .settings-actions button {
+    width: 100%;
   }
 }
 
-@media (max-width: 520px) {
+/* =========================================================
+   RESPONSIVE — SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 430px) {
+  .settings-page {
+    padding: 14px 10px 28px;
+  }
+
+  .settings-label {
+    font-size: 10px;
+  }
+
+  .settings-header h1 {
+    font-size: 24px;
+  }
+
+  .settings-card {
+    padding: 15px;
+  }
+
   .setting-row {
     flex-direction: column;
   }
 
-  .settings-select,
-  .switch {
+  .setting-row .switch {
     align-self: flex-start;
   }
 
-  .settings-actions {
-    justify-content: stretch;
+  .settings-select {
+    width: 100%;
+    flex-basis: auto;
   }
 
-  .save-settings-btn {
+  .security-action {
+    flex-direction: column;
+  }
+
+  .security-action .secondary-settings-btn {
+    align-self: flex-start;
+  }
+
+  .delete-account-btn {
     width: 100%;
+  }
+
+  .delete-confirmation-actions {
+    flex-direction: column;
+  }
+
+  .delete-confirmation-actions button {
+    width: 100%;
+  }
+}
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .settings-page *,
+  .settings-page *::before,
+  .settings-page *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* =========================================================
+   EDUPath AI — FORCE DARK PAGE BACKGROUND
+   Keep all existing Settings design unchanged
+   ========================================================= */
+
+html,
+body,
+#root {
+  min-height: 100%;
+  background: #0f172a !important;
+}
+
+body {
+  margin: 0;
+  color: #f8fafc;
+}
+
+/* Main Settings page background */
+.settings-page {
+  min-height: 100vh;
+  width: 100%;
+
+  background: #0f172a !important;
+  color: #f8fafc;
+
+  /* same spacing as current design */
+  padding: 28px 24px 56px;
+}
+
+/* Make sure the area around cards is never white */
+.settings-container {
+  background: transparent !important;
+}
+
+/* Cards stay exactly as your current dark design */
+.settings-card {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.015), rgba(255, 255, 255, 0)),
+    #151e2f;
+}
+
+/* =========================================================
+   DISABLE LIGHT MODE FOR SETTINGS PAGE
+   ========================================================= */
+
+html:not(.dark-theme) .settings-page {
+  --settings-bg: #0f172a;
+  --settings-surface: #151e2f;
+  --settings-surface-2: #192338;
+  --settings-surface-hover: #1c2840;
+
+  --settings-border: #273449;
+  --settings-border-strong: #334155;
+
+  --settings-text: #f8fafc;
+  --settings-text-secondary: #cbd5e1;
+  --settings-text-muted: #64748b;
+
+  --settings-primary: #818cf8;
+  --settings-primary-dark: #6366f1;
+  --settings-primary-soft: rgba(99, 102, 241, 0.12);
+  --settings-primary-border: rgba(129, 140, 248, 0.35);
+
+  background: #0f172a !important;
+  color: #f8fafc !important;
+}
+
+html:not(.dark-theme) .settings-card {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.015), rgba(255, 255, 255, 0)),
+    #151e2f !important;
+
+  border-color: #273449;
+}
+
+/* =========================================================
+   DARK BACKGROUND ON ALL SCREEN SIZES
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .settings-page {
+    background: #0f172a !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .settings-page {
+    background: #0f172a !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .settings-page {
+    background: #0f172a !important;
   }
 }

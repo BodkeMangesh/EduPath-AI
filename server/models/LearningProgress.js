@@ -13,6 +13,7 @@ const learningProgressSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
+      lowercase: true,
     },
 
     currentPhase: {
@@ -64,10 +65,12 @@ const learningProgressSchema = new mongoose.Schema(
     nextMilestone: {
       type: String,
       default: "",
+      trim: true,
     },
 
     lastStudyDate: {
       type: Date,
+      default: null,
     },
 
     status: {
@@ -82,7 +85,14 @@ const learningProgressSchema = new mongoose.Schema(
   },
 );
 
-// One learning progress per user per career
-learningProgressSchema.index({ user: 1, careerId: 1 }, { unique: true });
+learningProgressSchema.index(
+  {
+    user: 1,
+    careerId: 1,
+  },
+  {
+    unique: true,
+  },
+);
 
 module.exports = mongoose.model("LearningProgress", learningProgressSchema);

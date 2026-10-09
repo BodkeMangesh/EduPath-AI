@@ -16,6 +16,7 @@ function Login() {
     password: "",
   });
 
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -39,18 +40,38 @@ function Login() {
       const response = await loginService(formData);
 
       const token = response.data.data.token;
+      const user = response.data.data.user;
+
+      if (!token || !user) {
+        toast.error("Invalid login response.");
+        return;
+      }
 
       // Save JWT
       localStorage.setItem("token", token);
+
+      // Save user information
+      localStorage.setItem("user", JSON.stringify(user));
 
       // Update Auth Context
       login(token);
 
       console.log("Login Response:", response.data);
+      console.log("Onboarding Completed:", user.onboardingCompleted);
 
       toast.success("Login Successful!");
 
-      navigate("/dashboard");
+      /*
+      |--------------------------------------------------------------------------
+      | Existing User Flow
+      |--------------------------------------------------------------------------
+      */
+
+      if (!user.onboardingCompleted) {
+        navigate("/onboarding");
+      } else {
+        navigate("/dashboard");
+      }
     } catch (error) {
       console.log("Login Error:", error.response?.data);
 
@@ -62,88 +83,184 @@ function Login() {
 
   return (
     <div className="login-page">
+      {/* Background decoration */}
+      <div className="login-bg-circle login-bg-circle-one"></div>
+      <div className="login-bg-circle login-bg-circle-two"></div>
+
       <div className="login-container">
-        {/* Left Section */}
-        <div className="login-info">
-          <div className="brand">
-            <span className="brand-icon">🎓</span>
-            <span>EduPath-AI</span>
+        {/* =====================================================
+            LEFT SECTION
+        ====================================================== */}
+
+        <section className="login-info">
+          <button
+            type="button"
+            className="login-brand"
+            onClick={() => navigate("/")}
+          >
+            <span className="login-brand-icon">🎓</span>
+
+            <span className="login-brand-name">
+              EduPath <strong>AI</strong>
+            </span>
+          </button>
+
+          <div className="login-info-content">
+            <span className="login-badge">WELCOME BACK</span>
+
+            <h1>
+              Continue your
+              <span> journey.</span>
+            </h1>
+
+            <p>
+              Your personalized learning journey is waiting for you. Login and
+              continue building the skills that move you closer to your career
+              goals.
+            </p>
           </div>
 
-          <h1>
-            Build Your
-            <span> Future.</span>
-          </h1>
-
-          <p>
-            Continue your personalized learning journey and move one step closer
-            to your career goals.
-          </p>
+          {/* Features */}
 
           <div className="login-features">
-            <div>
-              <span>🎯</span>
-              <p>Personalized Career Paths</p>
+            <div className="login-feature">
+              <div className="login-feature-icon">🎯</div>
+
+              <div>
+                <strong>Personalized Career Paths</strong>
+
+                <p>Follow a learning path designed around your goals.</p>
+              </div>
             </div>
 
-            <div>
-              <span>🧠</span>
-              <p>AI-Powered Skill Analysis</p>
+            <div className="login-feature">
+              <div className="login-feature-icon">🧠</div>
+
+              <div>
+                <strong>AI-Powered Skill Analysis</strong>
+
+                <p>Understand your strengths and improve your weak areas.</p>
+              </div>
             </div>
 
-            <div>
-              <span>📈</span>
-              <p>Track Your Learning Progress</p>
+            <div className="login-feature">
+              <div className="login-feature-icon">📈</div>
+
+              <div>
+                <strong>Track Your Progress</strong>
+
+                <p>Monitor your progress as you learn and grow.</p>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Login Card */}
-        <div className="login-card">
+          <div className="login-trust">
+            <span>✓</span>
+
+            <p>Your personalized journey is always ready when you are.</p>
+          </div>
+        </section>
+
+        {/* =====================================================
+            LOGIN CARD
+        ====================================================== */}
+
+        <section className="login-card">
           <div className="login-header">
-            <h2>Welcome Back 👋</h2>
+            <span className="login-header-icon">👋</span>
 
-            <p>Login to continue your EduPath-AI journey.</p>
+            <div>
+              <h2>Welcome back</h2>
+
+              <p>Login to continue your journey.</p>
+            </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="login-form">
+          {/* =================================================
+              FORM
+          ================================================== */}
+
+          <form className="login-form" onSubmit={handleSubmit}>
             {/* Email */}
-            <div className="form-group">
+
+            <div className="login-form-group">
               <label htmlFor="email">Email Address</label>
 
-              <input
-                id="email"
-                type="email"
-                name="email"
-                placeholder="Enter your email"
-                value={formData.email}
-                onChange={handleChange}
-                autoComplete="email"
-              />
+              <div className="login-input-wrapper">
+                <span className="login-input-icon">✉️</span>
+
+                <input
+                  id="email"
+                  type="email"
+                  name="email"
+                  placeholder="you@example.com"
+                  value={formData.email}
+                  onChange={handleChange}
+                  autoComplete="email"
+                />
+              </div>
             </div>
 
             {/* Password */}
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
 
-              <input
-                id="password"
-                type="password"
-                name="password"
-                placeholder="Enter your password"
-                value={formData.password}
-                onChange={handleChange}
-                autoComplete="current-password"
-              />
+            <div className="login-form-group">
+              <div className="login-password-label">
+                <label htmlFor="password">Password</label>
+
+                <button
+                  type="button"
+                  className="forgot-password"
+                  onClick={() => toast("Password recovery coming soon.")}
+                >
+                  Forgot password?
+                </button>
+              </div>
+
+              <div className="login-input-wrapper">
+                <span className="login-input-icon">🔒</span>
+
+                <input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  placeholder="Enter your password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  autoComplete="current-password"
+                />
+
+                <button
+                  type="button"
+                  className="login-password-toggle"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? "🙈" : "👁️"}
+                </button>
+              </div>
             </div>
 
-            {/* Login Button */}
+            {/* Login */}
+
             <button type="submit" className="login-button" disabled={loading}>
-              {loading ? "Logging in..." : "Login"}
+              {loading ? (
+                <>
+                  <span className="login-spinner"></span>
+                  Logging in...
+                </>
+              ) : (
+                <>
+                  Login to EduPath
+                  <span>→</span>
+                </>
+              )}
             </button>
           </form>
 
-          {/* Register */}
+          {/* =================================================
+              REGISTER
+          ================================================== */}
+
           <div className="register-link">
             <span>Don't have an account?</span>
 
@@ -151,7 +268,14 @@ function Login() {
               Create Account
             </button>
           </div>
-        </div>
+
+          {/* Footer */}
+
+          <div className="login-footer">
+            <span>🔐</span>
+            Secure login with EduPath AI
+          </div>
+        </section>
       </div>
     </div>
   );

@@ -7,7 +7,19 @@ const bcrypt = require("bcrypt");
 |--------------------------------------------------------------------------
 */
 
-const USER_ROLES = ["student", "professional", "admin"];
+const USER_ROLES = [
+  "student",
+  "professional",
+  "admin",
+  "career_switcher",
+  "job_seeker",
+  "entrepreneur",
+  "freelancer",
+  "researcher",
+  "educator",
+  "mentor",
+  "content_creator",
+];
 
 const ACCOUNT_STATUS = ["active", "inactive", "blocked", "suspended"];
 
@@ -43,6 +55,26 @@ const userSchema = new mongoose.Schema(
       unique: true,
       lowercase: true,
       trim: true,
+    },
+
+    emailVerified: {
+      type: Boolean,
+      default: false,
+    },
+
+    emailVerificationToken: {
+      type: String,
+      default: null,
+    },
+
+    emailVerificationExpires: {
+      type: Date,
+      default: null,
+    },
+
+    onboardingCompleted: {
+      type: Boolean,
+      default: false,
     },
 
     phone: {
@@ -86,6 +118,34 @@ const userSchema = new mongoose.Schema(
       default: "student",
     },
 
+    onboarding: {
+      completed: {
+        type: Boolean,
+        default: false,
+      },
+
+      currentSituation: {
+        type: String,
+        default: "",
+        trim: true,
+        maxlength: 500,
+      },
+
+      careerGoal: {
+        type: String,
+        default: "",
+        trim: true,
+        maxlength: 300,
+      },
+
+      interests: [
+        {
+          type: String,
+          trim: true,
+        },
+      ],
+    },
+
     accountStatus: {
       type: String,
       enum: ACCOUNT_STATUS,
@@ -102,11 +162,6 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: PLACEMENT_TYPES,
       default: "both",
-    },
-
-    emailVerified: {
-      type: Boolean,
-      default: false,
     },
 
     isActive: {

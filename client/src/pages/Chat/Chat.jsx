@@ -1,10 +1,13 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { sendMessage } from "../../services/chatService";
 
 import "./Chat.css";
 
 function Chat() {
+  const navigate = useNavigate();
+
   const [messages, setMessages] = useState([
     {
       role: "assistant",
@@ -21,7 +24,6 @@ function Chat() {
 
     const question = input.trim();
 
-    // Add user message
     setMessages((prev) => [
       ...prev,
       {
@@ -36,14 +38,16 @@ function Chat() {
     try {
       const response = await sendMessage({
         message: question,
-        careerId: localStorage.getItem("careerId") || "full-stack",
+        conversation: messages,
       });
 
       console.log("AI Response:", response);
 
-      let reply = response?.reply;
+      let reply =
+        response?.data?.result?.reply ||
+        response?.data?.reply ||
+        response?.reply;
 
-      // If AI response is an object
       if (typeof reply === "object" && reply !== null) {
         reply =
           reply.rawResponse ||
@@ -51,7 +55,6 @@ function Chat() {
           "Sorry, I could not generate a response.";
       }
 
-      // Safety check
       if (!reply) {
         reply = "Sorry, I could not generate a response.";
       }
@@ -65,6 +68,7 @@ function Chat() {
       ]);
     } catch (error) {
       console.error("Chat Error:", error);
+      console.error("Chat Error Response:", error?.response?.data);
 
       toast.error("Unable to contact EduPath AI.");
 
@@ -73,6 +77,7 @@ function Chat() {
         {
           role: "assistant",
           content:
+            error?.response?.data?.message ||
             "Sorry, I could not process your question right now. Please try again.",
         },
       ]);
@@ -149,6 +154,14 @@ function Chat() {
         </div>
 
         <p className="chat-hint">Press Enter to send your message</p>
+
+        <button
+          type="button"
+          className="chat-dashboard-button"
+          onClick={() => navigate("/dashboard")}
+        >
+          ← Back to Dashboard
+        </button>
       </div>
     </div>
   );

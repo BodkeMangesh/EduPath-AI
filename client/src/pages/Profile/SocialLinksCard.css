@@ -1,30 +1,326 @@
+/* =========================================================
+   EduPath AI — Social Links Card
+   Premium Dark Navy Dashboard Design
+   ========================================================= */
+
 .profile-card {
-  background: #ffffff;
-  margin-top: 25px;
-  padding: 25px;
-  border-radius: 15px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  --social-bg: #111827;
+  --social-border: #273449;
+  --social-border-strong: #334155;
+
+  --social-text: #f8fafc;
+  --social-text-secondary: #cbd5e1;
+  --social-text-muted: #64748b;
+
+  --social-primary: #818cf8;
+  --social-primary-soft: rgba(99, 102, 241, 0.12);
+  --social-primary-border: rgba(129, 140, 248, 0.35);
+
+  --social-radius: 16px;
+
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto 18px;
+  padding: 22px 24px;
+
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.012), rgba(255, 255, 255, 0)),
+    var(--social-bg);
+
+  color: var(--social-text);
+
+  border: 1px solid var(--social-border);
+  border-radius: var(--social-radius);
+
+  box-sizing: border-box;
+
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.12),
+    0 1px 2px rgba(0, 0, 0, 0.16);
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-.profile-card h2 {
-  margin-bottom: 20px;
+.profile-card *,
+.profile-card *::before,
+.profile-card *::after {
+  box-sizing: border-box;
 }
+
+/* ---------------------------------------------------------
+   Card Hover
+   --------------------------------------------------------- */
+
+.profile-card:hover {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.015), rgba(255, 255, 255, 0)),
+    var(--social-bg);
+
+  border-color: var(--social-border-strong);
+
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.16),
+    0 1px 2px rgba(0, 0, 0, 0.18);
+}
+
+/* ---------------------------------------------------------
+   Heading
+   --------------------------------------------------------- */
+
+.profile-card h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin: 0;
+  padding-bottom: 17px;
+
+  color: var(--social-text);
+
+  border-bottom: 1px solid rgba(51, 65, 85, 0.55);
+
+  font-size: 18px;
+  line-height: 1.35;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* ---------------------------------------------------------
+   Information Grid
+   --------------------------------------------------------- */
 
 .info-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  column-gap: 24px;
+
+  width: 100%;
 }
+
+/* ---------------------------------------------------------
+   Information Item
+   --------------------------------------------------------- */
+
+.info-item {
+  min-width: 0;
+
+  padding: 17px 0;
+
+  border-bottom: 1px solid rgba(51, 65, 85, 0.4);
+}
+
+.info-item:last-child {
+  border-bottom: none;
+}
+
+/* ---------------------------------------------------------
+   Labels
+   --------------------------------------------------------- */
 
 .info-item label {
   display: block;
-  font-size: 13px;
-  color: #666;
-  margin-bottom: 6px;
+
+  margin: 0 0 8px;
+
+  color: var(--social-text-muted);
+
+  font-size: 10px;
+  line-height: 1.4;
+  font-weight: 700;
+
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
 }
 
+/* ---------------------------------------------------------
+   Social Link
+   --------------------------------------------------------- */
+
+.info-item a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 32px;
+
+  padding: 7px 12px;
+
+  background: var(--social-primary-soft);
+
+  border: 1px solid var(--social-primary-border);
+  border-radius: 8px;
+
+  color: var(--social-primary);
+
+  font-size: 12px;
+  line-height: 1.2;
+  font-weight: 700;
+
+  text-decoration: none;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.info-item a:hover {
+  background: rgba(99, 102, 241, 0.18);
+
+  border-color: rgba(129, 140, 248, 0.55);
+
+  color: #a5b4fc;
+
+  transform: translateY(-1px);
+}
+
+.info-item a:focus-visible {
+  outline: none;
+
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.14);
+}
+
+/* ---------------------------------------------------------
+   Missing Link
+   --------------------------------------------------------- */
+
 .info-item p {
-  font-size: 16px;
-  font-weight: 600;
-  color: #222;
+  margin: 0;
+
+  color: var(--social-text-secondary);
+
+  font-size: 14px;
+  line-height: 1.55;
+  font-weight: 550;
+
+  overflow-wrap: anywhere;
+}
+
+/* ---------------------------------------------------------
+   Focus State
+   --------------------------------------------------------- */
+
+.profile-card:focus-within {
+  border-color: var(--social-primary-border);
+
+  box-shadow:
+    0 0 0 3px rgba(99, 102, 241, 0.08),
+    0 10px 28px rgba(0, 0, 0, 0.14);
+}
+
+/* =========================================================
+   Tablet
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .profile-card {
+    padding: 20px;
+    border-radius: 14px;
+  }
+
+  .profile-card h2 {
+    font-size: 17px;
+    padding-bottom: 15px;
+  }
+
+  .info-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 22px;
+  }
+
+  .info-item {
+    padding: 15px 0;
+  }
+}
+
+/* =========================================================
+   Mobile
+   ========================================================= */
+
+@media (max-width: 600px) {
+  .profile-card {
+    padding: 18px;
+    margin-bottom: 16px;
+    border-radius: 13px;
+  }
+
+  .profile-card h2 {
+    gap: 8px;
+    padding-bottom: 14px;
+    font-size: 16px;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+  }
+
+  .info-item {
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(51, 65, 85, 0.4);
+  }
+
+  .info-item:last-child {
+    border-bottom: none;
+  }
+
+  .info-item label {
+    font-size: 10px;
+  }
+
+  .info-item a {
+    min-height: 30px;
+    padding: 6px 11px;
+    font-size: 11px;
+  }
+
+  .info-item p {
+    font-size: 13px;
+  }
+}
+
+/* =========================================================
+   Small Mobile
+   ========================================================= */
+
+@media (max-width: 430px) {
+  .profile-card {
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .profile-card h2 {
+    font-size: 15px;
+  }
+
+  .info-item {
+    padding: 13px 0;
+  }
+
+  .info-item a {
+    min-height: 28px;
+    padding: 5px 9px;
+    font-size: 10px;
+  }
+
+  .info-item p {
+    font-size: 12.5px;
+  }
+}
+
+/* =========================================================
+   Reduced Motion
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .profile-card,
+  .profile-card * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }

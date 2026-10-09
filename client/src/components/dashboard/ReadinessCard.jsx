@@ -4,16 +4,7 @@ function ReadinessCard({ dashboard }) {
   const readiness = dashboard?.careerReadiness;
 
   const score = readiness?.score ?? 0;
-
-  let status = "Beginner";
-
-  if (score >= 80) {
-    status = "Job Ready";
-  } else if (score >= 60) {
-    status = "Intermediate";
-  } else if (score >= 40) {
-    status = "Learning";
-  }
+  const status = readiness?.status || "Beginner";
 
   return (
     <div className="dashboard-card readiness-card">
@@ -41,6 +32,18 @@ function ReadinessCard({ dashboard }) {
 
       {/* Tips */}
       <div className="tips">
+        {readiness?.message && <p>💡 {readiness.message}</p>}
+
+        {readiness?.strengths?.length > 0 && (
+          <div className="readiness-strengths">
+            <strong>💪 Your Strengths</strong>
+
+            {readiness.strengths.map((item, index) => (
+              <p key={index}>✓ {item}</p>
+            ))}
+          </div>
+        )}
+
         {readiness?.improvements?.length > 0 ? (
           readiness.improvements.map((item, index) => (
             <p key={index}>📌 {item}</p>

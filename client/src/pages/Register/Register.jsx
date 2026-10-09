@@ -17,7 +17,10 @@ function Register() {
     confirmPassword: "",
   });
 
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     setFormData((prev) => ({
@@ -40,8 +43,13 @@ function Register() {
       return;
     }
 
+    if (!acceptedTerms) {
+      toast.error("Please accept the terms and conditions.");
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
-      toast.error("Passwords do not match");
+      toast.error("Passwords do not match.");
       return;
     }
 
@@ -57,13 +65,18 @@ function Register() {
 
       const response = await register(payload);
 
+      console.log("REGISTER RESPONSE:", response.data);
+
       toast.success(response.data.message || "Registration successful!");
 
       navigate("/login");
     } catch (error) {
       console.error("Registration Error:", error);
 
-      toast.error(error.response?.data?.message || "Registration failed.");
+      toast.error(
+        error.response?.data?.message ||
+          "Registration failed. Please try again.",
+      );
     } finally {
       setLoading(false);
     }
@@ -71,161 +84,284 @@ function Register() {
 
   return (
     <div className="register-page">
-      <div className="register-container">
-        {/* =========================
-            LEFT SECTION
-        ========================== */}
+      {/* Background decorations */}
+      <div className="register-bg-circle register-bg-circle-one"></div>
+      <div className="register-bg-circle register-bg-circle-two"></div>
 
-        <div className="register-info">
-          <div className="register-brand">
-            <span>🎓</span>
-            <strong>EduPath-AI</strong>
+      <div className="register-container">
+        {/* =====================================================
+            LEFT / BRAND SECTION
+        ====================================================== */}
+
+        <section className="register-info">
+          <button
+            type="button"
+            className="register-brand"
+            onClick={() => navigate("/")}
+          >
+            <span className="brand-icon">🎓</span>
+
+            <span className="brand-name">
+              EduPath <strong>AI</strong>
+            </span>
+          </button>
+
+          <div className="register-info-content">
+            <span className="register-badge">START YOUR JOURNEY</span>
+
+            <h1>
+              Build your
+              <span> future</span>
+              <br />
+              with EduPath AI.
+            </h1>
+
+            <p>
+              Create your account and let EduPath AI understand your skills,
+              interests and goals to build a personalized learning journey for
+              you.
+            </p>
           </div>
 
-          <h1>
-            Start Your
-            <span> Journey.</span>
-          </h1>
-
-          <p>
-            Create your account and discover a personalized learning path
-            designed around your skills, interests and career goals.
-          </p>
+          {/* Feature cards */}
 
           <div className="register-features">
             <div className="register-feature">
-              <span>🧠</span>
+              <div className="feature-icon">🧠</div>
 
               <div>
                 <strong>AI-Powered Analysis</strong>
-                <p>Understand your strengths and skill gaps.</p>
+
+                <p>
+                  Discover your strengths and identify important skill gaps.
+                </p>
               </div>
             </div>
 
             <div className="register-feature">
-              <span>🎯</span>
+              <div className="feature-icon">🎯</div>
 
               <div>
                 <strong>Personalized Career Path</strong>
-                <p>Get a learning journey based on your goals.</p>
+
+                <p>Get recommendations based on your goals and interests.</p>
               </div>
             </div>
 
             <div className="register-feature">
-              <span>📈</span>
+              <div className="feature-icon">📈</div>
 
               <div>
                 <strong>Track Your Progress</strong>
-                <p>Monitor your learning journey step by step.</p>
+
+                <p>Follow your learning journey and improve step by step.</p>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* =========================
+          <div className="register-trust">
+            <span>✓</span>
+            <p>Your learning journey stays personalized to you.</p>
+          </div>
+        </section>
+
+        {/* =====================================================
             REGISTER CARD
-        ========================== */}
+        ====================================================== */}
 
-        <div className="register-card">
+        <section className="register-card">
           <div className="register-header">
-            <h2>Create Account 🚀</h2>
+            <span className="register-header-icon">✨</span>
 
-            <p>Join EduPath-AI and start building your future.</p>
+            <div>
+              <h2>Create your account</h2>
+
+              <p>Start your personalized learning journey.</p>
+            </div>
           </div>
 
           <form className="register-form" onSubmit={handleSubmit}>
-            {/* Full Name */}
+            {/* =================================================
+                FULL NAME
+            ================================================== */}
 
             <div className="register-form-group">
               <label htmlFor="fullName">Full Name</label>
 
-              <input
-                id="fullName"
-                type="text"
-                name="fullName"
-                placeholder="Enter your full name"
-                value={formData.fullName}
-                onChange={handleChange}
-                autoComplete="name"
-              />
+              <div className="register-input-wrapper">
+                <span className="input-icon">👤</span>
+
+                <input
+                  id="fullName"
+                  type="text"
+                  name="fullName"
+                  placeholder="Enter your full name"
+                  value={formData.fullName}
+                  onChange={handleChange}
+                  autoComplete="name"
+                />
+              </div>
             </div>
 
-            {/* Email */}
+            {/* =================================================
+                EMAIL
+            ================================================== */}
 
             <div className="register-form-group">
               <label htmlFor="email">Email Address</label>
 
-              <input
-                id="email"
-                type="email"
-                name="email"
-                placeholder="Enter your email"
-                value={formData.email}
-                onChange={handleChange}
-                autoComplete="email"
-              />
+              <div className="register-input-wrapper">
+                <span className="input-icon">✉️</span>
+
+                <input
+                  id="email"
+                  type="email"
+                  name="email"
+                  placeholder="you@example.com"
+                  value={formData.email}
+                  onChange={handleChange}
+                  autoComplete="email"
+                />
+              </div>
             </div>
 
-            {/* Phone */}
+            {/* =================================================
+                PHONE
+            ================================================== */}
 
             <div className="register-form-group">
               <label htmlFor="phone">Phone Number</label>
 
-              <input
-                id="phone"
-                type="tel"
-                name="phone"
-                placeholder="Enter your phone number"
-                value={formData.phone}
-                onChange={handleChange}
-                autoComplete="tel"
-              />
+              <div className="register-input-wrapper">
+                <span className="input-icon">📱</span>
+
+                <input
+                  id="phone"
+                  type="tel"
+                  name="phone"
+                  placeholder="Enter your phone number"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  autoComplete="tel"
+                />
+              </div>
             </div>
 
-            {/* Password */}
+            {/* =================================================
+                PASSWORD
+            ================================================== */}
 
             <div className="register-form-group">
               <label htmlFor="password">Password</label>
 
-              <input
-                id="password"
-                type="password"
-                name="password"
-                placeholder="Create a password"
-                value={formData.password}
-                onChange={handleChange}
-                autoComplete="new-password"
-              />
+              <div className="register-input-wrapper">
+                <span className="input-icon">🔒</span>
+
+                <input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  placeholder="Create a password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  autoComplete="new-password"
+                />
+              </div>
             </div>
 
-            {/* Confirm Password */}
+            {/* =================================================
+                CONFIRM PASSWORD
+            ================================================== */}
 
             <div className="register-form-group">
               <label htmlFor="confirmPassword">Confirm Password</label>
 
-              <input
-                id="confirmPassword"
-                type="password"
-                name="confirmPassword"
-                placeholder="Confirm your password"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                autoComplete="new-password"
-              />
+              <div className="register-input-wrapper">
+                <span className="input-icon">🔐</span>
+
+                <input
+                  id="confirmPassword"
+                  type={showPassword ? "text" : "password"}
+                  name="confirmPassword"
+                  placeholder="Confirm your password"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  autoComplete="new-password"
+                />
+
+                <button
+                  type="button"
+                  className="password-toggle"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? "🙈" : "👁️"}
+                </button>
+              </div>
             </div>
 
-            {/* Register */}
+            {/* =================================================
+                TERMS
+            ================================================== */}
+
+            <div className="register-terms">
+              <label className="register-terms-label">
+                <input
+                  type="checkbox"
+                  checked={acceptedTerms}
+                  onChange={(e) => setAcceptedTerms(e.target.checked)}
+                />
+
+                <span className="custom-checkbox"></span>
+
+                <span className="terms-text">
+                  I agree to the{" "}
+                  <button
+                    type="button"
+                    className="terms-link"
+                    onClick={() => navigate("/terms-and-conditions")}
+                  >
+                    Terms & Conditions
+                  </button>{" "}
+                  and{" "}
+                  <button
+                    type="button"
+                    className="terms-link"
+                    onClick={() => navigate("/privacy-policy")}
+                  >
+                    Privacy Policy
+                  </button>
+                  .
+                </span>
+              </label>
+            </div>
+
+            {/* =================================================
+                SUBMIT
+            ================================================== */}
 
             <button
               type="submit"
               className="register-button"
               disabled={loading}
             >
-              {loading ? "Creating Account..." : "Create Account"}
+              {loading ? (
+                <>
+                  <span className="register-spinner"></span>
+                  Creating Account...
+                </>
+              ) : (
+                <>
+                  Create Account
+                  <span>→</span>
+                </>
+              )}
             </button>
           </form>
 
-          {/* Login */}
+          {/* =================================================
+              LOGIN
+          ================================================== */}
 
           <div className="login-link">
             <span>Already have an account?</span>
@@ -234,7 +370,12 @@ function Register() {
               Login
             </button>
           </div>
-        </div>
+
+          <div className="register-footer">
+            <span>🔐</span>
+            Secure account creation with EduPath AI
+          </div>
+        </section>
       </div>
     </div>
   );

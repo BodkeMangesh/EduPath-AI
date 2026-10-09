@@ -1,55 +1,239 @@
+/* =========================================================
+   EDUPATH AI — PROGRESS CARDS
+   Premium Dashboard / Roadmap Visual System
+   ========================================================= */
+
 .progress-cards {
+  --pc-surface: #111827;
+  --pc-surface-2: #151e2f;
+  --pc-surface-hover: #182235;
+
+  --pc-text: #f8fafc;
+  --pc-text-secondary: #cbd5e1;
+  --pc-text-muted: #64748b;
+
+  --pc-border: #273449;
+  --pc-border-strong: #334155;
+
+  --pc-primary: #818cf8;
+  --pc-primary-soft: rgba(99, 102, 241, 0.12);
+
+  --pc-success: #10b981;
+  --pc-warning: #f59e0b;
+
+  width: 100%;
+
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
-  margin: 30px 0;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+
+  margin: 20px auto 0;
 }
 
+/* =========================================================
+   CARD
+   ========================================================= */
+
 .progress-card {
-  background: #fff;
-  border-radius: 18px;
-  padding: 25px;
+  min-width: 0;
+
   display: flex;
   align-items: center;
-  gap: 18px;
-  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
-  transition: 0.3s;
+  gap: 14px;
+
+  padding: 18px;
+
+  background: var(--pc-surface);
+  border: 1px solid var(--pc-border);
+  border-radius: 14px;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .progress-card:hover {
-  transform: translateY(-6px);
+  background: var(--pc-surface-hover);
+  border-color: var(--pc-border-strong);
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
 }
+
+/* =========================================================
+   ICON
+   ========================================================= */
 
 .card-icon {
-  width: 65px;
-  height: 65px;
-  border-radius: 50%;
-  background: #2563eb;
-  color: #fff;
+  width: 44px;
+  height: 44px;
+
+  flex: 0 0 44px;
+
   display: flex;
-  justify-content: center;
   align-items: center;
-  font-size: 28px;
+  justify-content: center;
+
+  border-radius: 11px;
+
+  background: var(--pc-primary-soft);
+  border: 1px solid rgba(99, 102, 241, 0.16);
+
+  font-size: 20px;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
 }
 
+.progress-card:hover .card-icon {
+  background: rgba(99, 102, 241, 0.18);
+  transform: scale(1.04);
+}
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
 .card-content {
-  flex: 1;
+  min-width: 0;
 }
 
 .card-content h3 {
-  color: #6b7280;
-  font-size: 15px;
-  margin-bottom: 8px;
+  margin: 0;
+
+  color: var(--pc-text-muted);
+
+  font-size: 11px;
+  font-weight: 700;
+
+  line-height: 1.4;
+
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
 }
 
 .card-content h2 {
-  color: #111827;
-  font-size: 28px;
+  margin: 4px 0 0;
+
+  color: var(--pc-text);
+
+  font-size: 21px;
+  font-weight: 750;
+
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+
+  overflow-wrap: anywhere;
 }
 
-@media (max-width: 768px) {
+/* =========================================================
+   LIGHT MODE
+   ========================================================= */
+
+.progress-page:not(.dark):not([data-theme="dark"]):not([data-mode="dark"])
+  .progress-cards {
+  --pc-surface: #ffffff;
+  --pc-surface-2: #f8fafc;
+  --pc-surface-hover: #f8fafc;
+
+  --pc-text: #0f172a;
+  --pc-text-secondary: #334155;
+  --pc-text-muted: #64748b;
+
+  --pc-border: #e2e8f0;
+  --pc-border-strong: #cbd5e1;
+
+  --pc-primary: #4f46e5;
+  --pc-primary-soft: rgba(79, 70, 229, 0.08);
+}
+
+.progress-page:not(.dark):not([data-theme="dark"]):not([data-mode="dark"])
   .progress-card {
-    flex-direction: column;
-    text-align: center;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+.progress-page:not(.dark):not([data-theme="dark"]):not([data-mode="dark"])
+  .progress-card:hover {
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.09);
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1050px) {
+  .progress-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 650px) {
+  .progress-cards {
+    grid-template-columns: 1fr;
+    gap: 10px;
+
+    margin-top: 16px;
+  }
+
+  .progress-card {
+    padding: 16px;
+  }
+
+  .card-icon {
+    width: 42px;
+    height: 42px;
+    flex-basis: 42px;
+  }
+
+  .card-content h2 {
+    font-size: 19px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 430px) {
+  .progress-card {
+    padding: 14px;
+    gap: 12px;
+  }
+
+  .card-icon {
+    width: 40px;
+    height: 40px;
+    flex-basis: 40px;
+
+    font-size: 18px;
+  }
+
+  .card-content h3 {
+    font-size: 10px;
+  }
+
+  .card-content h2 {
+    font-size: 18px;
+  }
+}
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .progress-card,
+  .card-icon {
+    transition: none;
   }
 }

@@ -1,85 +1,525 @@
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
 .sidebar {
   position: fixed;
-  top: 70px;
+  top: 76px;
   left: 0;
+
   width: 250px;
-  height: calc(100vh - 70px);
-  background: #1e293b;
-  color: white;
-  padding: 20px 0;
-  overflow-y: auto;
+  height: calc(100vh - 76px);
+
+  padding: 20px 14px;
+
   box-sizing: border-box;
-  z-index: 1000;
+
+  background: #0f172a;
+  color: #ffffff;
+
+  border-right: 1px solid #1e293b;
+
+  z-index: 900;
+
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+.sidebar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 10px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* =========================================================
+   SIDEBAR MENU
+========================================================= */
+
 .sidebar-menu {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+
   list-style: none;
+
   padding: 0;
   margin: 0;
 }
 
+/* =========================================================
+   MENU ITEMS
+========================================================= */
+
 .sidebar-menu li {
-  margin: 5px 12px;
+  width: 100%;
+
+  margin: 0;
 }
+
+/* =========================================================
+   SIDEBAR LINK
+========================================================= */
 
 .sidebar-link {
+  width: 100%;
+
+  min-height: 48px;
+
+  padding: 0 15px;
+
+  box-sizing: border-box;
+
   display: flex;
   align-items: center;
-  gap: 14px;
 
-  padding: 14px 15px;
+  gap: 13px;
 
   color: #cbd5e1;
+
   text-decoration: none;
 
-  border-radius: 10px;
+  border-radius: 11px;
 
-  transition: all 0.2s ease;
+  font-size: 14px;
+  font-weight: 500;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
-.sidebar-link:hover {
-  background: #334155;
-  color: white;
-}
-
-.sidebar-link.active {
-  background: #2563eb;
-  color: white;
-  font-weight: 600;
-}
+/* =========================================================
+   ICON
+========================================================= */
 
 .sidebar-link span:first-child {
   width: 25px;
-  text-align: center;
+  min-width: 25px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   font-size: 18px;
+
+  line-height: 1;
 }
 
-.logout-item {
-  margin-top: 20px !important;
-  border-top: 1px solid #475569;
-  padding-top: 15px;
+/* =========================================================
+   HOVER
+========================================================= */
+
+.sidebar-link:hover {
+  background: #1e293b;
+
+  color: #ffffff;
+
+  transform: translateX(2px);
 }
+
+/* =========================================================
+   ACTIVE LINK
+========================================================= */
+
+.sidebar-link.active {
+  background: #2563eb;
+
+  color: #ffffff;
+
+  font-weight: 600;
+
+  box-shadow: 0 5px 14px rgba(37, 99, 235, 0.22);
+}
+
+/* =========================================================
+   ACTIVE ICON
+========================================================= */
+
+.sidebar-link.active span:first-child {
+  transform: scale(1.05);
+}
+
+/* =========================================================
+   LOGOUT SECTION
+========================================================= */
+
+.logout-item {
+  margin-top: auto !important;
+
+  padding-top: 18px;
+
+  margin-bottom: 5px !important;
+
+  border-top: 1px solid #1e293b;
+}
+
+/* =========================================================
+   LOGOUT BUTTON
+========================================================= */
 
 .sidebar-logout {
   width: 100%;
+
+  min-height: 48px;
+
+  padding: 0 15px;
+
+  box-sizing: border-box;
+
   display: flex;
   align-items: center;
-  gap: 14px;
 
-  padding: 14px 15px;
+  gap: 13px;
 
   background: transparent;
+
   border: none;
-  border-radius: 10px;
+
+  border-radius: 11px;
 
   color: #cbd5e1;
-  font-size: 15px;
+
+  font-family: inherit;
+
+  font-size: 14px;
+  font-weight: 500;
+
   text-align: left;
 
   cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
+/* =========================================================
+   LOGOUT ICON
+========================================================= */
+
+.sidebar-logout span:first-child {
+  width: 25px;
+  min-width: 25px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;
+}
+
+/* =========================================================
+   LOGOUT HOVER
+========================================================= */
+
 .sidebar-logout:hover {
-  background: #7f1d1d;
-  color: white;
+  background: #3f1d1d;
+
+  color: #fca5a5;
+
+  transform: translateX(2px);
+}
+
+/* =========================================================
+   DASHBOARD CONTENT OFFSET
+========================================================= */
+
+/*
+   Sidebar width = 250px
+
+   Your Dashboard main content should start after
+   the sidebar on desktop.
+*/
+
+.dashboard-content {
+  margin-left: 250px;
+
+  width: calc(100% - 250px);
+
+  min-height: 100vh;
+
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+  .sidebar {
+    width: 220px;
+
+    padding: 20px 11px;
+  }
+
+  .sidebar-link,
+  .sidebar-logout {
+    min-height: 46px;
+
+    padding: 0 13px;
+
+    gap: 11px;
+
+    font-size: 13px;
+  }
+
+  .sidebar-link span:first-child,
+  .sidebar-logout span:first-child {
+    width: 23px;
+    min-width: 23px;
+
+    font-size: 17px;
+  }
+
+  .dashboard-content {
+    margin-left: 220px;
+
+    width: calc(100% - 220px);
+  }
+}
+
+/* =========================================================
+   SMALL TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+  .sidebar {
+    width: 200px;
+
+    padding: 18px 9px;
+  }
+
+  .sidebar-link,
+  .sidebar-logout {
+    padding: 0 11px;
+
+    font-size: 12.5px;
+
+    gap: 9px;
+  }
+
+  .dashboard-content {
+    margin-left: 200px;
+
+    width: calc(100% - 250px);
+    min-height: calc(100vh - 76px);
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+  /*
+     Temporary mobile behavior:
+     sidebar becomes part of normal layout.
+
+     This prevents the sidebar from covering
+     dashboard cards on mobile.
+  */
+
+  .sidebar {
+    position: relative;
+
+    top: auto;
+    left: auto;
+
+    width: 100%;
+    height: auto;
+
+    min-height: auto;
+
+    padding: 10px 12px;
+
+    border-right: none;
+
+    border-bottom: 1px solid #1e293b;
+
+    overflow: visible;
+  }
+
+  .sidebar-menu {
+    flex-direction: row;
+
+    align-items: center;
+
+    gap: 6px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    padding-bottom: 3px;
+
+    scrollbar-width: thin;
+  }
+
+  .sidebar-menu li {
+    flex: 0 0 auto;
+
+    width: auto;
+  }
+
+  .sidebar-link {
+    width: auto;
+
+    min-height: 42px;
+
+    padding: 0 12px;
+
+    gap: 7px;
+
+    white-space: nowrap;
+
+    font-size: 12px;
+  }
+
+  .sidebar-link span:first-child {
+    width: auto;
+    min-width: auto;
+
+    font-size: 16px;
+  }
+
+  /*
+     Hide logout from horizontal navigation
+     to keep mobile navigation compact.
+  */
+
+  .logout-item {
+    margin-top: 0 !important;
+
+    padding-top: 0;
+
+    margin-left: 3px !important;
+
+    border-top: none;
+  }
+
+  .sidebar-logout {
+    width: auto;
+
+    min-height: 42px;
+
+    padding: 0 12px;
+
+    white-space: nowrap;
+
+    font-size: 12px;
+  }
+
+  .sidebar-logout span:first-child {
+    width: auto;
+    min-width: auto;
+
+    font-size: 16px;
+  }
+
+  .dashboard-content {
+    margin-left: 0;
+
+    width: 100%;
+
+    min-height: calc(100vh - 63px);
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+  .sidebar {
+    padding: 8px 9px;
+  }
+
+  .sidebar-menu {
+    gap: 5px;
+  }
+
+  .sidebar-link {
+    min-height: 39px;
+
+    padding: 0 10px;
+
+    border-radius: 9px;
+
+    font-size: 11px;
+  }
+
+  .sidebar-link span:first-child {
+    font-size: 15px;
+  }
+
+  .sidebar-logout {
+    min-height: 39px;
+
+    padding: 0 10px;
+
+    border-radius: 9px;
+
+    font-size: 11px;
+  }
+
+  .sidebar-logout span:first-child {
+    font-size: 15px;
+  }
+
+  .dashboard-content {
+    min-height: calc(100vh - 55px);
+  }
+}
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 360px) {
+  .sidebar {
+    padding: 7px;
+  }
+
+  .sidebar-link {
+    padding: 0 8px;
+
+    gap: 5px;
+
+    font-size: 10px;
+  }
+
+  .sidebar-link span:first-child {
+    font-size: 14px;
+  }
+
+  .sidebar-logout {
+    padding: 0 8px;
+
+    gap: 5px;
+
+    font-size: 10px;
+  }
+
+  .sidebar-logout span:first-child {
+    font-size: 14px;
+  }
 }

@@ -1,17 +1,29 @@
+import { useState } from "react";
 import { Outlet } from "react-router-dom";
+
 import Navbar from "../Navbar/Navbar";
-import Footer from "../Footer/Footer";
+import Sidebar from "../Sidebar/Sidebar";
+
 function ProtectedLayout() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setSidebarOpen((prev) => !prev);
+  };
+
+  const closeSidebar = () => {
+    setSidebarOpen(false);
+  };
+
   return (
     <div className="app-layout">
-      <Navbar />
+      <Navbar sidebarOpen={sidebarOpen} onSidebarToggle={toggleSidebar} />
 
-      {/* <Sidebar /> */}
+      <Sidebar sidebarOpen={sidebarOpen} onSidebarClose={closeSidebar} />
 
       <main className="app-main">
         <Outlet />
       </main>
-      <Footer />
     </div>
   );
 }

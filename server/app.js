@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const cors = require("cors");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
@@ -28,9 +29,15 @@ const studySessionRoutes = require("./routes/studySessionRoutes");
 const careerRoutes = require("./routes/careerRoutes");
 const errorHandler = require("./middleware/errorHandler");
 const notificationRoute = require("./routes/notificationRoute");
+const careerExplorerRoutes = require("./routes/CareerExplorerRoutes");
+const careerSelectionRoutes = require("./routes/careerSelectionRoutes");
 const roadmapRoutes = require("./routes/roadmapRoutes");
+const learningProgressRoutes = require("./routes/learningProgressRoutes");
 const resourceRoutes = require("./routes/resourceRoutes");
-
+const placementRoutes = require("./routes/placementRoutes");
+const resumeAnalyzerRoutes = require("./routes/resumeAnayzerRoutes");
+const profileRoutes = require("./routes/profileRoutes");
+const settingsRoutes = require("./routes/settingsRoutes");
 const app = express();
 
 // Middlewares
@@ -47,6 +54,7 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/assessments", assessmentRoutes);
 app.use("/api/v1/learning", learningRoutes);
+app.use("/api/v1/learning-progress", learningProgressRoutes);
 app.use("/api/v1/dashboard", dashboardRoutes);
 app.use("/api/v1/chat", chatRoutes);
 app.use(errorHandler);
@@ -54,8 +62,15 @@ app.use("/api/v1/study-session", studySessionRoutes);
 app.use("/api/v1/careers", careerRoutes);
 app.use(apiLimiter);
 app.use("/api/v1/notifications", notificationRoute);
+app.use("/api/v1/career-explorer", careerExplorerRoutes);
+app.use("/api/v1/career-selection", careerSelectionRoutes);
 app.use("/api/v1/roadmap", roadmapRoutes);
 app.use("/api/v1/resources", resourceRoutes);
+app.use("/api/v1/placement", placementRoutes);
+app.use("/api/v1/resume-analyzer", resumeAnalyzerRoutes);
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/api/v1/profile", profileRoutes);
+app.use("/api/v1/settings", settingsRoutes);
 
 // Health Route
 app.get("/api/v1/health", (req, res) => {

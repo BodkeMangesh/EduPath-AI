@@ -1,28 +1,405 @@
+/* =========================================================
+   EduPath AI — Progress Card
+   Premium Dark Navy Dashboard Design
+   ========================================================= */
+
 .profile-card {
-  background: white;
-  margin-top: 25px;
-  padding: 25px;
-  border-radius: 15px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  --progress-bg: #111827;
+  --progress-border: #273449;
+  --progress-border-strong: #334155;
+
+  --progress-text: #f8fafc;
+  --progress-text-secondary: #cbd5e1;
+  --progress-text-muted: #64748b;
+
+  --progress-primary: #818cf8;
+  --progress-primary-dark: #6366f1;
+
+  --progress-track: #1e293b;
+
+  --progress-success: #34d399;
+
+  --progress-radius: 16px;
+
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto 18px;
+  padding: 22px 24px;
+
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.012), rgba(255, 255, 255, 0)),
+    var(--progress-bg);
+
+  color: var(--progress-text);
+
+  border: 1px solid var(--progress-border);
+  border-radius: var(--progress-radius);
+
+  box-sizing: border-box;
+
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.12),
+    0 1px 2px rgba(0, 0, 0, 0.16);
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
+
+.profile-card *,
+.profile-card *::before,
+.profile-card *::after {
+  box-sizing: border-box;
+}
+
+/* ---------------------------------------------------------
+   Card Hover
+   --------------------------------------------------------- */
+
+.profile-card:hover {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.015), rgba(255, 255, 255, 0)),
+    var(--progress-bg);
+
+  border-color: var(--progress-border-strong);
+
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.16),
+    0 1px 2px rgba(0, 0, 0, 0.18);
+}
+
+/* ---------------------------------------------------------
+   Heading
+   --------------------------------------------------------- */
+
+.profile-card h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin: 0 0 22px;
+  padding-bottom: 17px;
+
+  color: var(--progress-text);
+
+  border-bottom: 1px solid rgba(51, 65, 85, 0.55);
+
+  font-size: 18px;
+  line-height: 1.35;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* ---------------------------------------------------------
+   Progress Item
+   --------------------------------------------------------- */
 
 .progress-item {
-  margin: 20px 0;
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr) 48px;
+  align-items: center;
+  gap: 16px;
+
+  width: 100%;
+  min-width: 0;
+
+  padding: 15px 0;
+
+  border-bottom: 1px solid rgba(51, 65, 85, 0.4);
 }
 
+.progress-item:last-of-type {
+  border-bottom: none;
+}
+
+/* ---------------------------------------------------------
+   Progress Label
+   --------------------------------------------------------- */
+
 .progress-item label {
-  display: block;
-  margin-bottom: 8px;
+  color: var(--progress-text-secondary);
+
+  font-size: 13px;
+  line-height: 1.4;
   font-weight: 600;
 }
 
+/* ---------------------------------------------------------
+   Progress Bar
+   --------------------------------------------------------- */
+
 .progress-item progress {
+  display: block;
+
   width: 100%;
-  height: 12px;
+  height: 8px;
+
+  border: none;
+  border-radius: 999px;
+
+  background: var(--progress-track);
+
+  overflow: hidden;
+
+  appearance: none;
+  -webkit-appearance: none;
 }
 
+/* Chrome / Edge / Safari */
+
+.progress-item progress::-webkit-progress-bar {
+  background: var(--progress-track);
+  border-radius: 999px;
+}
+
+.progress-item progress::-webkit-progress-value {
+  background: linear-gradient(
+    90deg,
+    var(--progress-primary-dark),
+    var(--progress-primary)
+  );
+
+  border-radius: 999px;
+}
+
+/* Firefox */
+
+.progress-item progress::-moz-progress-bar {
+  background: linear-gradient(
+    90deg,
+    var(--progress-primary-dark),
+    var(--progress-primary)
+  );
+
+  border-radius: 999px;
+}
+
+/* ---------------------------------------------------------
+   Percentage
+   --------------------------------------------------------- */
+
 .progress-item span {
+  min-width: 48px;
+
+  color: var(--progress-primary);
+
+  font-size: 12px;
+  line-height: 1.3;
+  font-weight: 700;
+
+  text-align: right;
+}
+
+/* ---------------------------------------------------------
+   Statistics Grid
+   --------------------------------------------------------- */
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  column-gap: 30px;
+
+  width: 100%;
+}
+
+/* ---------------------------------------------------------
+   Statistics Item
+   --------------------------------------------------------- */
+
+.info-item {
+  min-width: 0;
+
+  padding: 17px 0;
+
+  border-bottom: 1px solid rgba(51, 65, 85, 0.4);
+}
+
+.info-item:last-child {
+  border-bottom: none;
+}
+
+/* ---------------------------------------------------------
+   Statistics Labels
+   --------------------------------------------------------- */
+
+.info-item label {
   display: block;
-  margin-top: 8px;
-  font-weight: bold;
+
+  margin: 0 0 7px;
+
+  color: var(--progress-text-muted);
+
+  font-size: 10px;
+  line-height: 1.4;
+  font-weight: 700;
+
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+/* ---------------------------------------------------------
+   Statistics Values
+   --------------------------------------------------------- */
+
+.info-item p {
+  margin: 0;
+
+  color: var(--progress-success);
+
+  font-size: 20px;
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+/* ---------------------------------------------------------
+   Focus
+   --------------------------------------------------------- */
+
+.profile-card:focus-within {
+  border-color: rgba(129, 140, 248, 0.35);
+
+  box-shadow:
+    0 0 0 3px rgba(99, 102, 241, 0.08),
+    0 10px 28px rgba(0, 0, 0, 0.14);
+}
+
+/* =========================================================
+   Tablet
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .profile-card {
+    padding: 20px;
+    border-radius: 14px;
+  }
+
+  .profile-card h2 {
+    font-size: 17px;
+    padding-bottom: 15px;
+  }
+
+  .progress-item {
+    grid-template-columns: 145px minmax(0, 1fr) 44px;
+    gap: 13px;
+  }
+
+  .progress-item label {
+    font-size: 12px;
+  }
+
+  .info-grid {
+    column-gap: 22px;
+  }
+
+  .info-item {
+    padding: 15px 0;
+  }
+}
+
+/* =========================================================
+   Mobile
+   ========================================================= */
+
+@media (max-width: 600px) {
+  .profile-card {
+    padding: 18px;
+    margin-bottom: 16px;
+    border-radius: 13px;
+  }
+
+  .profile-card h2 {
+    gap: 8px;
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+    font-size: 16px;
+  }
+
+  .progress-item {
+    grid-template-columns: 1fr auto;
+    gap: 8px 12px;
+
+    padding: 14px 0;
+  }
+
+  .progress-item label {
+    font-size: 12px;
+  }
+
+  .progress-item span {
+    min-width: auto;
+    font-size: 11px;
+  }
+
+  .progress-item progress {
+    grid-column: 1 / -1;
+    grid-row: 2;
+
+    height: 7px;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+  }
+
+  .info-item {
+    padding: 14px 0;
+  }
+
+  .info-item p {
+    font-size: 18px;
+  }
+}
+
+/* =========================================================
+   Small Mobile
+   ========================================================= */
+
+@media (max-width: 430px) {
+  .profile-card {
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .profile-card h2 {
+    font-size: 15px;
+  }
+
+  .progress-item {
+    padding: 13px 0;
+  }
+
+  .progress-item label {
+    font-size: 11px;
+  }
+
+  .progress-item span {
+    font-size: 10px;
+  }
+
+  .progress-item progress {
+    height: 6px;
+  }
+
+  .info-item {
+    padding: 13px 0;
+  }
+
+  .info-item p {
+    font-size: 17px;
+  }
+}
+
+/* =========================================================
+   Reduced Motion
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .profile-card,
+  .profile-card * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }

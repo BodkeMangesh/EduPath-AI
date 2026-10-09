@@ -1,0 +1,1748 @@
+/* ============================================================
+   EDUPATH-AI — CAREER SELECTION
+   Modern AI / SaaS Design System
+   ============================================================ */
+
+/* ============================================================
+   DESIGN TOKENS
+============================================================ */
+
+.career-selection-page {
+  --cs-primary: #6366f1;
+  --cs-primary-hover: #4f46e5;
+  --cs-primary-dark: #4338ca;
+  --cs-primary-light: #818cf8;
+  --cs-primary-soft: #eef2ff;
+  --cs-primary-soft-strong: #e0e7ff;
+
+  --cs-bg: #f8fafc;
+  --cs-surface: #ffffff;
+  --cs-surface-soft: #f1f5f9;
+  --cs-surface-muted: #f8fafc;
+
+  --cs-text: #0f172a;
+  --cs-text-secondary: #475569;
+  --cs-text-muted: #94a3b8;
+
+  --cs-border: #e2e8f0;
+  --cs-border-strong: #cbd5e1;
+
+  --cs-success: #10b981;
+  --cs-success-dark: #047857;
+  --cs-success-soft: #ecfdf5;
+  --cs-success-border: #a7f3d0;
+
+  --cs-warning: #f59e0b;
+  --cs-warning-soft: #fffbeb;
+  --cs-warning-border: #fde68a;
+
+  --cs-error: #ef4444;
+  --cs-error-dark: #b91c1c;
+  --cs-error-soft: #fef2f2;
+  --cs-error-border: #fecaca;
+
+  --cs-radius-sm: 8px;
+  --cs-radius-md: 12px;
+  --cs-radius-lg: 16px;
+  --cs-radius-xl: 20px;
+  --cs-radius-2xl: 24px;
+  --cs-radius-pill: 999px;
+
+  --cs-shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
+
+  --cs-shadow-sm: 0 4px 14px rgba(15, 23, 42, 0.05);
+
+  --cs-shadow-md: 0 10px 30px rgba(15, 23, 42, 0.07);
+
+  --cs-shadow-lg: 0 18px 45px rgba(15, 23, 42, 0.1);
+
+  --cs-shadow-primary: 0 10px 24px rgba(99, 102, 241, 0.2);
+
+  --cs-transition: 180ms ease;
+
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 8% 4%, rgba(99, 102, 241, 0.09), transparent 27%),
+    radial-gradient(
+      circle at 92% 8%,
+      rgba(129, 140, 248, 0.07),
+      transparent 25%
+    ),
+    var(--cs-bg);
+  color: var(--cs-text);
+}
+
+/* ============================================================
+   CONTAINER
+============================================================ */
+
+.career-selection-container {
+  width: min(1180px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 32px 0 72px;
+}
+
+/* ============================================================
+   TOP STEP NAVIGATION
+============================================================ */
+
+.cs-step-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 34px;
+}
+
+.cs-step-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+}
+
+.cs-step-active {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 50%;
+  background: var(--cs-primary);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 800;
+  box-shadow: 0 5px 14px rgba(99, 102, 241, 0.18);
+}
+
+.cs-step-line {
+  width: 48px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    var(--cs-primary),
+    var(--cs-primary-light)
+  );
+}
+
+/* ============================================================
+   HEADER
+============================================================ */
+
+.career-selection-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 30px;
+  margin-bottom: 28px;
+}
+
+.career-selection-header > div:first-child {
+  max-width: 800px;
+}
+
+.cs-eyebrow {
+  display: inline-block;
+  margin-bottom: 9px;
+  color: var(--cs-primary);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.career-selection-header h1 {
+  margin: 0;
+  color: var(--cs-text);
+  font-size: clamp(34px, 5vw, 56px);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.045em;
+}
+
+.cs-heading-highlight {
+  color: var(--cs-primary);
+}
+
+.career-selection-header p {
+  max-width: 720px;
+  margin: 17px 0 0;
+  color: var(--cs-text-secondary);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* ============================================================
+   BUTTONS
+============================================================ */
+
+.cs-primary-button,
+.cs-secondary-button {
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  border-radius: var(--cs-radius-md);
+  border: 1px solid transparent;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    transform var(--cs-transition),
+    background var(--cs-transition),
+    border-color var(--cs-transition),
+    color var(--cs-transition),
+    box-shadow var(--cs-transition);
+}
+
+.cs-primary-button {
+  background: var(--cs-primary);
+  color: #ffffff;
+  box-shadow: var(--cs-shadow-primary);
+}
+
+.cs-primary-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  background: var(--cs-primary-hover);
+  box-shadow: 0 12px 28px rgba(99, 102, 241, 0.25);
+}
+
+.cs-primary-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.cs-secondary-button {
+  background: var(--cs-surface);
+  color: var(--cs-text-secondary);
+  border-color: var(--cs-border);
+  box-shadow: var(--cs-shadow-xs);
+}
+
+.cs-secondary-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  background: var(--cs-surface-soft);
+  border-color: var(--cs-border-strong);
+  color: var(--cs-text);
+  box-shadow: var(--cs-shadow-sm);
+}
+
+.cs-primary-button:disabled,
+.cs-secondary-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.cs-action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* ============================================================
+   SUCCESS / ERROR
+============================================================ */
+
+.cs-success-message,
+.cs-action-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 14px 16px;
+  border-radius: var(--cs-radius-md);
+  border: 1px solid;
+}
+
+.cs-success-message {
+  background: var(--cs-success-soft);
+  border-color: var(--cs-success-border);
+  color: var(--cs-success-dark);
+}
+
+.cs-action-error {
+  background: var(--cs-error-soft);
+  border-color: var(--cs-error-border);
+  color: var(--cs-error-dark);
+}
+
+.cs-success-message > span,
+.cs-action-error > span {
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.cs-success-message > span {
+  background: #d1fae5;
+  color: var(--cs-success-dark);
+}
+
+.cs-action-error > span {
+  background: #fee2e2;
+  color: var(--cs-error-dark);
+}
+
+.cs-success-message strong {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 13px;
+}
+
+.cs-success-message p,
+.cs-action-error p {
+  margin: 0;
+  color: inherit;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+/* ============================================================
+   CAREER HERO
+============================================================ */
+
+.cs-career-hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  overflow: hidden;
+  padding: 28px;
+  margin-bottom: 20px;
+  border: 1px solid var(--cs-border);
+  border-radius: var(--cs-radius-2xl);
+  background:
+    radial-gradient(
+      circle at 100% 0,
+      rgba(99, 102, 241, 0.08),
+      transparent 32%
+    ),
+    var(--cs-surface);
+  box-shadow: var(--cs-shadow-md);
+}
+
+.cs-career-hero::after {
+  content: "";
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  right: -100px;
+  bottom: -120px;
+  border-radius: 50%;
+  background: rgba(99, 102, 241, 0.06);
+  pointer-events: none;
+}
+
+.cs-career-identity {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 17px;
+  min-width: 0;
+}
+
+.cs-career-icon {
+  width: 68px;
+  height: 68px;
+  flex: 0 0 68px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(99, 102, 241, 0.14);
+  border-radius: 18px;
+  background: linear-gradient(145deg, #eef2ff, #e0e7ff);
+  color: var(--cs-primary-hover);
+  font-size: 28px;
+  font-weight: 850;
+  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.1);
+}
+
+.cs-career-identity h2 {
+  margin: 4px 0 8px;
+  color: var(--cs-text);
+  font-size: 28px;
+  font-weight: 750;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+
+.cs-card-label {
+  display: inline-block;
+  color: var(--cs-text-muted);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.cs-career-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.cs-career-meta span {
+  padding: 5px 9px;
+  border: 1px solid var(--cs-border);
+  border-radius: var(--cs-radius-sm);
+  background: var(--cs-surface-soft);
+  color: var(--cs-text-secondary);
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.cs-hero-score {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.cs-score-circle {
+  width: 82px;
+  height: 82px;
+  flex: 0 0 82px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 7px solid var(--cs-primary-soft-strong);
+  border-radius: 50%;
+  background: var(--cs-surface);
+  box-shadow:
+    inset 0 0 0 1px rgba(99, 102, 241, 0.04),
+    0 8px 20px rgba(99, 102, 241, 0.08);
+}
+
+.cs-score-circle strong {
+  color: var(--cs-primary-dark);
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.cs-score-circle span {
+  margin-top: 4px;
+  color: var(--cs-text-muted);
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+}
+
+.cs-score-label {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--cs-text-muted);
+  font-size: 11px;
+}
+
+.cs-hero-score > div:last-child strong {
+  color: var(--cs-text);
+  font-size: 15px;
+  font-weight: 750;
+}
+
+/* ============================================================
+   CAREER LOCK / SELECTION STATUS
+============================================================ */
+
+.cs-career-lock-banner {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 20px;
+  margin-bottom: 22px;
+  border-radius: var(--cs-radius-lg);
+  border: 1px solid;
+}
+
+.cs-career-lock-banner.exploring {
+  background: linear-gradient(
+    135deg,
+    rgba(238, 242, 255, 0.9),
+    rgba(248, 250, 252, 0.95)
+  );
+  border-color: #c7d2fe;
+}
+
+.cs-career-lock-banner.locked {
+  background: linear-gradient(135deg, #ecfdf5, #f8fafc);
+  border-color: var(--cs-success-border);
+}
+
+.cs-lock-status-icon {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--cs-radius-md);
+  font-size: 14px;
+  font-weight: 850;
+}
+
+.cs-career-lock-banner.exploring .cs-lock-status-icon {
+  background: var(--cs-primary-soft-strong);
+  color: var(--cs-primary-hover);
+}
+
+.cs-career-lock-banner.locked .cs-lock-status-icon {
+  background: #d1fae5;
+  color: var(--cs-success-dark);
+}
+
+.cs-lock-status-content > span {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.cs-career-lock-banner.exploring .cs-lock-status-content > span {
+  color: var(--cs-primary-hover);
+}
+
+.cs-career-lock-banner.locked .cs-lock-status-content > span {
+  color: var(--cs-success-dark);
+}
+
+.cs-lock-status-content strong {
+  display: block;
+  color: var(--cs-text);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.cs-lock-status-content p {
+  margin: 4px 0 0;
+  color: var(--cs-text-secondary);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.cs-lock-status-action {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cs-locked-badge {
+  padding: 8px 12px;
+  border: 1px solid var(--cs-success-border);
+  border-radius: var(--cs-radius-sm);
+  background: #d1fae5;
+  color: var(--cs-success-dark);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+/* ============================================================
+   STAT GRID
+============================================================ */
+
+.cs-grid {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.cs-grid-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.cs-stat-card {
+  min-height: 124px;
+  padding: 18px;
+  border: 1px solid var(--cs-border);
+  border-radius: var(--cs-radius-lg);
+  background: var(--cs-surface);
+  box-shadow: var(--cs-shadow-xs);
+  transition:
+    transform var(--cs-transition),
+    border-color var(--cs-transition),
+    box-shadow var(--cs-transition);
+}
+
+.cs-stat-card:hover {
+  transform: translateY(-2px);
+  border-color: #c7d2fe;
+  box-shadow: var(--cs-shadow-sm);
+}
+
+.cs-stat-card strong {
+  display: block;
+  margin: 9px 0 5px;
+  color: var(--cs-text);
+  font-size: 29px;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+}
+
+.cs-stat-card > span:last-child {
+  color: var(--cs-text-muted);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   GENERIC CARD
+============================================================ */
+
+.cs-card {
+  padding: 25px;
+  margin-bottom: 20px;
+  border: 1px solid var(--cs-border);
+  border-radius: var(--cs-radius-xl);
+  background: var(--cs-surface);
+  box-shadow: var(--cs-shadow-xs);
+  transition:
+    border-color var(--cs-transition),
+    box-shadow var(--cs-transition);
+}
+
+.cs-card:hover {
+  border-color: #d8def0;
+  box-shadow: var(--cs-shadow-sm);
+}
+
+.cs-card-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 19px;
+}
+
+.cs-card-heading h2 {
+  margin: 5px 0 0;
+  color: var(--cs-text);
+  font-size: 21px;
+  font-weight: 750;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.cs-description p,
+.cs-card > p {
+  margin: 0;
+  color: var(--cs-text-secondary);
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+/* ============================================================
+   AI / FIT EXPLANATION
+============================================================ */
+
+.cs-ai-explanation {
+  background:
+    radial-gradient(
+      circle at 100% 0,
+      rgba(99, 102, 241, 0.06),
+      transparent 30%
+    ),
+    var(--cs-surface);
+}
+
+.cs-ai-badge {
+  padding: 6px 9px;
+  border: 1px solid #c7d2fe;
+  border-radius: var(--cs-radius-sm);
+  background: var(--cs-primary-soft);
+  color: var(--cs-primary-hover);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.cs-match-breakdown {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 11px;
+  margin-top: 20px;
+}
+
+.cs-match-breakdown > div {
+  padding: 14px;
+  border: 1px solid var(--cs-border);
+  border-radius: var(--cs-radius-md);
+  background: var(--cs-surface-soft);
+}
+
+.cs-match-breakdown span {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--cs-text-muted);
+  font-size: 10px;
+  font-weight: 650;
+}
+
+.cs-match-breakdown strong {
+  color: var(--cs-text);
+  font-size: 20px;
+  font-weight: 800;
+}
+
+/* ============================================================
+   CAREER INFORMATION
+============================================================ */
+
+.cs-information-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.cs-information-grid > div {
+  padding: 16px;
+  border: 1px solid var(--cs-border);
+  border-radius: var(--cs-radius-md);
+  background: var(--cs-surface-soft);
+}
+
+.cs-information-grid span {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--cs-text-muted);
+  font-size: 10px;
+  font-weight: 650;
+}
+
+.cs-information-grid strong {
+  color: var(--cs-text);
+  font-size: 16px;
+  font-weight: 750;
+  line-height: 1.4;
+}
+
+/* ============================================================
+   SKILLS
+============================================================ */
+
+.cs-skill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.cs-skill-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 6px 11px;
+  border-radius: var(--cs-radius-sm);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.cs-skill-pill.matched {
+  background: var(--cs-success-soft);
+  border: 1px solid var(--cs-success-border);
+  color: var(--cs-success-dark);
+}
+
+.cs-skill-pill.missing {
+  background: var(--cs-warning-soft);
+  border: 1px solid #fed7aa;
+  color: #c2410c;
+}
+
+.cs-muted-text {
+  margin: 0;
+  color: var(--cs-text-muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* ============================================================
+   REQUIRED SKILL GRID
+============================================================ */
+
+.cs-required-skill-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.cs-required-skill {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-height: 53px;
+  padding: 9px 12px;
+  border: 1px solid var(--cs-border);
+  border-radius: var(--cs-radius-md);
+  background: var(--cs-surface-soft);
+  color: var(--cs-text-secondary);
+  font-size: 12px;
+  font-weight: 700;
+  transition:
+    transform var(--cs-transition),
+    border-color var(--cs-transition),
+    background var(--cs-transition);
+}
+
+.cs-required-skill:hover {
+  transform: translateY(-1px);
+  border-color: #c7d2fe;
+  background: var(--cs-primary-soft);
+}
+
+.cs-required-number {
+  width: 29px;
+  height: 29px;
+  flex: 0 0 29px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--cs-radius-sm);
+  background: var(--cs-primary-soft);
+  color: var(--cs-primary-hover);
+  font-size: 9px;
+  font-weight: 850;
+}
+
+.cs-count-badge {
+  padding: 5px 9px;
+  border: 1px solid var(--cs-border);
+  border-radius: var(--cs-radius-sm);
+  background: var(--cs-surface-soft);
+  color: var(--cs-text-secondary);
+  font-size: 10px;
+  font-weight: 750;
+}
+
+/* ============================================================
+   ELIGIBILITY
+============================================================ */
+
+.cs-eligibility-list {
+  display: grid;
+  gap: 9px;
+}
+
+.cs-eligibility-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid var(--cs-border);
+  border-radius: var(--cs-radius-md);
+  background: var(--cs-surface-soft);
+}
+
+.cs-eligibility-item > span {
+  width: 21px;
+  height: 21px;
+  flex: 0 0 21px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #d1fae5;
+  color: var(--cs-success-dark);
+  font-size: 10px;
+  font-weight: 850;
+}
+
+.cs-eligibility-item p {
+  margin: 1px 0 0;
+  color: var(--cs-text-secondary);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+/* ============================================================
+   ACTION HUB
+============================================================ */
+
+.cs-action-hub {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  overflow: hidden;
+  margin-top: 28px;
+  padding: 28px;
+  border: 1px solid rgba(129, 140, 248, 0.16);
+  border-radius: var(--cs-radius-2xl);
+  background:
+    radial-gradient(circle at 100% 0, rgba(99, 102, 241, 0.2), transparent 35%),
+    linear-gradient(135deg, #0b1020, #111827);
+  color: #ffffff;
+  box-shadow: var(--cs-shadow-lg);
+}
+
+.cs-action-hub::before {
+  content: "";
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  right: -110px;
+  bottom: -150px;
+  border-radius: 50%;
+  background: rgba(129, 140, 248, 0.08);
+  pointer-events: none;
+}
+
+.cs-action-hub-content {
+  position: relative;
+  z-index: 1;
+  max-width: 680px;
+}
+
+.cs-action-hub .cs-eyebrow {
+  color: var(--cs-primary-light);
+}
+
+.cs-action-hub h2 {
+  margin: 5px 0 9px;
+  color: #f8fafc;
+  font-size: 24px;
+  font-weight: 750;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.cs-action-hub p {
+  margin: 0;
+  color: #cbd5e1;
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.cs-action-hub .cs-action-buttons {
+  position: relative;
+  z-index: 1;
+}
+
+.cs-action-hub .cs-primary-button {
+  background: #ffffff;
+  color: #1e1b4b;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+}
+
+.cs-action-hub .cs-primary-button:hover:not(:disabled) {
+  background: #eef2ff;
+  color: var(--cs-primary-hover);
+}
+
+.cs-action-hub .cs-secondary-button {
+  background: rgba(255, 255, 255, 0.04);
+  color: #f8fafc;
+  border-color: #334155;
+}
+
+.cs-action-hub .cs-secondary-button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: #475569;
+  color: #ffffff;
+}
+
+/* ============================================================
+   LOGIN MODAL
+============================================================ */
+
+.cs-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.68);
+  backdrop-filter: blur(8px);
+  animation: cs-overlay-in 180ms ease;
+}
+
+.cs-login-modal {
+  width: min(480px, 100%);
+  padding: 32px;
+  border: 1px solid var(--cs-border);
+  border-radius: var(--cs-radius-2xl);
+  background: var(--cs-surface);
+  box-shadow:
+    0 30px 80px rgba(15, 23, 42, 0.24),
+    0 10px 30px rgba(15, 23, 42, 0.1);
+  text-align: center;
+  animation: cs-modal-in 220ms ease;
+}
+
+.cs-login-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--cs-success-border);
+  border-radius: 50%;
+  background: #d1fae5;
+  color: var(--cs-success-dark);
+  font-size: 24px;
+  font-weight: 900;
+}
+
+.cs-login-modal .cs-card-label {
+  color: var(--cs-primary);
+}
+
+.cs-login-modal h2 {
+  margin: 9px 0 11px;
+  color: var(--cs-text);
+  font-size: 26px;
+  font-weight: 750;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+
+.cs-login-modal p {
+  max-width: 390px;
+  margin: 8px auto;
+  color: var(--cs-text-secondary);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.cs-login-modal p strong {
+  color: var(--cs-text);
+}
+
+.cs-login-modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.cs-login-modal-actions .cs-primary-button,
+.cs-login-modal-actions .cs-secondary-button {
+  min-width: 125px;
+}
+
+/* ============================================================
+   LOADING STATE
+============================================================ */
+
+.career-selection-loading {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  text-align: center;
+}
+
+.cs-loading-spinner {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 20px;
+  border: 3px solid var(--cs-primary-soft-strong);
+  border-top-color: var(--cs-primary);
+  border-radius: 50%;
+  animation: cs-spin 800ms linear infinite;
+}
+
+.career-selection-loading h2 {
+  margin: 4px 0 8px;
+  color: var(--cs-text);
+  font-size: 23px;
+  font-weight: 750;
+}
+
+.career-selection-loading p {
+  max-width: 520px;
+  margin: 0;
+  color: var(--cs-text-muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* ============================================================
+   ERROR STATE
+============================================================ */
+
+.career-selection-error {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  text-align: center;
+}
+
+.cs-error-icon {
+  width: 56px;
+  height: 56px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--cs-error-border);
+  border-radius: 50%;
+  background: #fee2e2;
+  color: var(--cs-error-dark);
+  font-size: 23px;
+  font-weight: 900;
+}
+
+.career-selection-error h2 {
+  margin: 6px 0 8px;
+  color: var(--cs-text);
+  font-size: 24px;
+}
+
+.career-selection-error p {
+  max-width: 550px;
+  margin: 0;
+  color: var(--cs-text-secondary);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.cs-error-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 21px;
+}
+
+/* ============================================================
+   EMPTY STATE
+============================================================ */
+
+.cs-empty-state {
+  padding: 65px 24px;
+  border: 1px dashed var(--cs-border-strong);
+  border-radius: var(--cs-radius-xl);
+  background: var(--cs-surface);
+  text-align: center;
+  box-shadow: var(--cs-shadow-xs);
+}
+
+.cs-empty-icon {
+  width: 58px;
+  height: 58px;
+  margin: 0 auto 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #c7d2fe;
+  border-radius: var(--cs-radius-lg);
+  background: var(--cs-primary-soft);
+  color: var(--cs-primary);
+  font-size: 26px;
+}
+
+.cs-empty-state h2 {
+  margin: 0 0 8px;
+  color: var(--cs-text);
+  font-size: 22px;
+}
+
+.cs-empty-state p {
+  max-width: 530px;
+  margin: 0 auto 21px;
+  color: var(--cs-text-muted);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+/* ============================================================
+   SMALL EMPTY
+============================================================ */
+
+.cs-small-empty {
+  padding: 20px;
+  border: 1px dashed var(--cs-border);
+  border-radius: var(--cs-radius-md);
+  background: var(--cs-surface-soft);
+  color: var(--cs-text-muted);
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* ============================================================
+   FOCUS ACCESSIBILITY
+============================================================ */
+
+.cs-primary-button:focus-visible,
+.cs-secondary-button:focus-visible {
+  outline: 3px solid rgba(99, 102, 241, 0.2);
+  outline-offset: 3px;
+}
+
+/* ============================================================
+   ANIMATIONS
+============================================================ */
+
+@keyframes cs-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes cs-overlay-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes cs-modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ============================================================
+   DARK MODE
+============================================================ */
+
+.dark .career-selection-page,
+[data-theme="dark"] .career-selection-page,
+[data-mode="dark"] .career-selection-page {
+  --cs-bg: #0b1020;
+  --cs-surface: #111827;
+  --cs-surface-soft: #1f2937;
+  --cs-surface-muted: #111827;
+
+  --cs-text: #f8fafc;
+  --cs-text-secondary: #cbd5e1;
+  --cs-text-muted: #64748b;
+
+  --cs-border: #273449;
+  --cs-border-strong: #334155;
+
+  --cs-primary-soft: rgba(99, 102, 241, 0.14);
+  --cs-primary-soft-strong: rgba(99, 102, 241, 0.22);
+
+  --cs-success-soft: rgba(16, 185, 129, 0.1);
+  --cs-error-soft: rgba(239, 68, 68, 0.1);
+
+  background:
+    radial-gradient(circle at 8% 4%, rgba(99, 102, 241, 0.12), transparent 27%),
+    radial-gradient(
+      circle at 92% 8%,
+      rgba(129, 140, 248, 0.08),
+      transparent 25%
+    ),
+    var(--cs-bg);
+}
+
+.dark .cs-career-meta span,
+[data-theme="dark"] .cs-career-meta span,
+[data-mode="dark"] .cs-career-meta span {
+  background: #1f2937;
+  border-color: #334155;
+  color: #cbd5e1;
+}
+
+.dark .cs-career-icon,
+[data-theme="dark"] .cs-career-icon,
+[data-mode="dark"] .cs-career-icon {
+  background: linear-gradient(
+    145deg,
+    rgba(99, 102, 241, 0.18),
+    rgba(79, 70, 229, 0.12)
+  );
+  border-color: rgba(129, 140, 248, 0.2);
+  color: #a5b4fc;
+}
+
+.dark .cs-career-hero,
+[data-theme="dark"] .cs-career-hero,
+[data-mode="dark"] .cs-career-hero {
+  background:
+    radial-gradient(circle at 100% 0, rgba(99, 102, 241, 0.1), transparent 32%),
+    var(--cs-surface);
+}
+
+.dark .cs-career-lock-banner.exploring,
+[data-theme="dark"] .cs-career-lock-banner.exploring,
+[data-mode="dark"] .cs-career-lock-banner.exploring {
+  background: rgba(99, 102, 241, 0.08);
+  border-color: #373f70;
+}
+
+.dark .cs-career-lock-banner.locked,
+[data-theme="dark"] .cs-career-lock-banner.locked,
+[data-mode="dark"] .cs-career-lock-banner.locked {
+  background: rgba(16, 185, 129, 0.07);
+  border-color: #245344;
+}
+
+.dark .cs-stat-card:hover,
+[data-theme="dark"] .cs-stat-card:hover,
+[data-mode="dark"] .cs-stat-card:hover {
+  border-color: #4b5563;
+}
+
+.dark .cs-card:hover,
+[data-theme="dark"] .cs-card:hover,
+[data-mode="dark"] .cs-card:hover {
+  border-color: #3b475c;
+}
+
+.dark .cs-required-skill:hover,
+[data-theme="dark"] .cs-required-skill:hover,
+[data-mode="dark"] .cs-required-skill:hover {
+  background: rgba(99, 102, 241, 0.1);
+  border-color: #454d78;
+}
+
+.dark .cs-ai-explanation,
+[data-theme="dark"] .cs-ai-explanation,
+[data-mode="dark"] .cs-ai-explanation {
+  background:
+    radial-gradient(circle at 100% 0, rgba(99, 102, 241, 0.1), transparent 30%),
+    var(--cs-surface);
+}
+
+.dark .cs-ai-badge,
+[data-theme="dark"] .cs-ai-badge,
+[data-mode="dark"] .cs-ai-badge {
+  border-color: #454d78;
+  background: rgba(99, 102, 241, 0.14);
+  color: #a5b4fc;
+}
+
+.dark .cs-action-hub,
+[data-theme="dark"] .cs-action-hub,
+[data-mode="dark"] .cs-action-hub {
+  background:
+    radial-gradient(
+      circle at 100% 0,
+      rgba(99, 102, 241, 0.22),
+      transparent 35%
+    ),
+    linear-gradient(135deg, #080d1a, #111827);
+}
+
+.dark .cs-secondary-button,
+[data-theme="dark"] .cs-secondary-button,
+[data-mode="dark"] .cs-secondary-button {
+  background: var(--cs-surface);
+  color: #cbd5e1;
+}
+
+.dark .cs-secondary-button:hover:not(:disabled),
+[data-theme="dark"] .cs-secondary-button:hover:not(:disabled),
+[data-mode="dark"] .cs-secondary-button:hover:not(:disabled) {
+  background: #1f2937;
+  color: #f8fafc;
+  border-color: #475569;
+}
+
+.dark .cs-information-grid > div,
+[data-theme="dark"] .cs-information-grid > div,
+[data-mode="dark"] .cs-information-grid > div,
+.dark .cs-match-breakdown > div,
+[data-theme="dark"] .cs-match-breakdown > div,
+[data-mode="dark"] .cs-match-breakdown > div,
+.dark .cs-required-skill,
+[data-theme="dark"] .cs-required-skill,
+[data-mode="dark"] .cs-required-skill,
+.dark .cs-eligibility-item,
+[data-theme="dark"] .cs-eligibility-item,
+[data-mode="dark"] .cs-eligibility-item {
+  background: #1f2937;
+  border-color: #334155;
+}
+
+.dark .cs-count-badge,
+[data-theme="dark"] .cs-count-badge,
+[data-mode="dark"] .cs-count-badge {
+  background: #1f2937;
+  border-color: #334155;
+  color: #cbd5e1;
+}
+
+.dark .cs-modal-overlay,
+[data-theme="dark"] .cs-modal-overlay,
+[data-mode="dark"] .cs-modal-overlay {
+  background: rgba(2, 6, 23, 0.78);
+}
+
+.dark .cs-login-modal,
+[data-theme="dark"] .cs-login-modal,
+[data-mode="dark"] .cs-login-modal {
+  background: #111827;
+  border-color: #273449;
+}
+
+.dark .cs-login-modal p strong,
+[data-theme="dark"] .cs-login-modal p strong,
+[data-mode="dark"] .cs-login-modal p strong {
+  color: #f8fafc;
+}
+
+.dark .cs-empty-state,
+[data-theme="dark"] .cs-empty-state,
+[data-mode="dark"] .cs-empty-state {
+  background: #111827;
+  border-color: #334155;
+}
+
+.dark .cs-small-empty,
+[data-theme="dark"] .cs-small-empty,
+[data-mode="dark"] .cs-small-empty {
+  background: #1f2937;
+  border-color: #334155;
+}
+
+/* ============================================================
+   SYSTEM DARK MODE FALLBACK
+============================================================ */
+
+@media (prefers-color-scheme: dark) {
+  .career-selection-page:not(.light-mode) {
+    --cs-bg: #0b1020;
+    --cs-surface: #111827;
+    --cs-surface-soft: #1f2937;
+    --cs-surface-muted: #111827;
+
+    --cs-text: #f8fafc;
+    --cs-text-secondary: #cbd5e1;
+    --cs-text-muted: #64748b;
+
+    --cs-border: #273449;
+    --cs-border-strong: #334155;
+
+    background:
+      radial-gradient(
+        circle at 8% 4%,
+        rgba(99, 102, 241, 0.12),
+        transparent 27%
+      ),
+      radial-gradient(
+        circle at 92% 8%,
+        rgba(129, 140, 248, 0.08),
+        transparent 25%
+      ),
+      var(--cs-bg);
+  }
+
+  .career-selection-page:not(.light-mode) .cs-career-hero,
+  .career-selection-page:not(.light-mode) .cs-card,
+  .career-selection-page:not(.light-mode) .cs-stat-card,
+  .career-selection-page:not(.light-mode) .cs-login-modal,
+  .career-selection-page:not(.light-mode) .cs-empty-state {
+    background-color: #111827;
+    border-color: #273449;
+  }
+
+  .career-selection-page:not(.light-mode) .cs-information-grid > div,
+  .career-selection-page:not(.light-mode) .cs-match-breakdown > div,
+  .career-selection-page:not(.light-mode) .cs-required-skill,
+  .career-selection-page:not(.light-mode) .cs-eligibility-item,
+  .career-selection-page:not(.light-mode) .cs-small-empty {
+    background: #1f2937;
+    border-color: #334155;
+  }
+
+  .career-selection-page:not(.light-mode) .cs-secondary-button {
+    background: #111827;
+    color: #cbd5e1;
+    border-color: #334155;
+  }
+
+  .career-selection-page:not(.light-mode) .cs-career-meta span,
+  .career-selection-page:not(.light-mode) .cs-count-badge {
+    background: #1f2937;
+    border-color: #334155;
+    color: #cbd5e1;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — TABLET
+============================================================ */
+
+@media (max-width: 900px) {
+  .career-selection-container {
+    width: min(100% - 28px, 760px);
+    padding-top: 25px;
+  }
+
+  .cs-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cs-required-skill-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .career-selection-header {
+    align-items: flex-start;
+  }
+
+  .cs-career-hero {
+    align-items: flex-start;
+  }
+
+  .cs-action-hub {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .cs-action-buttons {
+    justify-content: flex-start;
+    width: 100%;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — MOBILE
+============================================================ */
+
+@media (max-width: 640px) {
+  .career-selection-container {
+    width: min(100% - 20px, 100%);
+    padding: 18px 0 45px;
+  }
+
+  .cs-step-navigation {
+    margin-bottom: 24px;
+  }
+
+  .cs-step-indicator {
+    gap: 7px;
+  }
+
+  .cs-step-active {
+    width: 29px;
+    height: 29px;
+    font-size: 10px;
+  }
+
+  .cs-step-line {
+    width: 28px;
+  }
+
+  .career-selection-header {
+    margin-bottom: 20px;
+  }
+
+  .career-selection-header h1 {
+    font-size: 34px;
+  }
+
+  .career-selection-header p {
+    margin-top: 13px;
+    font-size: 13px;
+  }
+
+  .cs-primary-button,
+  .cs-secondary-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .cs-career-hero {
+    flex-direction: column;
+    padding: 20px;
+    border-radius: var(--cs-radius-xl);
+  }
+
+  .cs-career-identity {
+    width: 100%;
+  }
+
+  .cs-career-icon {
+    width: 55px;
+    height: 55px;
+    flex-basis: 55px;
+    border-radius: 15px;
+    font-size: 22px;
+  }
+
+  .cs-career-identity h2 {
+    font-size: 22px;
+  }
+
+  .cs-hero-score {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .cs-career-lock-banner {
+    grid-template-columns: auto 1fr;
+    padding: 16px;
+  }
+
+  .cs-lock-status-action {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  .cs-lock-status-action .cs-primary-button {
+    width: 100%;
+  }
+
+  .cs-grid-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .cs-card {
+    padding: 20px;
+    border-radius: var(--cs-radius-lg);
+  }
+
+  .cs-card-heading {
+    flex-direction: column;
+    gap: 9px;
+  }
+
+  .cs-match-breakdown {
+    grid-template-columns: 1fr;
+  }
+
+  .cs-information-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cs-required-skill-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cs-action-hub {
+    padding: 21px;
+    border-radius: var(--cs-radius-xl);
+  }
+
+  .cs-action-hub h2 {
+    font-size: 21px;
+  }
+
+  .cs-action-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cs-action-buttons button {
+    width: 100%;
+  }
+
+  .cs-login-modal {
+    padding: 27px 20px;
+    border-radius: var(--cs-radius-xl);
+  }
+
+  .cs-login-modal h2 {
+    font-size: 23px;
+  }
+
+  .cs-login-modal-actions {
+    flex-direction: column-reverse;
+  }
+
+  .cs-login-modal-actions button {
+    width: 100%;
+  }
+
+  .cs-error-actions {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .cs-error-actions button {
+    width: 100%;
+  }
+}
+
+/* ============================================================
+   VERY SMALL DEVICES
+============================================================ */
+
+@media (max-width: 400px) {
+  .career-selection-container {
+    width: calc(100% - 16px);
+  }
+
+  .career-selection-header h1 {
+    font-size: 29px;
+  }
+
+  .cs-career-hero {
+    padding: 17px;
+  }
+
+  .cs-career-identity {
+    gap: 12px;
+  }
+
+  .cs-career-identity h2 {
+    font-size: 20px;
+  }
+
+  .cs-score-circle {
+    width: 70px;
+    height: 70px;
+    flex-basis: 70px;
+  }
+
+  .cs-score-circle strong {
+    font-size: 17px;
+  }
+
+  .cs-card {
+    padding: 17px;
+  }
+
+  .cs-action-hub {
+    padding: 18px;
+  }
+}
+
+/* ============================================================
+   REDUCED MOTION
+============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .career-selection-page *,
+  .career-selection-page *::before,
+  .career-selection-page *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

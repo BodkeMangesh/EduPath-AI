@@ -14,8 +14,8 @@ function WelcomeCard({ dashboard }) {
         </p>
 
         <div className="career-badge">
-          🎯 Current Career:{" "}
-          <strong>{dashboard?.career || "Career Path"}</strong>
+          🎯 Target Career:{" "}
+          <strong>{dashboard?.targetRole || "Career Path"}</strong>
         </div>
       </div>
     </section>

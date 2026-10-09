@@ -3,15 +3,21 @@ const CareerCategory = require("../models/CareerCategory");
 const ApiError = require("../utils/ApiError");
 
 class CareerService {
-  /**
-   * Get all active careers
-   */
+  static normalizeCareerId(value) {
+    return String(value || "")
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g, "-")
+      .replace(/[^a-z0-9-]/g, "")
+      .replace(/-+/g, "-")
+      .replace(/^-|-$/g, "");
+  }
+
   static async getAllCareers(filters = {}) {
     const query = {
       isActive: true,
     };
 
-    // Search by category slug
     if (filters.category) {
       const category = await CareerCategory.findOne({
         slug: filters.category,
@@ -23,7 +29,6 @@ class CareerService {
       }
     }
 
-    // Search by keyword
     if (filters.keyword) {
       query.$or = [
         {
@@ -43,7 +48,6 @@ class CareerService {
 
     const page = Number(filters.page) || 1;
     const limit = Number(filters.limit) || 12;
-
     const skip = (page - 1) * limit;
 
     const careers = await Career.find(query)
@@ -63,9 +67,6 @@ class CareerService {
     };
   }
 
-  /**
-   * Get career by slug
-   */
   static async getCareerBySlug(slug) {
     const career = await Career.findOne({
       slug,
@@ -79,10 +80,11 @@ class CareerService {
     return career;
   }
 
-  /**
-   * Search careers
-   */
   static async searchCareers(keyword) {
+    if (!keyword || !String(keyword).trim()) {
+      return [];
+    }
+
     return await Career.find({
       isActive: true,
       $or: [
@@ -98,22 +100,22 @@ class CareerService {
             $options: "i",
           },
         },
+        {
+          skills: {
+            $regex: keyword,
+            $options: "i",
+          },
+        },
       ],
     }).populate("category");
   }
 
-  /**
-   * Get all active categories
-   */
   static async getCategories() {
     return await CareerCategory.find({
       isActive: true,
     }).sort({ name: 1 });
   }
 
-  /**
-   * Dashboard statistics
-   */
   static async getStatistics() {
     const totalCareers = await Career.countDocuments({
       isActive: true,
@@ -130,25 +132,7 @@ class CareerService {
   }
 
   static async createCareer(data) {
-    const category = await CareerCategory.findOne({
-      slug: data.categorySlug,
-      isActive: true,
-    });
-
-    if (!category) {
-      throw new ApiError(404, "Career category not found.");
-    }
-
-    const career = await Career.create({
-      ...data,
-      category: category._id,
-    });
-
-    return career.populate("category", "name slug");
-  }
-
-  static async createCareer(data) {
-    const { categorySlug, ...careerData } = data;
+    const { categorySlug, careerId, name, slug, ...careerData } = data;
 
     const category = await CareerCategory.findOne({
       slug: categorySlug,
@@ -159,16 +143,36 @@ class CareerService {
       throw new ApiError(404, "Career category not found.");
     }
 
+    const normalizedCareerId = this.normalizeCareerId(careerId || name);
+
+    if (!normalizedCareerId) {
+      throw new ApiError(400, "A valid career ID is required.");
+    }
+
+    const existingCareer = await Career.findOne({
+      $or: [{ careerId: normalizedCareerId }, { slug }],
+    });
+
+    if (existingCareer) {
+      throw new ApiError(
+        409,
+        "A career with this career ID or slug already exists.",
+      );
+    }
+
     const career = await Career.create({
+      name,
+      careerId: normalizedCareerId,
+      slug,
       ...careerData,
       category: category._id,
     });
 
-    return career.populate("category", "name slug");
+    return await career.populate("category", "name slug icon");
   }
 
   static async updateCareer(id, data) {
-    const { categorySlug, ...careerData } = data;
+    const { categorySlug, careerId, name, slug, ...careerData } = data;
 
     if (categorySlug) {
       const category = await CareerCategory.findOne({
@@ -183,6 +187,18 @@ class CareerService {
       careerData.category = category._id;
     }
 
+    if (careerId !== undefined) {
+      careerData.careerId = this.normalizeCareerId(careerId);
+    }
+
+    if (name !== undefined) {
+      careerData.name = name;
+    }
+
+    if (slug !== undefined) {
+      careerData.slug = slug;
+    }
+
     const career = await Career.findByIdAndUpdate(id, careerData, {
       new: true,
       runValidators: true,
@@ -194,6 +210,7 @@ class CareerService {
 
     return career;
   }
+
   static async deleteCareer(id) {
     const career = await Career.findByIdAndUpdate(
       id,
@@ -210,6 +227,34 @@ class CareerService {
     }
 
     return career;
+  }
+
+  static async createCategory(data) {
+    const { name, slug, description, icon } = data;
+
+    const existingCategory = await CareerCategory.findOne({
+      $or: [{ name }, { slug }],
+    });
+
+    if (existingCategory) {
+      throw new ApiError(
+        409,
+        "A career category with this name or slug already exists.",
+      );
+    }
+
+    return await CareerCategory.create({
+      name,
+      slug,
+      description: description || "",
+      icon: icon || "",
+    });
+  }
+
+  static async someMethod() {
+    return {
+      message: "Career service is working correctly.",
+    };
   }
 }
 

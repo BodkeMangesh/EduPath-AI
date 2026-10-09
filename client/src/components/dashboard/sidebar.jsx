@@ -31,14 +31,6 @@ function Sidebar() {
           </NavLink>
         </li>
 
-        {/* Skill Assessment */}
-        <li>
-          <NavLink to="/skill-assessment" className="sidebar-link">
-            <span>📝</span>
-            <span>Assessment</span>
-          </NavLink>
-        </li>
-
         {/* AI Mentor */}
         <li>
           <NavLink to="/chat" className="sidebar-link">
@@ -60,14 +52,6 @@ function Sidebar() {
           <NavLink to="/profile" className="sidebar-link">
             <span>👤</span>
             <span>Profile</span>
-          </NavLink>
-        </li>
-
-        {/* Career Discovery */}
-        <li>
-          <NavLink to="/career-discovery" className="sidebar-link">
-            <span>💼</span>
-            <span>Career Discovery</span>
           </NavLink>
         </li>
 

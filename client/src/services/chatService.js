@@ -1,9 +1,9 @@
 import api from "../api/axios";
 
-export const sendMessage = async ({ message, careerId }) => {
+export const sendMessage = async ({ message, conversation = [] }) => {
   const response = await api.post("/chat", {
     message,
-    careerId,
+    conversation,
   });
 
   return response.data;

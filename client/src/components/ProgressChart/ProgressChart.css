@@ -1,85 +1,289 @@
+/* =========================================================
+   EduPath AI - Progress Chart
+   Premium Dark Dashboard System
+   ========================================================= */
+
 .progress-chart {
-  background: #ffffff;
-  border-radius: 18px;
-  padding: 30px;
-  margin-top: 30px;
-  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+  --chart-bg: #111827;
+  --chart-surface: #151e2f;
+  --chart-surface-hover: #182235;
+
+  --chart-text: #f8fafc;
+  --chart-text-secondary: #cbd5e1;
+  --chart-text-muted: #64748b;
+
+  --chart-border: #273449;
+  --chart-border-strong: #334155;
+
+  --chart-primary: #818cf8;
+  --chart-success: #10b981;
+  --chart-warning: #f59e0b;
+
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 22px 26px;
+
+  background: var(--chart-bg);
+  border: 1px solid var(--chart-border);
+  border-radius: 14px;
+
+  color: var(--chart-text);
+
+  box-shadow: 0 8px 24px rgba(2, 6, 23, 0.18);
+
+  /* Keep the analytics card compact */
+  min-height: 0;
 }
 
-.progress-chart h2 {
-  margin-bottom: 30px;
-  color: #1f2937;
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.progress-chart > h2 {
+  margin: 0 0 20px;
+
+  color: var(--chart-text);
+
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.3;
 }
+
+/* =========================================================
+   CHART ITEM
+   ========================================================= */
 
 .chart-item {
-  margin-bottom: 25px;
+  width: 100%;
+  margin-bottom: 17px;
 }
+
+.chart-item:last-of-type {
+  margin-bottom: 21px;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
 
 .chart-header {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  margin-bottom: 10px;
-  font-weight: 600;
-  color: #374151;
+
+  margin-bottom: 7px;
 }
+
+.chart-header span:first-child {
+  color: var(--chart-text-secondary);
+
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.chart-header span:last-child {
+  color: var(--chart-text);
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* =========================================================
+   PROGRESS BAR
+   ========================================================= */
 
 .chart-bar {
   width: 100%;
-  height: 14px;
-  background: #e5e7eb;
-  border-radius: 20px;
+  height: 8px;
+
   overflow: hidden;
+
+  background: #273449;
+  border-radius: 999px;
 }
 
 .chart-fill {
   height: 100%;
-  border-radius: 20px;
-  transition: width 0.6s ease;
+  border-radius: inherit;
+
+  transition: width 0.35s ease;
 }
 
-.blue {
-  background: #2563eb;
+/* =========================================================
+   BAR COLORS
+   ========================================================= */
+
+.chart-fill.blue {
+  background: #6366f1;
 }
 
-.green {
-  background: #22c55e;
+.chart-fill.green {
+  background: #10b981;
 }
 
-.orange {
+.chart-fill.orange {
   background: #f59e0b;
 }
 
+/* =========================================================
+   INFO CARDS
+   ========================================================= */
+
 .progress-info {
-  margin-top: 35px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  gap: 12px;
+
+  margin-top: 2px;
 }
 
 .info-box {
-  background: #f9fafb;
-  border-radius: 12px;
-  padding: 20px;
-  text-align: center;
-  border: 1px solid #e5e7eb;
+  min-width: 0;
+
+  padding: 13px 15px;
+
+  background: var(--chart-surface);
+  border: 1px solid var(--chart-border);
+  border-radius: 10px;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.info-box:hover {
+  background: var(--chart-surface-hover);
+  border-color: var(--chart-border-strong);
+
+  transform: translateY(-1px);
 }
 
 .info-box h3 {
-  font-size: 32px;
-  color: #2563eb;
-  margin-bottom: 8px;
+  margin: 0 0 4px;
+
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.2;
 }
 
 .info-box p {
-  color: #6b7280;
+  margin: 0;
+
+  color: var(--chart-text-muted);
+
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.4;
 }
 
-@media (max-width: 768px) {
+/* =========================================================
+   ACCENT COLORS
+   ========================================================= */
+
+.info-box:nth-child(1) h3 {
+  color: var(--chart-primary);
+}
+
+.info-box:nth-child(2) h3 {
+  color: var(--chart-warning);
+}
+
+.info-box:nth-child(3) h3 {
+  color: #a78bfa;
+}
+
+.info-box:nth-child(4) h3 {
+  color: var(--chart-success);
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
   .progress-chart {
     padding: 20px;
   }
 
-  .chart-header {
-    font-size: 14px;
+  .progress-info {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+  .progress-chart {
+    padding: 18px;
+    border-radius: 12px;
+  }
+
+  .progress-chart > h2 {
+    font-size: 18px;
+    margin-bottom: 18px;
+  }
+
+  .chart-item {
+    margin-bottom: 16px;
+  }
+
+  .progress-info {
+    grid-template-columns: 1fr;
+    gap: 9px;
+  }
+
+  .info-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 13px 14px;
+  }
+
+  .info-box h3 {
+    margin: 0;
+    font-size: 19px;
+  }
+
+  .info-box p {
+    text-align: right;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 430px) {
+  .progress-chart {
+    padding: 16px;
+  }
+
+  .progress-chart > h2 {
+    font-size: 17px;
+  }
+
+  .chart-header span {
+    font-size: 12px !important;
+  }
+
+  .info-box h3 {
+    font-size: 18px;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .chart-fill,
+  .info-box {
+    transition: none;
   }
 }

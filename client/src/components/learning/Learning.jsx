@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+
 import "./Learning.css";
 
 import {
@@ -13,30 +15,26 @@ function Learning() {
   const [progress, setProgress] = useState(null);
   const [careerId, setCareerId] = useState("");
   const [loading, setLoading] = useState(true);
+  const [completingTopic, setCompletingTopic] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
     loadLearningProgress();
   }, []);
 
+  // =====================================================
+  // LOAD LEARNING PROGRESS
+  // =====================================================
+
   const loadLearningProgress = async () => {
     try {
       setLoading(true);
       setError("");
 
-      /*
-       * Get selected career from localStorage.
-       *
-       * We need the career SLUG because
-       * LearningProgress is currently created with:
-       *
-       * careerId = "full-stack-developer"
-       */
-
       const selectedCareerId = localStorage.getItem("selectedCareerId");
 
       if (!selectedCareerId) {
-        setError("No selected career found. Please select a career first.");
+        setError("No learning path found. Please select your career first.");
         return;
       }
 
@@ -44,18 +42,7 @@ function Learning() {
 
       const response = await getLearningProgress(selectedCareerId);
 
-      if (!selectedCareerId) {
-        setError("Selected career information is invalid.");
-        return;
-      }
-
-      setCareerId(selectedCareerId);
-      console.log("Stored Career:", career);
-      console.log("Selected Career ID:", selectedCareerId);
-
-      const response = await getLearningProgress(selectedCareerId);
-
-      setProgress(response.data.data);
+      setProgress(response.data?.data || null);
     } catch (err) {
       console.error("Unable to load learning progress:", err);
 
@@ -67,243 +54,404 @@ function Learning() {
     }
   };
 
+  // =====================================================
+  // COMPLETE TOPIC
+  // =====================================================
+
   const handleCompleteTopic = async (topic) => {
+    if (!careerId || !topic) return;
+
     try {
+      setCompletingTopic(topic);
       setError("");
 
-      const selectedCareerId = localStorage.getItem("selectedCareerId");
+      await completeTopic(careerId, topic);
 
-      if (!selectedCareerId) {
-        setError("Selected career not found.");
-        return;
-      }
+      toast.success(`"${topic}" completed 🎉`);
 
-      console.log("Completing Topic:", topic);
-      console.log("Career ID:", selectedCareerId);
-
-      await completeTopic(selectedCareerId, topic);
-
-      // Reload latest progress
       await loadLearningProgress();
     } catch (err) {
       console.error("Unable to complete topic:", err);
 
-      setError(err.response?.data?.message || "Unable to complete topic.");
+      const message =
+        err.response?.data?.message || "Unable to complete this topic.";
+
+      setError(message);
+      toast.error(message);
+    } finally {
+      setCompletingTopic("");
     }
   };
 
+  // =====================================================
+  // LOADING
+  // =====================================================
+
   if (loading) {
     return (
-      <div className="learning-state">
-        <div className="learning-spinner"></div>
+      <div className="learning-page">
+        <div className="learning-state">
+          <div className="learning-spinner"></div>
 
-        <h2>Loading your learning path...</h2>
+          <h2>Preparing your learning path...</h2>
 
-        <p>Preparing your personalized learning journey.</p>
+          <p>Loading your personalized journey.</p>
+        </div>
       </div>
     );
   }
 
-  if (error) {
+  // =====================================================
+  // ERROR
+  // =====================================================
+
+  if (error && !progress) {
     return (
-      <div className="learning-state learning-error">
-        <div className="learning-error-icon">⚠️</div>
+      <div className="learning-page">
+        <div className="learning-state learning-error">
+          <div className="learning-state-icon">⚠️</div>
 
-        <h2>Unable to Load Learning Path</h2>
+          <h2>Unable to Load Learning Path</h2>
 
-        <p>{error}</p>
+          <p>{error}</p>
 
-        <button onClick={loadLearningProgress}>Try Again</button>
+          <div className="learning-state-actions">
+            <button onClick={loadLearningProgress}>Try Again</button>
 
-        <button
-          className="secondary-button"
-          onClick={() => navigate("/career-discovery")}
-        >
-          Explore Careers
-        </button>
+            <button
+              className="secondary-button"
+              onClick={() => navigate("/dashboard")}
+            >
+              Back to Dashboard
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
+
+  // =====================================================
+  // NO PROGRESS
+  // =====================================================
 
   if (!progress) {
     return (
-      <div className="learning-state">
-        <h2>No Learning Progress Found</h2>
+      <div className="learning-page">
+        <div className="learning-state">
+          <div className="learning-state-icon">📚</div>
 
-        <p>
-          Complete your assessment to generate your personalized learning path.
-        </p>
+          <h2>Your Learning Path Isn't Ready Yet</h2>
 
-        <button onClick={() => navigate("/skill-assessment")}>
-          Take Assessment
-        </button>
+          <p>
+            Select a career and complete the required setup to generate your
+            personalized learning journey.
+          </p>
+
+          <button onClick={() => navigate("/dashboard")}>
+            Go to Dashboard
+          </button>
+        </div>
       </div>
     );
   }
 
+  const completion = progress.overallCompletion || 0;
+  const pendingTopics = progress.pendingTopics || [];
+  const completedTopics = progress.completedTopics || [];
+
+  const nextTopic = pendingTopics[0];
+
   return (
     <div className="learning-page">
-      {/* Header */}
-      <section className="learning-header">
-        <div>
-          <span className="learning-badge">📚 Personalized Learning</span>
+      <div className="learning-container">
+        {/* =================================================
+            PAGE HEADER
+        ================================================= */}
 
-          <h1>Your Learning Journey</h1>
+        <section className="learning-hero">
+          <div className="learning-hero-content">
+            <span className="learning-badge">📚 Personalized Learning</span>
 
-          <p>
-            Follow your personalized learning path and build the skills needed
-            for your career.
-          </p>
-        </div>
+            <h1>Your Learning Journey</h1>
 
-        <div className="phase-card">
-          <span>Current Phase</span>
+            <p>
+              Build the skills you need for your target career, one topic at a
+              time.
+            </p>
 
-          <strong>Phase {progress.currentPhase || 1}</strong>
-        </div>
-      </section>
-
-      {/* Progress Overview */}
-      <section className="learning-overview">
-        <div className="overview-card">
-          <span>📈</span>
-
-          <div>
-            <p>Overall Completion</p>
-
-            <h2>{progress.overallCompletion || 0}%</h2>
-          </div>
-        </div>
-
-        <div className="overview-card">
-          <span>🔥</span>
-
-          <div>
-            <p>Current Streak</p>
-
-            <h2>{progress.currentStreak || 0} days</h2>
-          </div>
-        </div>
-
-        <div className="overview-card">
-          <span>⏱️</span>
-
-          <div>
-            <p>Study Hours</p>
-
-            <h2>{progress.totalStudyHours || 0} hrs</h2>
-          </div>
-        </div>
-
-        <div className="overview-card">
-          <span>🎯</span>
-
-          <div>
-            <p>Next Milestone</p>
-
-            <h2 className="milestone-text">
-              {progress.nextMilestone || "Keep Learning"}
-            </h2>
-          </div>
-        </div>
-      </section>
-
-      {/* Progress Bar */}
-      <section className="learning-section">
-        <div className="section-heading">
-          <div>
-            <h2>Learning Progress</h2>
-
-            <p>Track your progress toward completing your learning path.</p>
+            <div className="learning-career">
+              <span>🎯 Career Path</span>
+              <strong>{careerId}</strong>
+            </div>
           </div>
 
-          <strong>{progress.overallCompletion || 0}%</strong>
-        </div>
+          <div className="phase-card">
+            <span>Current Phase</span>
 
-        <div className="progress-track">
-          <div
-            className="progress-fill"
-            style={{
-              width: `${progress.overallCompletion || 0}%`,
-            }}
-          ></div>
-        </div>
-      </section>
+            <strong>Phase {progress.currentPhase || 1}</strong>
 
-      {/* Pending Topics */}
-      <section className="learning-section">
-        <div className="section-heading">
-          <div>
-            <h2>📖 Topics to Learn</h2>
-
-            <p>Complete these topics to move forward.</p>
+            <small>
+              {pendingTopics.length > 0
+                ? `${pendingTopics.length} topics remaining`
+                : "All topics completed"}
+            </small>
           </div>
-        </div>
+        </section>
 
-        {progress.pendingTopics?.length > 0 ? (
-          <div className="topic-list">
-            {progress.pendingTopics.map((topic, index) => (
-              <div className="topic-card" key={`${topic}-${index}`}>
-                <div className="topic-number">{index + 1}</div>
+        {/* =================================================
+            ERROR ALERT
+        ================================================= */}
 
-                <div className="topic-content">
-                  <h3>{topic}</h3>
+        {error && (
+          <div className="learning-alert">
+            <span>⚠️</span>
+            <p>{error}</p>
 
-                  <span>Pending</span>
+            <button onClick={() => setError("")}>×</button>
+          </div>
+        )}
+
+        {/* =================================================
+            PROGRESS OVERVIEW
+        ================================================= */}
+
+        <section className="learning-overview">
+          <div className="overview-card">
+            <div className="overview-icon progress-icon">📈</div>
+
+            <div>
+              <span>Overall Progress</span>
+              <strong>{completion}%</strong>
+            </div>
+          </div>
+
+          <div className="overview-card">
+            <div className="overview-icon streak-icon">🔥</div>
+
+            <div>
+              <span>Study Streak</span>
+              <strong>{progress.currentStreak || 0} days</strong>
+            </div>
+          </div>
+
+          <div className="overview-card">
+            <div className="overview-icon hours-icon">⏱️</div>
+
+            <div>
+              <span>Study Hours</span>
+              <strong>{progress.totalStudyHours || 0} hrs</strong>
+            </div>
+          </div>
+
+          <div className="overview-card">
+            <div className="overview-icon topic-icon">📚</div>
+
+            <div>
+              <span>Topics Completed</span>
+              <strong>{completedTopics.length}</strong>
+            </div>
+          </div>
+        </section>
+
+        {/* =================================================
+            PROGRESS BAR
+        ================================================= */}
+
+        <section className="learning-progress-card">
+          <div className="progress-heading">
+            <div>
+              <span className="section-label">YOUR PROGRESS</span>
+
+              <h2>Learning Path Progress</h2>
+
+              <p>
+                Keep completing topics to move through your personalized
+                roadmap.
+              </p>
+            </div>
+
+            <strong>{completion}%</strong>
+          </div>
+
+          <div className="progress-track">
+            <div
+              className="progress-fill"
+              style={{ width: `${completion}%` }}
+            />
+          </div>
+
+          <div className="progress-meta">
+            <span>{completedTopics.length} completed</span>
+
+            <span>{pendingTopics.length} remaining</span>
+          </div>
+        </section>
+
+        {/* =================================================
+            NEXT TOPIC
+        ================================================= */}
+
+        {nextTopic && (
+          <section className="next-topic-card">
+            <div className="next-topic-icon">🚀</div>
+
+            <div className="next-topic-content">
+              <span>YOUR NEXT STEP</span>
+
+              <h2>{nextTopic}</h2>
+
+              <p>
+                Complete this topic to continue progressing through your
+                learning path.
+              </p>
+            </div>
+
+            <button
+              onClick={() => handleCompleteTopic(nextTopic)}
+              disabled={completingTopic === nextTopic}
+            >
+              {completingTopic === nextTopic
+                ? "Completing..."
+                : "✓ Mark Complete"}
+            </button>
+          </section>
+        )}
+
+        {/* =================================================
+            PENDING TOPICS
+        ================================================= */}
+
+        <section className="learning-section">
+          <div className="section-heading">
+            <div>
+              <span className="section-label">UPCOMING</span>
+
+              <h2>📖 Topics to Learn</h2>
+
+              <p>Follow these topics in order to build your career skills.</p>
+            </div>
+
+            <span className="topic-counter">
+              {pendingTopics.length} Remaining
+            </span>
+          </div>
+
+          {pendingTopics.length > 0 ? (
+            <div className="topic-list">
+              {pendingTopics.map((topic, index) => (
+                <div
+                  className={`topic-card ${index === 0 ? "active-topic" : ""}`}
+                  key={`${topic}-${index}`}
+                >
+                  <div className="topic-number">{index + 1}</div>
+
+                  <div className="topic-details">
+                    <div className="topic-title-row">
+                      <h3>{topic}</h3>
+
+                      {index === 0 && (
+                        <span className="current-topic">Current</span>
+                      )}
+                    </div>
+
+                    <p>
+                      {index === 0
+                        ? "Your next recommended learning topic."
+                        : "Upcoming topic in your learning path."}
+                    </p>
+                  </div>
+
+                  <button
+                    className="topic-complete-btn"
+                    onClick={() => handleCompleteTopic(topic)}
+                    disabled={completingTopic === topic}
+                  >
+                    {completingTopic === topic ? "..." : "Complete"}
+                  </button>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+          ) : (
+            <div className="empty-topics">
+              <div>🎉</div>
+
+              <h3>Learning Path Completed!</h3>
+
+              <p>
+                Excellent work! You have completed all topics in your current
+                learning path.
+              </p>
+            </div>
+          )}
+        </section>
+
+        {/* =================================================
+            COMPLETED TOPICS
+        ================================================= */}
+
+        <section className="learning-section completed-section">
+          <div className="section-heading">
+            <div>
+              <span className="section-label">ACHIEVEMENT</span>
+
+              <h2>✅ Completed Topics</h2>
+
+              <p>Your completed learning milestones.</p>
+            </div>
+
+            <span className="topic-counter completed-counter">
+              {completedTopics.length} Completed
+            </span>
           </div>
-        ) : (
-          <div className="empty-topics">
-            <span>🎉</span>
 
-            <h3>Learning Path Completed!</h3>
+          {completedTopics.length > 0 ? (
+            <div className="completed-list">
+              {completedTopics.map((topic, index) => (
+                <div className="completed-topic" key={`${topic}-${index}`}>
+                  <div className="completed-check">✓</div>
 
-            <p>You have completed all available topics.</p>
-          </div>
-        )}
-      </section>
+                  <div>
+                    <h3>{topic}</h3>
 
-      {/* Completed Topics */}
-      <section className="learning-section">
-        <div className="section-heading">
+                    <p>Completed successfully</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="empty-completed">
+              <span>📘</span>
+
+              <h3>No completed topics yet</h3>
+
+              <p>
+                Start with your next topic and your achievements will appear
+                here.
+              </p>
+            </div>
+          )}
+        </section>
+
+        {/* =================================================
+            BOTTOM CTA
+        ================================================= */}
+
+        <section className="learning-cta">
           <div>
-            <h2>✅ Completed Topics</h2>
+            <span>💡</span>
 
-            <p>Topics you have already completed.</p>
+            <div>
+              <h2>Stay consistent with your learning.</h2>
+
+              <p>Small progress every day leads to strong career readiness.</p>
+            </div>
           </div>
-        </div>
 
-        {progress.completedTopics?.length > 0 ? (
-          <div className="completed-list">
-            {progress.completedTopics.map((topic, index) => (
-              <div className="completed-topic" key={`${topic}-${index}`}>
-                <span>✓</span>
-
-                <p>{topic}</p>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="empty-completed">No topics completed yet.</div>
-        )}
-      </section>
-
-      {/* Career Information */}
-      <section className="learning-footer-card">
-        <div>
-          <span>🚀</span>
-
-          <div>
-            <h2>Keep building your skills</h2>
-
-            <p>Consistency is the key to becoming career-ready.</p>
-          </div>
-        </div>
-
-        <button onClick={() => navigate("/progress")}>View Progress →</button>
-      </section>
+          <button onClick={() => navigate("/progress")}>
+            View Full Progress →
+          </button>
+        </section>
+      </div>
     </div>
   );
 }

@@ -1,61 +1,68 @@
 const asyncHandler = require("../middleware/asyncHandler");
 
-const Assessment = require("../models/Assessment");
-
+const User = require("../models/User");
 const LearningProgressService = require("../services/LearningProgressService");
-
-const CareerIntelligenceEngine = require("../intelligence/CareerIntelligenceEngine");
 
 const ResourceRecommendationEngine = require("../intelligence/algorithms/ResourceRecommendationEngine");
 
 exports.getResources = asyncHandler(async (req, res) => {
   const userId = req.user._id;
 
-  // ------------------------------------------
-  // Get latest completed assessment
-  // ------------------------------------------
+  // ==========================================================
+  // GET REQUEST CONTEXT
+  // ==========================================================
 
-  const assessment = await Assessment.findOne({
-    user: userId,
-    status: "completed",
-  }).sort({
-    completedAt: -1,
-  });
+  const requestedCareerId = req.query.careerId?.trim() || "";
+  const requestedPhase = Number(req.query.phase) || null;
+  const requestedTopic = req.query.topic?.trim() || "";
 
-  if (!assessment) {
+  // ==========================================================
+  // GET USER
+  // ==========================================================
+
+  const user = await User.findById(userId);
+
+  if (!user) {
     return res.status(404).json({
       success: false,
-      message: "Completed assessment not found.",
+      message: "User not found.",
     });
   }
 
-  // ------------------------------------------
-  // Analyze career
-  // ------------------------------------------
+  // ==========================================================
+  // RESOLVE CAREER ID
+  // ==========================================================
 
-  const careerAnalysis = await CareerIntelligenceEngine.analyze(assessment);
+  let careerId = requestedCareerId;
 
-  const recommendedCareer =
-    careerAnalysis?.careerAnalysis?.recommendedCareer ||
-    careerAnalysis?.recommendedCareer;
+  /*
 
-  if (!recommendedCareer) {
-    console.log(
-      "Career Intelligence Result:",
-      JSON.stringify(careerAnalysis, null, 2),
-    );
+* If careerId is not supplied by the frontend,
+* try to get it from the user's profile/onboarding data.
+*
+* This keeps Resources usable after page refresh/direct access.
+  */
 
-    return res.status(404).json({
+  if (!careerId) {
+    careerId =
+      user?.selectedCareer ||
+      user?.profile?.careerId ||
+      user?.careerId ||
+      user?.selectedCareerId ||
+      user?.aiProfile?.careerId ||
+      "";
+  }
+
+  if (!careerId) {
+    return res.status(400).json({
       success: false,
-      message: "Recommended career not found.",
+      message: "Career information is missing. Please select a career first.",
     });
   }
 
-  const careerId = recommendedCareer.careerId;
-
-  // ------------------------------------------
-  // Get actual learning progress
-  // ------------------------------------------
+  // ==========================================================
+  // GET LEARNING PROGRESS
+  // ==========================================================
 
   const learningProgress = await LearningProgressService.getProgress(
     userId,
@@ -69,19 +76,70 @@ exports.getResources = asyncHandler(async (req, res) => {
     });
   }
 
-  // ------------------------------------------
-  // Generate personalized resources
-  // ------------------------------------------
+  // ==========================================================
+  // CURRENT PHASE
+  // ==========================================================
+
+  const currentPhase =
+    requestedPhase || Number(learningProgress.currentPhase) || 1;
+
+  // ==========================================================
+  // CURRENT TOPIC
+  // ==========================================================
+
+  const currentTopic =
+    requestedTopic ||
+    learningProgress.pendingTopics?.[0] ||
+    learningProgress.nextTopic ||
+    null;
+
+  // ==========================================================
+  // GENERATE PERSONALIZED RESOURCES
+  // ==========================================================
+
+  /*
+
+* ResourceRecommendationEngine expects career information
+* and learning progress.
+*
+* No Assessment dependency is required here.
+  */
+
+  const careerAnalysis = {
+    recommendedCareer: {
+      careerId,
+      id: careerId,
+      title: user?.profile?.careerTitle || careerId,
+      careerTitle: user?.profile?.careerTitle || careerId,
+    },
+  };
 
   const resources = await ResourceRecommendationEngine.recommend(
-    assessment,
+    user,
     careerAnalysis,
-    learningProgress,
+    {
+      ...(learningProgress.toObject?.() || learningProgress),
+      currentPhase,
+      currentTopic,
+      nextTopic: currentTopic,
+    },
   );
 
-  // ------------------------------------------
-  // Response
-  // ------------------------------------------
+  // ==========================================================
+  // VALIDATE RESOURCE RESPONSE
+  // ==========================================================
+
+  if (!resources || resources.error) {
+    return res.status(500).json({
+      success: false,
+      message:
+        resources?.message || "Resource generation returned invalid data.",
+    });
+  }
+
+  // ==========================================================
+  // RESPONSE
+  // ==========================================================
 
   return res.status(200).json({
     success: true,
@@ -89,15 +147,37 @@ exports.getResources = asyncHandler(async (req, res) => {
     message: "Personalized resources retrieved successfully.",
 
     data: {
-      career: recommendedCareer.title || recommendedCareer.careerId,
+      career: careerAnalysis.recommendedCareer.title,
 
-      currentPhase: learningProgress.currentPhase,
+      careerId,
 
-      overallCompletion: learningProgress.overallCompletion,
+      currentPhase,
 
-      nextTopic: learningProgress.pendingTopics?.[0] || null,
+      overallCompletion: Number(learningProgress.overallCompletion) || 0,
 
-      resources,
+      nextTopic: resources.nextTopic || currentTopic,
+
+      currentTopic: currentTopic,
+
+      resources: {
+        nextTopic: resources.nextTopic || currentTopic,
+
+        objectives: resources.objectives || {},
+
+        youtube: Array.isArray(resources.youtube) ? resources.youtube : [],
+
+        documentation: Array.isArray(resources.documentation)
+          ? resources.documentation
+          : [],
+
+        articles: Array.isArray(resources.articles) ? resources.articles : [],
+
+        practice: Array.isArray(resources.practice) ? resources.practice : [],
+
+        projects: Array.isArray(resources.projects) ? resources.projects : [],
+
+        revision: Array.isArray(resources.revision) ? resources.revision : [],
+      },
     },
   });
 });

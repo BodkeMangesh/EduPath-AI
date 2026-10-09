@@ -1,30 +1,392 @@
+/* =========================================================
+   EduPath AI — Personal Info Card
+   Premium Dark Navy Dashboard Design
+   ========================================================= */
+
 .profile-card {
-  background: #ffffff;
-  margin-top: 25px;
-  padding: 25px;
-  border-radius: 15px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  --pic-bg: #111827;
+  --pic-bg-soft: #151e2f;
+  --pic-bg-hover: #182235;
+
+  --pic-border: #273449;
+  --pic-border-strong: #334155;
+
+  --pic-text: #f8fafc;
+  --pic-text-secondary: #cbd5e1;
+  --pic-text-muted: #64748b;
+
+  --pic-primary: #818cf8;
+  --pic-primary-dark: #6366f1;
+  --pic-primary-soft: rgba(99, 102, 241, 0.12);
+  --pic-primary-border: rgba(129, 140, 248, 0.35);
+
+  --pic-success: #34d399;
+  --pic-success-soft: rgba(16, 185, 129, 0.1);
+  --pic-success-border: rgba(16, 185, 129, 0.25);
+
+  --pic-radius: 16px;
+
+  width: 100%;
+  max-width: 1180px;
+
+  margin: 0 auto;
+
+  padding: 22px 24px;
+
+  background: var(--pic-bg);
+
+  color: var(--pic-text);
+
+  border: 1px solid var(--pic-border);
+  border-radius: var(--pic-radius);
+
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.12),
+    0 1px 2px rgba(0, 0, 0, 0.16);
+
+  box-sizing: border-box;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-.profile-card h2 {
-  margin-bottom: 20px;
+/* =========================================================
+   GLOBAL BOX SIZING
+   ========================================================= */
+
+.profile-card *,
+.profile-card *::before,
+.profile-card *::after {
+  box-sizing: border-box;
 }
+
+/* =========================================================
+   CARD HOVER
+   ========================================================= */
+
+.profile-card:hover {
+  background: var(--pic-bg);
+
+  border-color: var(--pic-border-strong);
+
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.16),
+    0 1px 2px rgba(0, 0, 0, 0.18);
+}
+
+/* =========================================================
+   CARD TITLE
+   ========================================================= */
+
+.profile-card h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin: 0;
+
+  padding: 0 0 17px;
+
+  color: var(--pic-text);
+
+  border-bottom: 1px solid rgba(51, 65, 85, 0.55);
+
+  font-size: 18px;
+  line-height: 1.35;
+  font-weight: 700;
+
+  letter-spacing: -0.01em;
+}
+
+/* =========================================================
+   INFORMATION GRID
+   ========================================================= */
 
 .info-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  column-gap: 30px;
+
+  width: 100%;
 }
+
+/* =========================================================
+   INFORMATION ITEM
+   ========================================================= */
+
+.info-item {
+  min-width: 0;
+
+  padding: 17px 0;
+
+  border-bottom: 1px solid rgba(51, 65, 85, 0.4);
+}
+
+/*
+   Remove bottom border from the last row
+   on desktop.
+*/
+
+.info-item:nth-last-child(-n + 2) {
+  border-bottom: none;
+}
+
+/* =========================================================
+   LABEL
+   ========================================================= */
 
 .info-item label {
   display: block;
-  font-size: 13px;
-  color: #666;
-  margin-bottom: 6px;
+
+  margin: 0 0 6px;
+
+  color: var(--pic-text-muted);
+
+  font-size: 10px;
+  line-height: 1.4;
+
+  font-weight: 700;
+
+  letter-spacing: 0.09em;
+
+  text-transform: uppercase;
 }
 
+/* =========================================================
+   VALUE
+   ========================================================= */
+
 .info-item p {
-  font-size: 16px;
-  font-weight: 600;
-  color: #222;
+  margin: 0;
+
+  color: var(--pic-text);
+
+  font-size: 14px;
+  line-height: 1.55;
+
+  font-weight: 550;
+
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* =========================================================
+   BIO
+   ========================================================= */
+
+.info-item:nth-child(6) p {
+  color: var(--pic-text-secondary);
+
+  font-size: 13.5px;
+
+  font-weight: 450;
+
+  line-height: 1.65;
+}
+
+/* =========================================================
+   ROLE BADGE
+   ========================================================= */
+
+.info-item:nth-child(4) p {
+  display: inline-flex;
+  align-items: center;
+
+  min-height: 28px;
+
+  padding: 5px 10px;
+
+  background: var(--pic-primary-soft);
+
+  border: 1px solid var(--pic-primary-border);
+
+  border-radius: 8px;
+
+  color: var(--pic-primary);
+
+  font-size: 11px;
+  font-weight: 700;
+
+  line-height: 1.2;
+
+  text-transform: capitalize;
+}
+
+/* =========================================================
+   ACCOUNT STATUS
+   ========================================================= */
+
+.info-item:nth-child(5) p {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  color: var(--pic-success);
+
+  font-size: 13px;
+  font-weight: 650;
+
+  text-transform: capitalize;
+}
+
+/*
+   Small status indicator.
+*/
+
+.info-item:nth-child(5) p::before {
+  content: "";
+
+  width: 7px;
+  height: 7px;
+
+  flex: 0 0 7px;
+
+  border-radius: 50%;
+
+  background: var(--pic-success);
+
+  box-shadow:
+    0 0 0 3px var(--pic-success-soft);
+}
+
+/* =========================================================
+   FOCUS STATE
+   ========================================================= */
+
+.profile-card:focus-within {
+  border-color: var(--pic-primary-border);
+
+  box-shadow:
+    0 0 0 3px rgba(99, 102, 241, 0.08),
+    0 10px 28px rgba(0, 0, 0, 0.14);
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .profile-card {
+    padding: 20px;
+
+    border-radius: 14px;
+  }
+
+  .profile-card h2 {
+    font-size: 17px;
+
+    padding-bottom: 15px;
+  }
+
+  .info-grid {
+    column-gap: 22px;
+  }
+
+  .info-item {
+    padding: 15px 0;
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+  .profile-card {
+    padding: 18px;
+
+    border-radius: 13px;
+  }
+
+  .profile-card h2 {
+    gap: 8px;
+
+    padding-bottom: 14px;
+
+    font-size: 16px;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+
+    column-gap: 0;
+  }
+
+  .info-item {
+    padding: 14px 0;
+
+    border-bottom: 1px solid rgba(51, 65, 85, 0.4);
+  }
+
+  .info-item:nth-last-child(-n + 2) {
+    border-bottom: 1px solid rgba(51, 65, 85, 0.4);
+  }
+
+  .info-item:last-child {
+    border-bottom: none;
+  }
+
+  .info-item label {
+    font-size: 10px;
+  }
+
+  .info-item p {
+    font-size: 13px;
+  }
+
+  .info-item:nth-child(6) p {
+    font-size: 13px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 430px) {
+  .profile-card {
+    padding: 16px;
+
+    border-radius: 12px;
+  }
+
+  .profile-card h2 {
+    font-size: 15px;
+  }
+
+  .info-item {
+    padding: 13px 0;
+  }
+
+  .info-item p {
+    font-size: 12.5px;
+  }
+
+  .info-item:nth-child(6) p {
+    font-size: 12.5px;
+  }
+
+  .info-item:nth-child(4) p {
+    min-height: 26px;
+
+    padding: 4px 9px;
+
+    font-size: 10px;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .profile-card,
+  .profile-card * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

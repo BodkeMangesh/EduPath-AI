@@ -22,29 +22,25 @@ function MentorCard({ dashboard }) {
       <div className="mentor-message">
         <div className="mentor-item">
           <strong>💡 Motivation</strong>
-          <p>
-            {mentor?.motivation ||
-              "Stay consistent and keep improving your skills."}
-          </p>
+          <p>{mentor?.motivation || ""}</p>
         </div>
 
         <div className="mentor-item">
           <strong>🎯 Today's Goal</strong>
-          <p>{mentor?.todayGoal || "Complete today's learning task."}</p>
+          <p>{mentor?.todayGoal || ""}</p>
         </div>
 
         <div className="mentor-item">
           <strong>🚀 Career Tip</strong>
-          <p>
-            {mentor?.careerTip ||
-              "Build practical projects to strengthen your profile."}
-          </p>
+          <p>{mentor?.careerTip || ""}</p>
         </div>
 
-        <div className="mentor-item warning-item">
-          <strong>⚠ Warning</strong>
-          <p>{mentor?.warning || "Don't skip your learning schedule."}</p>
-        </div>
+        {mentor?.warning && (
+          <div className="mentor-item warning-item">
+            <strong>⚠ Warning</strong>
+            <p>{mentor.warning || ""}</p>
+          </div>
+        )}
       </div>
 
       {/* AI Mentor Button */}

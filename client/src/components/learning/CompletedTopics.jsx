@@ -2,33 +2,56 @@ import "./CompletedTopics.css";
 
 function CompletedTopics({ topics = [] }) {
   return (
-    <div className="completed-card">
-      <div className="card-header">
-        <h2>✅ Completed Topics</h2>
+    <section className="completed-card">
+      {/* Header */}
+      <div className="completed-header">
+        <div className="completed-title">
+          <span className="completed-title-icon">✅</span>
 
-        <span className="topic-count">{topics.length} Completed</span>
+          <div>
+            <h2>Completed Topics</h2>
+            <p>Your learning achievements so far</p>
+          </div>
+        </div>
+
+        <span className="topic-count">
+          {topics.length} {topics.length === 1 ? "Topic" : "Topics"}
+        </span>
       </div>
 
+      {/* Content */}
       {topics.length === 0 ? (
-        <div className="empty-state">
+        <div className="completed-empty-state">
+          <div className="empty-icon">📚</div>
+
           <h3>No Topics Completed Yet</h3>
-          <p>Start learning to see your completed topics here.</p>
+
+          <p>
+            Complete topics from your learning path and your achievements will
+            appear here.
+          </p>
         </div>
       ) : (
-        <div className="topics-list">
+        <div className="completed-topics-list">
           {topics.map((topic, index) => (
-            <div className="topic-item completed" key={index}>
-              <div className="topic-icon">✔</div>
+            <div className="completed-topic-item" key={`${topic}-${index}`}>
+              {/* Number */}
+              <div className="topic-number">{index + 1}</div>
 
-              <div className="topic-content">
+              {/* Status */}
+              <div className="completed-status-icon">✓</div>
+
+              {/* Topic */}
+              <div className="completed-topic-content">
                 <h4>{topic}</h4>
-                <small>Completed Successfully</small>
+
+                <span>Completed successfully</span>
               </div>
             </div>
           ))}
         </div>
       )}
-    </div>
+    </section>
   );
 }
 

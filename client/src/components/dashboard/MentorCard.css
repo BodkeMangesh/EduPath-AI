@@ -1,129 +1,522 @@
+/* =========================================================
+   AI MENTOR CARD
+   EduPath AI - Modern Responsive UI
+========================================================= */
+
 .mentor-card {
   width: 100%;
-  box-sizing: border-box;
+  height: 100%;
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  background: #ffffff;
+
+  border-radius: 20px;
+
+  overflow: hidden;
+
+  color: #172033;
 }
+
+/* =========================================================
+   HEADER
+========================================================= */
 
 .mentor-header {
+  flex-shrink: 0;
+
   display: flex;
   align-items: center;
-  gap: 10px;
 
-  margin-bottom: 20px;
+  gap: 14px;
+
+  padding: 24px 28px 18px;
+
+  border-bottom: 1px solid #e8edf4;
+
+  background: #ffffff;
 }
+
+/* Robot icon */
 
 .mentor-header > span {
+  width: 48px;
+  height: 48px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #eef2ff;
+
+  border-radius: 14px;
+
   font-size: 25px;
+
+  box-shadow: 0 4px 10px rgba(79, 70, 229, 0.08);
 }
+
+/* Header title */
 
 .mentor-header h3 {
   margin: 0;
 
-  font-size: 18px;
+  font-size: 21px;
 
-  color: #0f172a;
+  font-weight: 700;
+
+  line-height: 1.25;
+
+  color: #111827;
 }
+
+/* Header subtitle */
 
 .mentor-header p {
-  margin: 3px 0 0;
-
-  font-size: 13px;
-
-  color: #64748b;
-}
-
-/* =========================
-   MENTOR MESSAGE
-========================= */
-
-.mentor-message {
-  display: flex;
-  flex-direction: column;
-
-  gap: 14px;
-}
-
-.mentor-item {
-  padding: 12px 14px;
-
-  background: #f8fafc;
-
-  border-radius: 8px;
-
-  border-left: 3px solid #2563eb;
-}
-
-.mentor-item strong {
-  display: block;
-
-  margin-bottom: 5px;
-
-  font-size: 13px;
-
-  color: #334155;
-}
-
-.mentor-item p {
-  margin: 0;
-
-  font-size: 13px;
-
-  line-height: 1.5;
-
-  color: #64748b;
-}
-
-.warning-item {
-  border-left-color: #f59e0b;
-}
-
-/* =========================
-   BUTTON
-========================= */
-
-.mentor-btn {
-  width: 100%;
-
-  margin-top: 20px;
-
-  padding: 11px 15px;
-
-  border: none;
-
-  border-radius: 8px;
-
-  background: #2563eb;
-
-  color: white;
+  margin: 5px 0 0;
 
   font-size: 14px;
 
-  font-weight: 600;
+  line-height: 1.4;
 
-  cursor: pointer;
-
-  transition: 0.2s ease;
+  color: #64748b;
 }
 
-.mentor-btn:hover {
-  background: #1d4ed8;
+/* =========================================================
+   MENTOR CONTENT
+========================================================= */
+
+.mentor-message {
+  flex: 1;
+
+  min-height: 0;
+
+  overflow-y: auto;
+
+  overflow-x: hidden;
+
+  padding: 18px 24px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 12px;
+
+  background: #ffffff;
+
+  scrollbar-width: thin;
+
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+/* Chrome / Edge / Safari scrollbar */
+
+.mentor-message::-webkit-scrollbar {
+  width: 7px;
+}
+
+.mentor-message::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.mentor-message::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+
+  border-radius: 10px;
+}
+
+.mentor-message::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* =========================================================
+   INDIVIDUAL MENTOR ITEM
+========================================================= */
+
+.mentor-item {
+  flex-shrink: 0;
+
+  padding: 15px 16px;
+
+  background: #f8fafc;
+
+  border: 1px solid #e5eaf1;
+
+  border-radius: 14px;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+/* Hover */
+
+.mentor-item:hover {
+  background: #f5f8fc;
+
+  border-color: #d9e1eb;
 
   transform: translateY(-1px);
 }
 
-/* =========================
+/* =========================================================
+   ITEM TITLE
+========================================================= */
+
+.mentor-item strong {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-size: 15px;
+
+  font-weight: 700;
+
+  line-height: 1.4;
+
+  color: #1e293b;
+}
+
+/* =========================================================
+   ITEM CONTENT
+========================================================= */
+
+.mentor-item p {
+  margin: 0;
+
+  font-size: 14px;
+
+  line-height: 1.65;
+
+  color: #64748b;
+
+  word-break: break-word;
+
+  overflow-wrap: anywhere;
+}
+
+/* =========================================================
+   WARNING
+========================================================= */
+
+.mentor-item.warning-item {
+  background: #fff7ed;
+
+  border-color: #fed7aa;
+}
+
+.mentor-item.warning-item strong {
+  color: #c2410c;
+}
+
+.mentor-item.warning-item p {
+  color: #9a3412;
+}
+
+/* =========================================================
+   BUTTON AREA
+========================================================= */
+
+.mentor-btn {
+  flex-shrink: 0;
+
+  width: calc(100% - 48px);
+
+  margin: 0 24px 24px;
+
+  min-height: 54px;
+
+  border: none;
+
+  border-radius: 13px;
+
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
+
+  color: #ffffff;
+
+  font-size: 15px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+/* Button hover */
+
+.mentor-btn:hover {
+  background: linear-gradient(135deg, #4338ca, #4f46e5);
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 8px 18px rgba(79, 70, 229, 0.25);
+}
+
+/* Button click */
+
+.mentor-btn:active {
+  transform: translateY(0);
+
+  box-shadow: none;
+}
+
+/* Keyboard accessibility */
+
+.mentor-btn:focus-visible {
+  outline: 3px solid rgba(99, 102, 241, 0.25);
+
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   EMPTY CONTENT
+========================================================= */
+
+.mentor-item p:empty {
+  min-height: 18px;
+
+  color: #94a3b8;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+  .mentor-header {
+    padding: 20px 22px 16px;
+  }
+
+  .mentor-header > span {
+    width: 44px;
+    height: 44px;
+
+    font-size: 23px;
+  }
+
+  .mentor-header h3 {
+    font-size: 19px;
+  }
+
+  .mentor-header p {
+    font-size: 13px;
+  }
+
+  .mentor-message {
+    padding: 16px 20px;
+
+    gap: 10px;
+  }
+
+  .mentor-item {
+    padding: 14px;
+  }
+
+  .mentor-item strong {
+    font-size: 14px;
+  }
+
+  .mentor-item p {
+    font-size: 13px;
+
+    line-height: 1.6;
+  }
+
+  .mentor-btn {
+    width: calc(100% - 40px);
+
+    margin: 0 20px 20px;
+
+    min-height: 50px;
+  }
+}
+
+/* =========================================================
    MOBILE
-========================= */
+========================================================= */
+
+@media (max-width: 768px) {
+  .mentor-card {
+    border-radius: 16px;
+  }
+
+  .mentor-header {
+    padding: 18px 18px 15px;
+
+    gap: 12px;
+  }
+
+  .mentor-header > span {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 12px;
+
+    font-size: 22px;
+  }
+
+  .mentor-header h3 {
+    font-size: 18px;
+  }
+
+  .mentor-header p {
+    margin-top: 4px;
+
+    font-size: 12px;
+  }
+
+  .mentor-message {
+    padding: 14px 16px;
+
+    gap: 10px;
+  }
+
+  .mentor-item {
+    padding: 13px 14px;
+
+    border-radius: 12px;
+  }
+
+  .mentor-item strong {
+    margin-bottom: 6px;
+
+    font-size: 14px;
+  }
+
+  .mentor-item p {
+    font-size: 13px;
+
+    line-height: 1.55;
+  }
+
+  .mentor-btn {
+    width: calc(100% - 32px);
+
+    margin: 0 16px 16px;
+
+    min-height: 48px;
+
+    border-radius: 11px;
+
+    font-size: 14px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
 
 @media (max-width: 480px) {
+  .mentor-header {
+    padding: 16px 15px 13px;
+  }
+
+  .mentor-header > span {
+    width: 40px;
+    height: 40px;
+
+    font-size: 21px;
+  }
+
+  .mentor-header h3 {
+    font-size: 17px;
+  }
+
+  .mentor-header p {
+    font-size: 11px;
+  }
+
+  .mentor-message {
+    padding: 12px;
+
+    gap: 9px;
+  }
+
+  .mentor-item {
+    padding: 12px;
+
+    border-radius: 11px;
+  }
+
+  .mentor-item strong {
+    font-size: 13px;
+  }
+
+  .mentor-item p {
+    font-size: 12px;
+
+    line-height: 1.55;
+  }
+
+  .mentor-btn {
+    width: calc(100% - 24px);
+
+    margin: 0 12px 12px;
+
+    min-height: 46px;
+
+    font-size: 13px;
+  }
+}
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 360px) {
+  .mentor-header {
+    gap: 9px;
+
+    padding: 14px 12px;
+  }
+
+  .mentor-header > span {
+    width: 36px;
+    height: 36px;
+
+    font-size: 19px;
+  }
+
   .mentor-header h3 {
     font-size: 16px;
   }
 
+  .mentor-header p {
+    font-size: 10px;
+  }
+
+  .mentor-message {
+    padding: 10px;
+  }
+
   .mentor-item {
-    padding: 10px 12px;
+    padding: 10px;
+  }
+
+  .mentor-item strong {
+    font-size: 12px;
   }
 
   .mentor-item p {
+    font-size: 11px;
+  }
+
+  .mentor-btn {
+    width: calc(100% - 20px);
+
+    margin: 0 10px 10px;
+
+    min-height: 44px;
+
     font-size: 12px;
   }
 }

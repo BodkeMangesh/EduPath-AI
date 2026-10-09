@@ -1,13 +1,22 @@
 const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
 const User = require("../models/User");
+const EmailService = require("./EmailService");
 
 class AuthService {
   /*
    * Generate JWT Token
    */
+
   generateToken(userId) {
     return jwt.sign({ id: userId }, process.env.JWT_SECRET, {
       expiresIn: "7d",
+    });
+  }
+
+  generateOnboardingToken(userId) {
+    return jwt.sign({ userId, purpose: "onboarding" }, process.env.JWT_SECRET, {
+      expiresIn: "2h",
     });
   }
 
@@ -21,31 +30,50 @@ class AuthService {
     const emailExists = await User.findOne({ email });
 
     if (emailExists) {
-      throw new Error("Email already exists.", 409);
+      throw new Error("Email already exists.");
     }
 
     // Check existing phone
     const phoneExists = await User.findOne({ phone });
 
     if (phoneExists) {
-      throw new Error("Phone number already exists.", 409);
+      throw new Error("Phone number already exists.");
     }
 
-    // Create user
+    // Generate email verification token
+    const verificationToken = crypto.randomBytes(32).toString("hex");
+
+    const verificationExpires = new Date(Date.now() + 24 * 60 * 60 * 1000);
+
+    // Create user FIRST
     const user = await User.create({
       fullName,
       email,
       phone,
       password,
+
+      emailVerified: false,
+      emailVerificationToken: verificationToken,
+      emailVerificationExpires: verificationExpires,
+
+      onboardingCompleted: false,
     });
 
-    // Login User After Registration
-    const token = this.generateToken(user._id);
+    // Send welcome email AFTER user is created
+    try {
+      await EmailService.sendWelcomeEmail(user);
+    } catch (error) {
+      console.error("Welcome email failed:", error.message);
+    }
+
+    // Generate JWT
+    const onboardingToken = this.generateOnboardingToken(user._id);
+
     user.password = undefined;
 
     return {
       user,
-      token,
+      onboardingToken,
     };
   }
 
@@ -57,6 +85,11 @@ class AuthService {
       throw new Error("Invalid email or password.");
     }
 
+    // Check account status
+    if (user.accountStatus !== "active") {
+      throw new Error("Your account is not active.");
+    }
+
     // Compare password
     const isPasswordValid = await user.comparePassword(password);
 
@@ -64,6 +97,12 @@ class AuthService {
       throw new Error("Invalid email or password.");
     }
 
+    // Update last login
+    user.lastLogin = new Date();
+
+    await user.save();
+
+    
     // Generate JWT
     const token = this.generateToken(user._id);
 

@@ -6,6 +6,10 @@ class AIProvider {
   }
 
   async generate(feature, context) {
+    if (!this.provider?.client) {
+      throw new Error("AI provider is unavailable because no valid API key is configured.");
+    }
+
     return await this.provider.generate(feature, context);
   }
 }

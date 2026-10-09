@@ -1,0 +1,2672 @@
+/* =========================================================
+   EDUPATH AI — ONBOARDING
+   Premium SaaS Design System
+   ========================================================= */
+
+/* =========================================================
+   DESIGN TOKENS
+   ========================================================= */
+
+.onboarding-page {
+  --ob-primary: #6366f1;
+  --ob-primary-hover: #4f46e5;
+  --ob-primary-dark: #4338ca;
+  --ob-primary-soft: #eef2ff;
+  --ob-primary-soft-strong: #e0e7ff;
+
+  --ob-bg: #f8fafc;
+  --ob-surface: #ffffff;
+  --ob-surface-soft: #f8fafc;
+  --ob-surface-muted: #f1f5f9;
+
+  --ob-text: #0f172a;
+  --ob-text-secondary: #475569;
+  --ob-text-muted: #94a3b8;
+
+  --ob-border: #e2e8f0;
+  --ob-border-strong: #cbd5e1;
+
+  --ob-success: #10b981;
+  --ob-success-soft: #ecfdf5;
+
+  --ob-error: #ef4444;
+  --ob-error-soft: #fef2f2;
+  --ob-error-border: #fecaca;
+
+  --ob-shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --ob-shadow-sm: 0 4px 12px rgba(15, 23, 42, 0.05);
+  --ob-shadow-md: 0 10px 30px rgba(15, 23, 42, 0.07);
+  --ob-shadow-primary: 0 8px 20px rgba(99, 102, 241, 0.18);
+
+  --ob-radius-sm: 8px;
+  --ob-radius-md: 10px;
+  --ob-radius-lg: 14px;
+  --ob-radius-xl: 18px;
+  --ob-radius-2xl: 22px;
+  --ob-radius-pill: 999px;
+
+  --ob-transition: 180ms ease;
+
+  min-height: 100vh;
+  padding: 32px 20px 64px;
+
+  background:
+    radial-gradient(
+      circle at 50% -10%,
+      rgba(99, 102, 241, 0.07),
+      transparent 34%
+    ),
+    var(--ob-bg);
+
+  color: var(--ob-text);
+
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  box-sizing: border-box;
+}
+
+.onboarding-page *,
+.onboarding-page *::before,
+.onboarding-page *::after {
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   DARK MODE
+   ========================================================= */
+
+.dark .onboarding-page,
+[data-theme="dark"] .onboarding-page,
+[data-mode="dark"] .onboarding-page {
+  --ob-bg: #0b1020;
+  --ob-surface: #111827;
+  --ob-surface-soft: #0f172a;
+  --ob-surface-muted: #1f2937;
+
+  --ob-text: #f8fafc;
+  --ob-text-secondary: #cbd5e1;
+  --ob-text-muted: #64748b;
+
+  --ob-border: #273449;
+  --ob-border-strong: #334155;
+
+  --ob-primary: #818cf8;
+  --ob-primary-hover: #6366f1;
+  --ob-primary-dark: #a5b4fc;
+  --ob-primary-soft: rgba(99, 102, 241, 0.14);
+  --ob-primary-soft-strong: rgba(99, 102, 241, 0.2);
+
+  --ob-success-soft: rgba(16, 185, 129, 0.1);
+
+  --ob-error-soft: rgba(239, 68, 68, 0.1);
+  --ob-error-border: rgba(239, 68, 68, 0.25);
+
+  --ob-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --ob-shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.2);
+  --ob-shadow-md: 0 10px 30px rgba(0, 0, 0, 0.24);
+}
+
+@media (prefers-color-scheme: dark) {
+  .onboarding-page {
+    --ob-bg: #0b1020;
+    --ob-surface: #111827;
+    --ob-surface-soft: #0f172a;
+    --ob-surface-muted: #1f2937;
+
+    --ob-text: #f8fafc;
+    --ob-text-secondary: #cbd5e1;
+    --ob-text-muted: #64748b;
+
+    --ob-border: #273449;
+    --ob-border-strong: #334155;
+  }
+}
+
+/* =========================================================
+   CONTAINER
+   ========================================================= */
+
+.onboarding-container {
+  width: min(1120px, 100%);
+  margin: 0 auto;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.onboarding-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+
+  margin-bottom: 52px;
+}
+
+.onboarding-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  flex-shrink: 0;
+
+  color: var(--ob-text);
+
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+
+  cursor: pointer;
+
+  user-select: none;
+}
+
+.onboarding-logo span {
+  width: 38px;
+  height: 38px;
+
+  display: grid;
+  place-items: center;
+
+  border: 1px solid var(--ob-border);
+  border-radius: 11px;
+
+  background: var(--ob-surface);
+
+  box-shadow: var(--ob-shadow-xs);
+
+  font-size: 21px;
+}
+
+.onboarding-logo strong {
+  font-weight: 800;
+}
+
+/* =========================================================
+   PROGRESS
+   ========================================================= */
+
+.onboarding-progress {
+  width: min(340px, 100%);
+}
+
+.progress-text {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 9px;
+
+  color: var(--ob-text-muted);
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.progress-text strong {
+  color: var(--ob-text-secondary);
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.progress-track {
+  width: 100%;
+  height: 7px;
+
+  overflow: hidden;
+
+  border-radius: var(--ob-radius-pill);
+
+  background: var(--ob-surface-muted);
+}
+
+.progress-fill {
+  height: 100%;
+
+  border-radius: inherit;
+
+  background: var(--ob-primary);
+
+  transition: width 300ms ease;
+}
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.onboarding-content {
+  width: min(920px, 100%);
+  margin: 0 auto;
+}
+
+/* =========================================================
+   TITLE
+   ========================================================= */
+
+.onboarding-title {
+  width: 100%;
+  max-width: 850px;
+
+  margin: 0 auto 40px;
+
+  text-align: center;
+}
+
+.onboarding-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 7px 13px;
+  margin-bottom: 16px;
+
+  border: 1px solid rgba(99, 102, 241, 0.15);
+  border-radius: var(--ob-radius-pill);
+
+  background: var(--ob-primary-soft);
+
+  color: var(--ob-primary-dark);
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.onboarding-title h1 {
+  margin: 0;
+
+  color: var(--ob-text);
+
+  font-size: clamp(32px, 5vw, 48px);
+  line-height: 1.1;
+  font-weight: 800;
+
+  letter-spacing: -1.4px;
+}
+
+.onboarding-title h1 span {
+  color: var(--ob-primary);
+}
+
+.onboarding-title > p {
+  max-width: 680px;
+
+  margin: 16px auto 0;
+
+  color: var(--ob-text-secondary);
+
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* =========================================================
+   MAIN SECTION
+   ========================================================= */
+
+.onboarding-section {
+  width: 100%;
+
+  padding: 30px;
+
+  border: 1px solid var(--ob-border);
+  border-radius: var(--ob-radius-2xl);
+
+  background: var(--ob-surface);
+
+  box-shadow: var(--ob-shadow-md);
+}
+
+.onboarding-section > h2 {
+  margin: 0;
+
+  color: var(--ob-text);
+
+  font-size: 22px;
+  font-weight: 750;
+
+  letter-spacing: -0.4px;
+}
+
+.section-description {
+  margin: 8px 0 24px;
+
+  color: var(--ob-text-secondary);
+
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* =========================================================
+   STEP 1 — ROLE GRID
+   ========================================================= */
+
+.role-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+.role-card {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  min-height: 84px;
+
+  padding: 15px;
+
+  border: 1px solid var(--ob-border);
+  border-radius: var(--ob-radius-lg);
+
+  background: var(--ob-surface);
+
+  color: var(--ob-text);
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    border-color var(--ob-transition),
+    background var(--ob-transition),
+    transform var(--ob-transition),
+    box-shadow var(--ob-transition);
+}
+
+.role-card:hover {
+  border-color: #a5b4fc;
+
+  background: var(--ob-primary-soft);
+
+  transform: translateY(-1px);
+
+  box-shadow: var(--ob-shadow-sm);
+}
+
+.role-card.selected {
+  border-color: var(--ob-primary);
+
+  background: var(--ob-primary-soft);
+
+  box-shadow: var(--ob-shadow-primary);
+}
+
+.role-icon {
+  width: 46px;
+  height: 46px;
+
+  display: grid;
+  place-items: center;
+
+  flex-shrink: 0;
+
+  border-radius: 12px;
+
+  background: var(--ob-surface-muted);
+
+  font-size: 23px;
+}
+
+.role-card.selected .role-icon {
+  background: var(--ob-primary-soft-strong);
+}
+
+.role-content {
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+
+  min-width: 0;
+
+  margin-left: 13px;
+}
+
+.role-content strong {
+  color: var(--ob-text);
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.role-content small {
+  color: var(--ob-text-secondary);
+
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.selected-check,
+.step4-selected-check,
+.step5-check {
+  display: grid;
+  place-items: center;
+
+  width: 20px;
+  height: 20px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: var(--ob-primary);
+  color: #ffffff;
+
+  font-size: 10px;
+  font-weight: 800;
+}
+
+/* =========================================================
+   STEP 1 — CUSTOM ROLE
+   ========================================================= */
+
+.custom-role {
+  margin-top: 26px;
+  padding-top: 24px;
+
+  border-top: 1px solid var(--ob-border);
+}
+
+.custom-role label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: var(--ob-text-secondary);
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.custom-role small {
+  display: block;
+
+  margin-top: 7px;
+
+  color: var(--ob-text-muted);
+
+  font-size: 11px;
+}
+
+/* =========================================================
+   INPUTS / TEXTAREAS
+   ========================================================= */
+
+.custom-role input,
+.form-group input,
+.form-group textarea,
+.custom-situation-box textarea,
+.step4-text-input,
+.step4-goal-textarea,
+.step5-textarea {
+  width: 100%;
+
+  border: 1px solid var(--ob-border-strong);
+  border-radius: var(--ob-radius-md);
+
+  outline: none;
+
+  background: var(--ob-surface);
+  color: var(--ob-text);
+
+  font-family: inherit;
+  font-size: 13px;
+
+  transition:
+    border-color var(--ob-transition),
+    box-shadow var(--ob-transition),
+    background var(--ob-transition);
+}
+
+.custom-role input,
+.form-group input,
+.step4-text-input {
+  min-height: 44px;
+
+  padding: 0 13px;
+}
+
+.form-group textarea,
+.custom-situation-box textarea,
+.step4-goal-textarea,
+.step5-textarea {
+  padding: 13px 14px;
+
+  line-height: 1.6;
+
+  resize: vertical;
+}
+
+.form-group textarea,
+.custom-situation-box textarea {
+  min-height: 105px;
+}
+
+.custom-role input::placeholder,
+.form-group input::placeholder,
+.form-group textarea::placeholder,
+.custom-situation-box textarea::placeholder,
+.step4-text-input::placeholder,
+.step4-goal-textarea::placeholder,
+.step5-textarea::placeholder {
+  color: var(--ob-text-muted);
+}
+
+.custom-role input:focus,
+.form-group input:focus,
+.form-group textarea:focus,
+.custom-situation-box textarea:focus,
+.step4-text-input:focus,
+.step4-goal-textarea:focus,
+.step5-textarea:focus {
+  border-color: var(--ob-primary);
+
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.11);
+}
+
+/* =========================================================
+   STEP 2 — SELECTED ROLE
+   ========================================================= */
+
+.selected-role-display {
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+
+  width: 100%;
+
+  margin-bottom: 28px;
+  padding: 14px 16px;
+
+  border: 1px solid var(--ob-border);
+  border-radius: var(--ob-radius-lg);
+
+  background: var(--ob-primary-soft);
+}
+
+.selected-role-display > span {
+  width: 44px;
+  height: 44px;
+
+  display: grid;
+  place-items: center;
+
+  flex-shrink: 0;
+
+  border-radius: 11px;
+
+  background: var(--ob-surface);
+
+  font-size: 22px;
+}
+
+.selected-role-display div {
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+
+  min-width: 0;
+}
+
+.selected-role-display small {
+  color: var(--ob-text-muted);
+
+  font-size: 10px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.selected-role-display strong {
+  color: var(--ob-text);
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* =========================================================
+   STEP 2 — SITUATION FORM
+   ========================================================= */
+
+.situation-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 18px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+
+  gap: 7px;
+}
+
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-group label,
+.custom-situation-box label {
+  color: var(--ob-text-secondary);
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.custom-situation-box {
+  display: flex;
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+/* =========================================================
+   STEP 3 — SKILLS & INTERESTS
+   ========================================================= */
+
+.step3-block {
+  margin-bottom: 20px;
+  padding: 24px;
+
+  border: 1px solid var(--ob-border);
+  border-radius: var(--ob-radius-xl);
+
+  background: var(--ob-surface-soft);
+
+  box-shadow: var(--ob-shadow-xs);
+}
+
+.step3-block:last-child {
+  margin-bottom: 0;
+}
+
+.step3-block h2 {
+  margin: 0 0 6px;
+
+  color: var(--ob-text);
+
+  font-size: 19px;
+  font-weight: 750;
+
+  letter-spacing: -0.3px;
+}
+
+.selection-grid {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 8px;
+}
+
+.selection-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  min-height: 38px;
+
+  padding: 8px 13px;
+
+  border: 1px solid var(--ob-border);
+  border-radius: 10px;
+
+  background: var(--ob-surface);
+
+  color: var(--ob-text-secondary);
+
+  font-size: 12px;
+  font-weight: 650;
+
+  cursor: pointer;
+
+  transition:
+    border-color var(--ob-transition),
+    background var(--ob-transition),
+    color var(--ob-transition),
+    transform var(--ob-transition),
+    box-shadow var(--ob-transition);
+}
+
+.selection-chip:hover {
+  border-color: #a5b4fc;
+
+  background: var(--ob-primary-soft);
+
+  color: var(--ob-primary-dark);
+
+  transform: translateY(-1px);
+}
+
+.selection-chip.selected {
+  border-color: var(--ob-primary);
+
+  background: var(--ob-primary-soft);
+
+  color: var(--ob-primary-dark);
+
+  box-shadow: var(--ob-shadow-xs);
+}
+
+.selection-chip > span {
+  width: 16px;
+  height: 16px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background: var(--ob-primary);
+  color: #ffffff;
+
+  font-size: 9px;
+  font-weight: 800;
+}
+
+/* Interests */
+
+.interest-chip:hover {
+  border-color: #a5b4fc;
+
+  background: var(--ob-primary-soft);
+
+  color: var(--ob-primary-dark);
+}
+
+.interest-chip.selected {
+  border-color: var(--ob-primary);
+
+  background: var(--ob-primary-soft);
+
+  color: var(--ob-primary-dark);
+
+  box-shadow: var(--ob-shadow-xs);
+}
+
+.interest-chip.selected > span {
+  background: var(--ob-primary);
+}
+
+/* =========================================================
+   STEP 3 — CUSTOM SELECTION
+   ========================================================= */
+
+.custom-selection {
+  margin-top: 22px;
+  padding-top: 20px;
+
+  border-top: 1px solid var(--ob-border);
+}
+
+.custom-selection label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: var(--ob-text-secondary);
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.custom-input-row {
+  display: flex;
+
+  gap: 8px;
+}
+
+.custom-input-row input {
+  flex: 1;
+
+  min-width: 0;
+  height: 43px;
+
+  padding: 0 13px;
+
+  border: 1px solid var(--ob-border-strong);
+  border-radius: var(--ob-radius-md);
+
+  outline: none;
+
+  background: var(--ob-surface);
+  color: var(--ob-text);
+
+  font-family: inherit;
+  font-size: 12px;
+
+  transition: var(--ob-transition);
+}
+
+.custom-input-row input::placeholder {
+  color: var(--ob-text-muted);
+}
+
+.custom-input-row input:focus {
+  border-color: var(--ob-primary);
+
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.custom-input-row button {
+  min-width: 78px;
+  height: 43px;
+
+  padding: 0 15px;
+
+  border: 1px solid var(--ob-primary);
+  border-radius: var(--ob-radius-md);
+
+  background: var(--ob-primary);
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background var(--ob-transition),
+    transform var(--ob-transition),
+    box-shadow var(--ob-transition);
+}
+
+.custom-input-row button:hover {
+  background: var(--ob-primary-hover);
+
+  transform: translateY(-1px);
+
+  box-shadow: var(--ob-shadow-primary);
+}
+
+/* =========================================================
+   SELECTED ITEMS
+   ========================================================= */
+
+.selected-items {
+  margin-top: 20px;
+  padding-top: 19px;
+
+  border-top: 1px solid var(--ob-border);
+}
+
+.selected-items h4 {
+  margin: 0 0 11px;
+
+  color: var(--ob-text-secondary);
+
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.selected-items-list {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 7px;
+}
+
+.selected-item {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 6px;
+
+  padding: 6px 8px 6px 10px;
+
+  border: 1px solid var(--ob-primary-soft-strong);
+  border-radius: var(--ob-radius-pill);
+
+  background: var(--ob-primary-soft);
+
+  color: var(--ob-primary-dark);
+
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.selected-item.interest-item {
+  border-color: var(--ob-primary-soft-strong);
+
+  background: var(--ob-primary-soft);
+
+  color: var(--ob-primary-dark);
+}
+
+.selected-item button {
+  width: 19px;
+  height: 19px;
+
+  display: grid;
+  place-items: center;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 50%;
+
+  background: rgba(99, 102, 241, 0.12);
+
+  color: var(--ob-primary-dark);
+
+  font-size: 14px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    background var(--ob-transition),
+    color var(--ob-transition),
+    transform var(--ob-transition);
+}
+
+.selected-item button:hover {
+  background: var(--ob-primary);
+  color: #ffffff;
+
+  transform: scale(1.06);
+}
+
+/* =========================================================
+   STEP 4 — CAREER DIRECTION
+   ========================================================= */
+
+.step4-section,
+.step5-section,
+.step6-section {
+  display: flex;
+  flex-direction: column;
+
+  gap: 18px;
+}
+
+.step4-block {
+  width: 100%;
+
+  padding: 24px;
+
+  border: 1px solid var(--ob-border);
+  border-radius: var(--ob-radius-xl);
+
+  background: var(--ob-surface-soft);
+
+  box-shadow: var(--ob-shadow-xs);
+}
+
+.step4-heading,
+.step5-heading,
+.step6-section-heading {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 12px;
+
+  margin-bottom: 20px;
+}
+
+.step4-heading-icon,
+.step5-heading-icon,
+.step6-heading-icon {
+  width: 42px;
+  height: 42px;
+
+  display: grid;
+  place-items: center;
+
+  flex-shrink: 0;
+
+  border-radius: 11px;
+
+  background: var(--ob-primary-soft);
+
+  font-size: 19px;
+}
+
+.step4-heading h2,
+.step5-heading h2 {
+  margin: 0 0 5px;
+
+  color: var(--ob-text);
+
+  font-size: 18px;
+  font-weight: 750;
+
+  letter-spacing: -0.2px;
+}
+
+.step4-heading .section-description,
+.step5-heading .section-description {
+  margin: 0;
+
+  font-size: 12px;
+}
+
+/* =========================================================
+   STEP 4 — CAREER GOALS
+   ========================================================= */
+
+.step4-goal-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 10px;
+}
+
+.step4-goal-card,
+.step4-learning-card,
+.step5-experience-card,
+.step5-priority-card,
+.step5-mode-card {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+
+  border: 1px solid var(--ob-border);
+  border-radius: var(--ob-radius-lg);
+
+  background: var(--ob-surface);
+
+  color: var(--ob-text);
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    border-color var(--ob-transition),
+    background var(--ob-transition),
+    transform var(--ob-transition),
+    box-shadow var(--ob-transition);
+}
+
+.step4-goal-card:hover,
+.step4-learning-card:hover,
+.step5-experience-card:hover,
+.step5-priority-card:hover,
+.step5-mode-card:hover {
+  border-color: #a5b4fc;
+
+  background: var(--ob-primary-soft);
+
+  transform: translateY(-1px);
+
+  box-shadow: var(--ob-shadow-sm);
+}
+
+.step4-goal-card.selected,
+.step4-learning-card.selected,
+.step5-experience-card.selected,
+.step5-priority-card.selected,
+.step5-mode-card.selected {
+  border-color: var(--ob-primary);
+
+  background: var(--ob-primary-soft);
+
+  box-shadow: var(--ob-shadow-sm);
+}
+
+.step4-goal-card {
+  min-height: 76px;
+
+  gap: 12px;
+
+  padding: 13px;
+}
+
+.step4-goal-icon {
+  width: 42px;
+  height: 42px;
+
+  display: grid;
+  place-items: center;
+
+  flex-shrink: 0;
+
+  border-radius: 11px;
+
+  background: var(--ob-surface-muted);
+
+  font-size: 20px;
+}
+
+.step4-goal-card.selected .step4-goal-icon {
+  background: var(--ob-surface);
+}
+
+.step4-goal-content,
+.step4-learning-content {
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+
+  min-width: 0;
+}
+
+.step4-goal-content strong,
+.step4-learning-content strong {
+  color: var(--ob-text);
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.step4-goal-card.selected .step4-goal-content strong,
+.step4-learning-card.selected .step4-learning-content strong {
+  color: var(--ob-primary-dark);
+}
+
+.step4-goal-content small,
+.step4-learning-content small {
+  color: var(--ob-text-secondary);
+
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+/* =========================================================
+   STEP 4 — TARGET ROLE
+   ========================================================= */
+
+.step4-role-suggestions {
+  margin-bottom: 19px;
+}
+
+.step4-label {
+  display: block;
+
+  margin-bottom: 9px;
+
+  color: var(--ob-text-muted);
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.step4-custom-role {
+  margin-top: 4px;
+  padding-top: 19px;
+
+  border-top: 1px solid var(--ob-border);
+}
+
+.step4-custom-role label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: var(--ob-text-secondary);
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.step4-custom-role small,
+.step4-textarea-hint {
+  display: block;
+
+  margin-top: 7px;
+
+  color: var(--ob-text-muted);
+
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   STEP 4 — STUDY HOURS
+   ========================================================= */
+
+.step4-hours-grid {
+  display: grid;
+
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+
+  gap: 9px;
+}
+
+.step4-hours-card {
+  position: relative;
+
+  min-height: 100px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  padding: 11px;
+
+  border: 1px solid var(--ob-border);
+  border-radius: var(--ob-radius-lg);
+
+  background: var(--ob-surface);
+
+  color: var(--ob-text);
+
+  cursor: pointer;
+
+  transition: var(--ob-transition);
+}
+
+.step4-hours-card:hover {
+  border-color: #a5b4fc;
+
+  background: var(--ob-primary-soft);
+
+  transform: translateY(-1px);
+}
+
+.step4-hours-card.selected {
+  border-color: var(--ob-primary);
+
+  background: var(--ob-primary-soft);
+
+  box-shadow: var(--ob-shadow-sm);
+}
+
+.step4-hours-icon {
+  font-size: 21px;
+}
+
+.step4-hours-card strong {
+  color: var(--ob-text-secondary);
+
+  font-size: 10px;
+  line-height: 1.35;
+
+  text-align: center;
+}
+
+.step4-hours-card.selected strong {
+  color: var(--ob-primary-dark);
+}
+
+/* =========================================================
+   STEP 4 — LEARNING STYLE
+   ========================================================= */
+
+.step4-learning-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 10px;
+}
+
+.step4-learning-card {
+  min-height: 78px;
+
+  gap: 12px;
+
+  padding: 13px;
+}
+
+.step4-learning-icon {
+  width: 42px;
+  height: 42px;
+
+  display: grid;
+  place-items: center;
+
+  flex-shrink: 0;
+
+  border-radius: 11px;
+
+  background: var(--ob-surface-muted);
+
+  font-size: 20px;
+}
+
+.step4-learning-card.selected .step4-learning-icon {
+  background: var(--ob-surface);
+}
+
+/* =========================================================
+   STEP 4 — LANGUAGE
+   ========================================================= */
+
+.step4-language-grid {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 9px;
+}
+
+.step4-language-card {
+  position: relative;
+
+  min-width: 112px;
+  min-height: 44px;
+
+  display: inline-flex;
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 8px 13px;
+
+  border: 1px solid var(--ob-border);
+  border-radius: var(--ob-radius-md);
+
+  background: var(--ob-surface);
+
+  color: var(--ob-text-secondary);
+
+  cursor: pointer;
+
+  transition: var(--ob-transition);
+}
+
+.step4-language-card:hover {
+  border-color: #a5b4fc;
+
+  background: var(--ob-primary-soft);
+}
+
+.step4-language-card.selected {
+  border-color: var(--ob-primary);
+
+  background: var(--ob-primary-soft);
+
+  color: var(--ob-primary-dark);
+}
+
+.step4-language-icon {
+  font-size: 17px;
+}
+
+.step4-language-card strong {
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* =========================================================
+   STEP 4 — CAREER DESCRIPTION
+   ========================================================= */
+
+.step4-goal-textarea {
+  min-height: 135px;
+}
+
+/* =========================================================
+   STEP 5 — SUMMARY
+   ========================================================= */
+
+.step5-summary {
+  display: grid;
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 10px;
+
+  padding: 13px;
+
+  border: 1px solid var(--ob-border);
+  border-radius: var(--ob-radius-lg);
+
+  background: var(--ob-primary-soft);
+}
+
+.step5-summary-item {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  min-width: 0;
+
+  padding: 11px;
+
+  border: 1px solid var(--ob-border);
+
+  border-radius: 10px;
+
+  background: var(--ob-surface);
+}
+
+.step5-summary-item > span {
+  width: 36px;
+  height: 36px;
+
+  display: grid;
+  place-items: center;
+
+  flex-shrink: 0;
+
+  border-radius: 9px;
+
+  background: var(--ob-primary-soft);
+
+  font-size: 17px;
+}
+
+.step5-summary-item div {
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+
+  min-width: 0;
+}
+
+.step5-summary-item small {
+  color: var(--ob-text-muted);
+
+  font-size: 9px;
+}
+
+.step5-summary-item strong {
+  overflow: hidden;
+
+  color: var(--ob-text);
+
+  font-size: 11px;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   STEP 5 — BLOCK
+   ========================================================= */
+
+.step5-block {
+  width: 100%;
+
+  padding: 24px;
+
+  border: 1px solid var(--ob-border);
+  border-radius: var(--ob-radius-xl);
+
+  background: var(--ob-surface-soft);
+
+  box-shadow: var(--ob-shadow-xs);
+}
+
+/* =========================================================
+   STEP 5 — DURATION
+   ========================================================= */
+
+.step5-duration-grid {
+  display: grid;
+
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  gap: 10px;
+}
+
+.step5-duration-card {
+  position: relative;
+
+  min-height: 118px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  padding: 12px;
+
+  border: 1px solid var(--ob-border);
+  border-radius: var(--ob-radius-lg);
+
+  background: var(--ob-surface);
+
+  color: var(--ob-text);
+
+  cursor: pointer;
+
+  transition: var(--ob-transition);
+}
+
+.step5-duration-card:hover {
+  border-color: #a5b4fc;
+
+  background: var(--ob-primary-soft);
+
+  transform: translateY(-1px);
+}
+
+.step5-duration-card.selected {
+  border-color: var(--ob-primary);
+
+  background: var(--ob-primary-soft);
+
+  box-shadow: var(--ob-shadow-sm);
+}
+
+.step5-card-icon {
+  font-size: 22px;
+}
+
+.step5-duration-card strong {
+  color: var(--ob-text-secondary);
+
+  font-size: 12px;
+}
+
+.step5-duration-card.selected strong {
+  color: var(--ob-primary-dark);
+}
+
+.step5-duration-card small {
+  color: var(--ob-text-muted);
+
+  font-size: 9px;
+
+  text-align: center;
+}
+
+/* =========================================================
+   STEP 5 — DAYS
+   ========================================================= */
+
+.step5-days-grid {
+  display: grid;
+
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+
+  gap: 9px;
+}
+
+.step5-day-card {
+  position: relative;
+
+  min-height: 72px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 5px;
+
+  border: 1px solid var(--ob-border);
+  border-radius: var(--ob-radius-md);
+
+  background: var(--ob-surface);
+
+  color: var(--ob-text);
+
+  cursor: pointer;
+
+  transition: var(--ob-transition);
+}
+
+.step5-day-card:hover {
+  border-color: #a5b4fc;
+
+  background: var(--ob-primary-soft);
+}
+
+.step5-day-card.selected {
+  border-color: var(--ob-primary);
+
+  background: var(--ob-primary-soft);
+}
+
+.step5-day-card > span:first-child {
+  font-size: 18px;
+}
+
+.step5-day-card strong {
+  color: var(--ob-text-secondary);
+
+  font-size: 10px;
+}
+
+.step5-day-card.selected strong {
+  color: var(--ob-primary-dark);
+}
+
+/* =========================================================
+   STEP 5 — EXPERIENCE
+   ========================================================= */
+
+.step5-experience-grid,
+.step5-priority-grid,
+.step5-mode-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 10px;
+}
+
+.step5-experience-card {
+  min-height: 80px;
+
+  gap: 12px;
+
+  padding: 13px;
+}
+
+.step5-experience-card > div,
+.step5-priority-card > div,
+.step5-mode-card > div {
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+
+  min-width: 0;
+}
+
+.step5-experience-card strong,
+.step5-priority-card strong,
+.step5-mode-card strong {
+  color: var(--ob-text);
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.step5-experience-card.selected strong,
+.step5-priority-card.selected strong,
+.step5-mode-card.selected strong {
+  color: var(--ob-primary-dark);
+}
+
+.step5-experience-card small,
+.step5-priority-card small,
+.step5-mode-card small {
+  color: var(--ob-text-secondary);
+
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+/* =========================================================
+   STEP 5 — PRIORITIES
+   ========================================================= */
+
+.step5-priority-card {
+  min-height: 70px;
+
+  gap: 11px;
+
+  padding: 12px;
+}
+
+.step5-priority-card .step5-card-icon,
+.step5-mode-card .step5-card-icon {
+  width: 35px;
+  height: 35px;
+
+  display: grid;
+  place-items: center;
+
+  flex-shrink: 0;
+
+  border-radius: 9px;
+
+  background: var(--ob-surface-muted);
+
+  font-size: 17px;
+}
+
+.step5-priority-card.selected .step5-card-icon,
+.step5-mode-card.selected .step5-card-icon {
+  background: var(--ob-surface);
+}
+
+.step5-selected-count {
+  margin-top: 12px;
+
+  padding: 9px 11px;
+
+  border: 1px solid rgba(16, 185, 129, 0.15);
+  border-radius: var(--ob-radius-sm);
+
+  background: var(--ob-success-soft);
+
+  color: var(--ob-success);
+
+  font-size: 10px;
+  font-weight: 700;
+}
+
+/* =========================================================
+   STEP 5 — LEARNING MODE
+   ========================================================= */
+
+.step5-mode-card {
+  min-height: 78px;
+
+  gap: 12px;
+
+  padding: 13px;
+}
+
+/* =========================================================
+   STEP 5 — ADDITIONAL GOAL
+   ========================================================= */
+
+.step5-textarea {
+  min-height: 115px;
+}
+
+/* =========================================================
+   STEP 6 — FINAL REVIEW
+   ========================================================= */
+
+.step6-card {
+  width: 100%;
+
+  padding: 23px;
+
+  border: 1px solid var(--ob-border);
+  border-radius: var(--ob-radius-xl);
+
+  background: var(--ob-surface-soft);
+
+  box-shadow: var(--ob-shadow-xs);
+}
+
+/* =========================================================
+   STEP 6 — PROFILE HEADER
+   ========================================================= */
+
+.step6-card-header {
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+}
+
+.step6-header-icon {
+  width: 50px;
+  height: 50px;
+
+  display: grid;
+  place-items: center;
+
+  flex-shrink: 0;
+
+  border-radius: 13px;
+
+  background: var(--ob-primary-soft);
+
+  font-size: 24px;
+}
+
+.step6-label {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: var(--ob-text-muted);
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+}
+
+.step6-card-header h2 {
+  margin: 0;
+
+  color: var(--ob-text);
+
+  font-size: 20px;
+  font-weight: 750;
+
+  letter-spacing: -0.3px;
+}
+
+.step6-profile-status {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 7px;
+
+  margin-top: 15px;
+
+  padding: 6px 9px;
+
+  border-radius: 7px;
+
+  background: var(--ob-success-soft);
+
+  color: var(--ob-success);
+
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.step6-status-dot {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: var(--ob-success);
+}
+
+/* =========================================================
+   STEP 6 — SECTION HEADING
+   ========================================================= */
+
+.step6-section-heading {
+  margin-bottom: 19px;
+}
+
+.step6-heading-icon {
+  width: 39px;
+  height: 39px;
+
+  border-radius: 10px;
+
+  font-size: 17px;
+}
+
+.step6-section-heading h2 {
+  margin: 0 0 4px;
+
+  color: var(--ob-text);
+
+  font-size: 16px;
+  font-weight: 750;
+}
+
+.step6-section-heading p {
+  margin: 0;
+
+  color: var(--ob-text-secondary);
+
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   STEP 6 — INFO GRID
+   ========================================================= */
+
+.step6-info-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 9px;
+}
+
+.step6-info-item {
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+
+  padding: 12px;
+
+  border: 1px solid var(--ob-border);
+  border-radius: 9px;
+
+  background: var(--ob-surface);
+}
+
+.step6-info-item span {
+  color: var(--ob-text-muted);
+
+  font-size: 9px;
+  font-weight: 650;
+}
+
+.step6-info-item strong {
+  color: var(--ob-text-secondary);
+
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.step6-full-width {
+  grid-column: 1 / -1;
+}
+
+/* =========================================================
+   STEP 6 — SUBSECTIONS
+   ========================================================= */
+
+.step6-subsection {
+  margin-top: 18px;
+}
+
+.step6-subsection:first-of-type {
+  margin-top: 0;
+}
+
+.step6-subsection h3 {
+  margin: 0 0 9px;
+
+  color: var(--ob-text-secondary);
+
+  font-size: 11px;
+  font-weight: 750;
+}
+
+.step6-tags {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 6px;
+}
+
+.step6-tag {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 6px 9px;
+
+  border: 1px solid var(--ob-primary-soft-strong);
+  border-radius: var(--ob-radius-pill);
+
+  background: var(--ob-primary-soft);
+
+  color: var(--ob-primary-dark);
+
+  font-size: 10px;
+  font-weight: 650;
+}
+
+.skill-tag,
+.interest-tag {
+  border-color: var(--ob-primary-soft-strong);
+
+  background: var(--ob-primary-soft);
+
+  color: var(--ob-primary-dark);
+}
+
+.step6-empty {
+  display: inline-block;
+
+  padding: 7px 9px;
+
+  border-radius: 7px;
+
+  background: var(--ob-surface-muted);
+
+  color: var(--ob-text-muted);
+
+  font-size: 10px;
+}
+
+/* =========================================================
+   STEP 6 — LEARNING GRID
+   ========================================================= */
+
+.step6-learning-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 9px;
+}
+
+.step6-learning-item {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 11px;
+
+  border: 1px solid var(--ob-border);
+  border-radius: 9px;
+
+  background: var(--ob-surface);
+}
+
+.step6-learning-icon {
+  width: 33px;
+  height: 33px;
+
+  display: grid;
+  place-items: center;
+
+  flex-shrink: 0;
+
+  border-radius: 8px;
+
+  background: var(--ob-primary-soft);
+
+  font-size: 14px;
+}
+
+.step6-learning-item > div {
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+
+  min-width: 0;
+}
+
+.step6-learning-item small {
+  color: var(--ob-text-muted);
+
+  font-size: 8px;
+}
+
+.step6-learning-item strong {
+  overflow: hidden;
+
+  color: var(--ob-text-secondary);
+
+  font-size: 10px;
+
+  text-transform: capitalize;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   STEP 6 — PRIORITIES
+   ========================================================= */
+
+.step6-priority-list {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 7px;
+}
+
+.step6-priority {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 7px 10px;
+
+  border: 1px solid var(--ob-primary-soft-strong);
+  border-radius: var(--ob-radius-pill);
+
+  background: var(--ob-primary-soft);
+
+  color: var(--ob-primary-dark);
+
+  font-size: 10px;
+  font-weight: 650;
+
+  text-transform: capitalize;
+}
+
+/* =========================================================
+   STEP 6 — ADDITIONAL GOAL
+   ========================================================= */
+
+.step6-additional-goal {
+  padding: 13px;
+
+  border-left: 3px solid var(--ob-primary);
+  border-radius: 0 9px 9px 0;
+
+  background: var(--ob-primary-soft);
+
+  color: var(--ob-text-secondary);
+
+  font-size: 11px;
+  line-height: 1.65;
+}
+
+/* =========================================================
+   STEP 6 — FINAL MESSAGE
+   ========================================================= */
+
+.step6-final-message {
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+
+  padding: 17px;
+
+  border: 1px solid var(--ob-primary-soft-strong);
+  border-radius: var(--ob-radius-lg);
+
+  background: var(--ob-primary-soft);
+}
+
+.step6-final-icon {
+  width: 43px;
+  height: 43px;
+
+  display: grid;
+  place-items: center;
+
+  flex-shrink: 0;
+
+  border-radius: 11px;
+
+  background: var(--ob-surface);
+
+  font-size: 20px;
+}
+
+.step6-final-message h3 {
+  margin: 0 0 4px;
+
+  color: var(--ob-primary-dark);
+
+  font-size: 14px;
+  font-weight: 750;
+}
+
+.step6-final-message p {
+  margin: 0;
+
+  color: var(--ob-text-secondary);
+
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+.step6-final-message strong {
+  color: var(--ob-primary-dark);
+}
+
+/* =========================================================
+   ERROR
+   ========================================================= */
+
+.onboarding-error {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-top: 18px;
+  padding: 12px 14px;
+
+  border: 1px solid var(--ob-error-border);
+  border-radius: var(--ob-radius-md);
+
+  background: var(--ob-error-soft);
+
+  color: var(--ob-error);
+
+  font-size: 12px;
+  font-weight: 600;
+
+  line-height: 1.5;
+}
+
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+
+.onboarding-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  margin-top: 22px;
+}
+
+.onboarding-back,
+.onboarding-continue {
+  min-height: 43px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 18px;
+
+  border-radius: var(--ob-radius-md);
+
+  font-family: inherit;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background var(--ob-transition),
+    border-color var(--ob-transition),
+    color var(--ob-transition),
+    transform var(--ob-transition),
+    box-shadow var(--ob-transition);
+}
+
+.onboarding-back {
+  border: 1px solid var(--ob-border-strong);
+
+  background: var(--ob-surface);
+
+  color: var(--ob-text-secondary);
+}
+
+.onboarding-back:hover {
+  border-color: var(--ob-primary-soft-strong);
+
+  background: var(--ob-primary-soft);
+
+  color: var(--ob-primary-dark);
+
+  transform: translateY(-1px);
+}
+
+.onboarding-continue {
+  border: 1px solid var(--ob-primary);
+
+  background: var(--ob-primary);
+
+  color: #ffffff;
+
+  box-shadow: var(--ob-shadow-primary);
+}
+
+.onboarding-continue:hover {
+  border-color: var(--ob-primary-hover);
+
+  background: var(--ob-primary-hover);
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 10px 24px rgba(99, 102, 241, 0.22);
+}
+
+.onboarding-back:active,
+.onboarding-continue:active {
+  transform: translateY(0);
+}
+
+/* =========================================================
+   FOCUS ACCESSIBILITY
+   ========================================================= */
+
+.onboarding-page button:focus-visible,
+.onboarding-page input:focus-visible,
+.onboarding-page textarea:focus-visible,
+.onboarding-page [role="button"]:focus-visible {
+  outline: 3px solid rgba(99, 102, 241, 0.18);
+  outline-offset: 2px;
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 850px) {
+  .onboarding-page {
+    padding: 26px 18px 52px;
+  }
+
+  .onboarding-header {
+    margin-bottom: 42px;
+  }
+
+  .onboarding-section {
+    padding: 25px;
+  }
+
+  .step4-hours-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .step5-duration-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .step5-days-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 680px) {
+  .onboarding-page {
+    padding: 18px 13px 40px;
+  }
+
+  .onboarding-header {
+    align-items: flex-start;
+    flex-direction: column;
+
+    gap: 18px;
+
+    margin-bottom: 34px;
+  }
+
+  .onboarding-logo {
+    font-size: 18px;
+  }
+
+  .onboarding-logo span {
+    width: 34px;
+    height: 34px;
+
+    font-size: 19px;
+  }
+
+  .onboarding-progress {
+    width: 100%;
+  }
+
+  .onboarding-title {
+    margin-bottom: 28px;
+  }
+
+  .onboarding-title h1 {
+    font-size: 31px;
+
+    letter-spacing: -0.9px;
+  }
+
+  .onboarding-title > p {
+    margin-top: 13px;
+
+    font-size: 13px;
+    line-height: 1.65;
+  }
+
+  .onboarding-section {
+    padding: 19px;
+
+    border-radius: 16px;
+  }
+
+  .onboarding-section > h2 {
+    font-size: 20px;
+  }
+
+  .role-grid,
+  .step4-goal-grid,
+  .step4-learning-grid,
+  .step5-experience-grid,
+  .step5-priority-grid,
+  .step5-mode-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .situation-grid {
+    grid-template-columns: 1fr;
+
+    gap: 15px;
+  }
+
+  .form-group.full-width {
+    grid-column: auto;
+  }
+
+  .step3-block,
+  .step4-block,
+  .step5-block,
+  .step6-card {
+    padding: 18px;
+
+    border-radius: 14px;
+  }
+
+  .step4-hours-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .step4-language-card {
+    min-width: 100px;
+  }
+
+  .step5-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .step5-duration-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .step5-days-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .step6-info-grid,
+  .step6-learning-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .step6-full-width {
+    grid-column: auto;
+  }
+
+  .onboarding-actions {
+    margin-top: 18px;
+  }
+
+  .onboarding-back,
+  .onboarding-continue {
+    flex: 1;
+
+    min-height: 42px;
+
+    padding: 0 13px;
+
+    font-size: 11px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 430px) {
+  .onboarding-page {
+    padding: 14px 10px 32px;
+  }
+
+  .onboarding-title h1 {
+    font-size: 27px;
+  }
+
+  .onboarding-badge {
+    padding: 6px 10px;
+
+    font-size: 9px;
+  }
+
+  .onboarding-section {
+    padding: 15px;
+  }
+
+  .role-card {
+    min-height: 78px;
+
+    padding: 12px;
+  }
+
+  .role-icon {
+    width: 42px;
+    height: 42px;
+
+    font-size: 20px;
+  }
+
+  .role-content {
+    margin-left: 10px;
+  }
+
+  .role-content strong {
+    font-size: 13px;
+  }
+
+  .role-content small {
+    font-size: 10px;
+  }
+
+  .step3-block,
+  .step4-block,
+  .step5-block,
+  .step6-card {
+    padding: 15px;
+  }
+
+  .step4-heading,
+  .step5-heading,
+  .step6-section-heading {
+    gap: 9px;
+  }
+
+  .step4-heading-icon,
+  .step5-heading-icon {
+    width: 37px;
+    height: 37px;
+
+    font-size: 17px;
+  }
+
+  .step4-heading h2,
+  .step5-heading h2 {
+    font-size: 16px;
+  }
+
+  .step4-heading .section-description,
+  .step5-heading .section-description {
+    font-size: 11px;
+  }
+
+  .selection-chip {
+    min-height: 35px;
+
+    padding: 7px 10px;
+
+    font-size: 11px;
+  }
+
+  .custom-input-row {
+    flex-direction: column;
+  }
+
+  .custom-input-row input,
+  .custom-input-row button {
+    width: 100%;
+  }
+
+  .step4-hours-grid {
+    gap: 7px;
+  }
+
+  .step4-hours-card {
+    min-height: 88px;
+  }
+
+  .step4-language-card {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .step5-duration-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .step5-days-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .step6-card-header h2 {
+    font-size: 18px;
+  }
+
+  .step6-final-message {
+    align-items: flex-start;
+
+    padding: 14px;
+  }
+}
+
+/* =========================================================
+   VERY SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 360px) {
+  .onboarding-title h1 {
+    font-size: 24px;
+  }
+
+  .onboarding-title > p {
+    font-size: 12px;
+  }
+
+  .onboarding-section {
+    padding: 13px;
+  }
+
+  .step3-block,
+  .step4-block,
+  .step5-block,
+  .step6-card {
+    padding: 13px;
+  }
+
+  .step4-hours-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .step5-days-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .onboarding-actions {
+    gap: 7px;
+  }
+
+  .onboarding-back,
+  .onboarding-continue {
+    padding: 0 9px;
+
+    font-size: 10px;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .onboarding-page *,
+  .onboarding-page *::before,
+  .onboarding-page *::after {
+    scroll-behavior: auto !important;
+
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

@@ -29,15 +29,41 @@ router.get("/categories", careerController.getCategories);
 // Career statistics
 router.get("/statistics", careerController.getStatistics);
 
-// Career Details
+// Get career details by slug
 router.get("/:slug", careerController.getCareerBySlug);
 
-router.post("/category", validateRequest, careerController.createCategory);
+// ============================
+// Protected Admin/Management Routes
+// ============================
 
-router.post("/", validateRequest, careerController.createCareer);
+// Create career category
+router.post(
+  "/category",
+  protect,
+  validateCreateCategory,
+  validateRequest,
+  careerController.createCategory,
+);
 
-router.put("/:id", validateRequest,  careerController.updateCareer);
+// Create career
+router.post(
+  "/",
+  protect,
+  validateCreateCareer,
+  validateRequest,
+  careerController.createCareer,
+);
 
-router.delete("/:id", validateRequest, careerController.deleteCareer);
+// Update career
+router.put(
+  "/:id",
+  protect,
+  validateCreateCareer,
+  validateRequest,
+  careerController.updateCareer,
+);
+
+// Delete career
+router.delete("/:id", protect, careerController.deleteCareer);
 
 module.exports = router;

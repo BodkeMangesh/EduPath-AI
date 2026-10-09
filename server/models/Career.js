@@ -35,48 +35,94 @@ const CareerSchema = new mongoose.Schema(
     skills: [
       {
         type: String,
+        trim: true,
       },
     ],
 
     eligibility: [
       {
         type: String,
+        trim: true,
       },
     ],
 
     averageSalary: {
       type: String,
       default: "",
+      trim: true,
     },
 
     growthRate: {
       type: String,
       default: "",
+      trim: true,
     },
 
     demand: {
       type: String,
       default: "",
+      trim: true,
     },
 
-    roadmapTemplate: {
-      type: String,
-      default: "",
-    },
+    roadmap: [
+      {
+        phase: {
+          type: Number,
+          required: true,
+          min: 1,
+        },
+
+        title: {
+          type: String,
+          required: true,
+          trim: true,
+        },
+
+        duration: {
+          type: String,
+          default: "",
+          trim: true,
+        },
+
+        topics: [
+          {
+            type: String,
+            trim: true,
+          },
+        ],
+
+        projects: [
+          {
+            type: String,
+            trim: true,
+          },
+        ],
+
+        interviewTopics: [
+          {
+            type: String,
+            trim: true,
+          },
+        ],
+      },
+    ],
 
     assessmentTemplate: {
       type: String,
       default: "",
+      trim: true,
     },
 
     aiPrompt: {
       type: String,
       default: "",
+      trim: true,
     },
 
     tags: [
       {
         type: String,
+        trim: true,
       },
     ],
 

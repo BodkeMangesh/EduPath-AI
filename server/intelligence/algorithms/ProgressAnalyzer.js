@@ -1,5 +1,5 @@
 class ProgressAnalyzer {
-  async analyze(assessment, careerAnalysis) {
+  async analyze(careerAnalysis) {
     const readiness = careerAnalysis?.recommendedCareer?.matchPercentage || 0;
 
     let level = "Beginner";
@@ -12,8 +12,11 @@ class ProgressAnalyzer {
 
     return {
       careerReadiness: readiness,
+
       level,
+
       completedPercentage: readiness,
+
       nextMilestone:
         readiness >= 80
           ? "Start Interview Preparation"

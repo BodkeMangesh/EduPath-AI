@@ -1,17 +1,15 @@
 import api from "../api/axios";
 
-export const getDashboard = async (careerId) => {
-  const response = await api.get("/dashboard", {
-    params: { careerId },
-  });
+export const getDashboard = async () => {
+  const response = await api.get("/dashboard");
 
   return response.data.data;
 };
 
-export const completeTopic = async (topic, careerId) => {
+export const completeTopic = async (careerId, topic) => {
   const response = await api.post("/learning/complete-topic", {
-    topic,
     careerId,
+    topic,
   });
 
   return response.data;

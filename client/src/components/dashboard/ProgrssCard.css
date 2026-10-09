@@ -3,219 +3,435 @@
 ========================================= */
 
 .progress-card {
-  min-width: 0;
+  width: 100%;
+  height: 420px;
+  min-height: 420px;
+
+  display: flex;
+  flex-direction: column;
+
+  box-sizing: border-box;
+
+  padding: 24px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+
+  overflow: hidden;
 }
 
-.card-header {
+/* =========================================
+   HEADER
+========================================= */
+
+.progress-card .card-header {
+  flex-shrink: 0;
+
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: center;
 
-  margin-bottom: 10px;
+  padding-bottom: 16px;
+
+  border-bottom: 1px solid #e5e7eb;
 }
 
-.card-header div {
+.progress-card .card-header > div {
   display: flex;
   align-items: center;
-  gap: 8px;
+
+  gap: 10px;
 }
 
-.card-header h3 {
+.progress-card .card-header span {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #eff6ff;
+
+  border-radius: 12px;
+
+  font-size: 20px;
+}
+
+.progress-card .card-header h3 {
   margin: 0;
 
+  color: #111827;
+
   font-size: 18px;
-
-  color: #0f172a;
+  font-weight: 700;
 }
 
-.card-header strong {
-  font-size: 20px;
-
+.progress-card .card-header > strong {
   color: #2563eb;
+
+  font-size: 22px;
+  font-weight: 700;
 }
+
+/* =========================================
+   PROGRESS BAR
+========================================= */
+
+.progress-card .progress-bar {
+  width: 100%;
+  height: 9px;
+
+  flex-shrink: 0;
+
+  margin-top: 18px;
+
+  background: #e5e7eb;
+
+  border-radius: 20px;
+
+  overflow: hidden;
+}
+
+.progress-card .progress-fill {
+  height: 100%;
+
+  background: linear-gradient(90deg, #2563eb, #3b82f6);
+
+  border-radius: inherit;
+
+  transition: width 0.5s ease;
+}
+
+/* =========================================
+   SCROLLABLE CONTENT
+========================================= */
+
+.progress-content {
+  flex: 1;
+
+  min-height: 0;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  padding: 15px 8px 4px 0;
+
+  scrollbar-width: thin;
+
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+.progress-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.progress-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.progress-content::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+
+  border-radius: 10px;
+}
+
+.progress-content::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* =========================================
+   STATUS
+========================================= */
 
 .progress-status {
-  margin: 10px 0 18px;
+  margin: 0 0 14px;
 
-  font-size: 14px;
+  padding: 11px 13px;
 
-  color: #64748b;
+  background: #f8fafc;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 10px;
+
+  color: #475569;
+
+  font-size: 12px;
+
+  line-height: 1.5;
 }
+
+/* =========================================
+   STATISTICS
+========================================= */
 
 .progress-stats {
   display: grid;
 
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
 
-  gap: 12px;
+  gap: 9px;
 
-  margin-bottom: 18px;
+  margin-bottom: 15px;
 }
 
-.progress-stats div {
-  padding: 12px;
+.progress-stats > div {
+  min-width: 0;
+
+  padding: 12px 9px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
 
   background: #f8fafc;
 
-  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+
+  border-radius: 11px;
 }
 
 .progress-stats span {
-  display: block;
-
-  font-size: 12px;
-
   color: #64748b;
 
-  margin-bottom: 4px;
+  font-size: 10px;
+
+  line-height: 1.35;
 }
 
 .progress-stats strong {
-  font-size: 18px;
+  margin-top: 5px;
 
   color: #0f172a;
+
+  font-size: 15px;
 }
 
-.next-topic {
-  border-top: 1px solid #e2e8f0;
+/* =========================================
+   NEXT TOPIC
+========================================= */
 
-  padding-top: 15px;
+.next-topic {
+  padding: 14px;
+
+  background: linear-gradient(135deg, #eff6ff, #f8fafc);
+
+  border: 1px solid #dbeafe;
+
+  border-radius: 12px;
 }
 
 .next-topic p {
   margin: 0 0 8px;
 
-  font-size: 13px;
+  color: #64748b;
+
+  font-size: 11px;
 
   font-weight: 600;
 
-  color: #64748b;
+  text-transform: uppercase;
+
+  letter-spacing: 0.4px;
+}
+
+.topic-btn {
+  width: 100%;
+
+  padding: 10px 12px;
+
+  border: none;
+
+  border-radius: 9px;
+
+  background: #2563eb;
+
+  color: #ffffff;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.topic-btn:hover {
+  background: #1d4ed8;
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 5px 12px rgba(37, 99, 235, 0.18);
+}
+
+.topic-btn:active {
+  transform: translateY(0);
+}
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 900px) {
+  .progress-card {
+    height: 400px;
+    min-height: 400px;
+
+    padding: 20px;
+  }
+
+  .progress-card .card-header h3 {
+    font-size: 17px;
+  }
+
+  .progress-card .card-header > strong {
+    font-size: 20px;
+  }
 }
 
 /* =========================================
    MOBILE
 ========================================= */
 
-@media (max-width: 480px) {
-  .progress-stats {
-    grid-template-columns: 1fr;
+@media (max-width: 768px) {
+  .progress-card {
+    height: 390px;
+    min-height: 390px;
+
+    padding: 18px;
+
+    border-radius: 16px;
   }
 
-  .card-header h3 {
+  .progress-card .card-header {
+    padding-bottom: 14px;
+  }
+
+  .progress-card .card-header span {
+    width: 39px;
+    height: 39px;
+
+    font-size: 18px;
+
+    border-radius: 10px;
+  }
+
+  .progress-card .card-header h3 {
     font-size: 16px;
   }
 
-  .card-header strong {
-    font-size: 18px;
+  .progress-card .card-header > strong {
+    font-size: 19px;
   }
-} /* =========================================
-   PROGRESS CARD
-========================================= */
 
-.progress-card {
-  min-width: 0;
-}
+  .progress-card .progress-bar {
+    height: 8px;
 
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    margin-top: 15px;
+  }
 
-  margin-bottom: 10px;
-}
+  .progress-content {
+    padding: 13px 6px 3px 0;
+  }
 
-.card-header div {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+  .progress-stats {
+    gap: 7px;
+  }
 
-.card-header h3 {
-  margin: 0;
+  .progress-stats > div {
+    padding: 10px 6px;
+  }
 
-  font-size: 18px;
+  .progress-stats span {
+    font-size: 9px;
+  }
 
-  color: #0f172a;
-}
+  .progress-stats strong {
+    font-size: 13px;
+  }
 
-.card-header strong {
-  font-size: 20px;
+  .progress-status {
+    font-size: 11px;
 
-  color: #2563eb;
-}
+    padding: 10px 11px;
+  }
 
-.progress-status {
-  margin: 10px 0 18px;
+  .next-topic {
+    padding: 12px;
+  }
 
-  font-size: 14px;
+  .topic-btn {
+    font-size: 11px;
 
-  color: #64748b;
-}
-
-.progress-stats {
-  display: grid;
-
-  grid-template-columns: repeat(2, 1fr);
-
-  gap: 12px;
-
-  margin-bottom: 18px;
-}
-
-.progress-stats div {
-  padding: 12px;
-
-  background: #f8fafc;
-
-  border-radius: 8px;
-}
-
-.progress-stats span {
-  display: block;
-
-  font-size: 12px;
-
-  color: #64748b;
-
-  margin-bottom: 4px;
-}
-
-.progress-stats strong {
-  font-size: 18px;
-
-  color: #0f172a;
-}
-
-.next-topic {
-  border-top: 1px solid #e2e8f0;
-
-  padding-top: 15px;
-}
-
-.next-topic p {
-  margin: 0 0 8px;
-
-  font-size: 13px;
-
-  font-weight: 600;
-
-  color: #64748b;
+    padding: 9px 10px;
+  }
 }
 
 /* =========================================
-   MOBILE
+   SMALL MOBILE
 ========================================= */
 
 @media (max-width: 480px) {
+  .progress-card {
+    height: 370px;
+    min-height: 370px;
+
+    padding: 15px;
+  }
+
+  .progress-card .card-header span {
+    width: 36px;
+    height: 36px;
+
+    font-size: 17px;
+  }
+
+  .progress-card .card-header h3 {
+    font-size: 15px;
+  }
+
+  .progress-card .card-header > strong {
+    font-size: 18px;
+  }
+
   .progress-stats {
     grid-template-columns: 1fr;
+
+    gap: 7px;
   }
 
-  .card-header h3 {
-    font-size: 16px;
+  .progress-stats > div {
+    flex-direction: row;
+
+    justify-content: space-between;
+
+    padding: 9px 11px;
+
+    text-align: left;
   }
 
-  .card-header strong {
-    font-size: 18px;
+  .progress-stats strong {
+    margin-top: 0;
+  }
+
+  .progress-status {
+    font-size: 10px;
+  }
+
+  .topic-btn {
+    font-size: 10px;
   }
 }

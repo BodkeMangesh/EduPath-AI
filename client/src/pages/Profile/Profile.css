@@ -1,0 +1,464 @@
+/* =========================================================
+   EduPath AI — Profile Page
+   Premium Dark Navy Dashboard Design
+   Matches Roadmap / Learning / Progress
+   ========================================================= */
+
+/* =========================================================
+   GLOBAL PAGE BACKGROUND
+   ========================================================= */
+
+html,
+body,
+#root {
+  background: #0f172a;
+  color: #f8fafc;
+}
+
+/* =========================================================
+   PROFILE PAGE
+   ========================================================= */
+
+.profile-page {
+  /* =======================================================
+     DESIGN TOKENS
+     ======================================================= */
+
+  --profile-bg: #0f172a;
+
+  --profile-surface: #111827;
+  --profile-surface-soft: #151e2f;
+  --profile-surface-hover: #182235;
+
+  --profile-border: #273449;
+  --profile-border-strong: #334155;
+
+  --profile-text: #f8fafc;
+  --profile-text-secondary: #cbd5e1;
+  --profile-text-muted: #64748b;
+
+  --profile-primary: #818cf8;
+  --profile-primary-dark: #6366f1;
+  --profile-primary-hover: #4f46e5;
+
+  --profile-primary-soft: rgba(99, 102, 241, 0.12);
+  --profile-primary-border: rgba(129, 140, 248, 0.35);
+
+  --profile-success: #10b981;
+  --profile-success-soft: rgba(16, 185, 129, 0.12);
+
+  --profile-warning: #f59e0b;
+  --profile-warning-soft: rgba(245, 158, 11, 0.12);
+
+  --profile-danger: #ef4444;
+  --profile-danger-soft: rgba(239, 68, 68, 0.1);
+
+  --profile-radius-sm: 8px;
+  --profile-radius-md: 12px;
+  --profile-radius-lg: 16px;
+
+  /* =======================================================
+     PAGE
+     ======================================================= */
+
+  width: 100%;
+  min-height: 100vh;
+
+  margin: 0;
+
+  padding: 28px 24px 60px;
+
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 0;
+
+  background: #0f172a !important;
+
+  color: var(--profile-text);
+
+  /* margin-top: 86px; */
+
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+
+  overflow-x: hidden;
+}
+
+/* =========================================================
+   BOX SIZING
+   ========================================================= */
+
+.profile-page *,
+.profile-page *::before,
+.profile-page *::after {
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   CONTENT WIDTH
+   ========================================================= */
+
+.profile-page > * {
+  width: min(1180px, 100%);
+
+  max-width: 1180px;
+
+  margin-left: auto;
+  margin-right: auto;
+
+  margin-bottom: 18px;
+}
+
+.profile-page > *:last-child {
+  margin-bottom: 0;
+}
+
+/* =========================================================
+   COMMON CARD SYSTEM
+   ========================================================= */
+
+.profile-page .profile-card,
+.profile-page .education-card,
+.profile-page .professional-card,
+.profile-page .ai-profile-card,
+.profile-page .placement-card,
+.profile-page .social-links-card,
+.profile-page .progress-card {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.012), rgba(255, 255, 255, 0)),
+    var(--profile-surface);
+
+  color: var(--profile-text);
+
+  border: 1px solid var(--profile-border);
+
+  border-radius: var(--profile-radius-lg);
+
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.12),
+    0 1px 2px rgba(0, 0, 0, 0.16);
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* =========================================================
+   CARD HOVER
+   ========================================================= */
+
+.profile-page .profile-card:hover,
+.profile-page .education-card:hover,
+.profile-page .professional-card:hover,
+.profile-page .ai-profile-card:hover,
+.profile-page .placement-card:hover,
+.profile-page .social-links-card:hover,
+.profile-page .progress-card:hover {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.015), rgba(255, 255, 255, 0)),
+    var(--profile-surface);
+
+  border-color: var(--profile-border-strong);
+
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.16),
+    0 1px 2px rgba(0, 0, 0, 0.18);
+}
+
+/* =========================================================
+   COMMON TEXT
+   ========================================================= */
+
+.profile-page h1,
+.profile-page h2,
+.profile-page h3,
+.profile-page h4,
+.profile-page h5,
+.profile-page h6 {
+  color: var(--profile-text);
+}
+
+.profile-page p {
+  color: var(--profile-text-secondary);
+}
+
+/* =========================================================
+   COMMON SECTION HEADERS
+   ========================================================= */
+
+.profile-page .card-header,
+.profile-page .profile-card-header,
+.profile-page .section-header {
+  border-bottom: 1px solid rgba(51, 65, 85, 0.55);
+}
+
+/* =========================================================
+   COMMON ICON STYLE
+   ========================================================= */
+
+.profile-page .card-icon,
+.profile-page .section-icon,
+.profile-page .profile-icon {
+  background: var(--profile-primary-soft);
+
+  border: 1px solid var(--profile-primary-border);
+
+  color: var(--profile-primary);
+
+  border-radius: 10px;
+}
+
+/* =========================================================
+   LABELS
+   ========================================================= */
+
+.profile-page label {
+  color: var(--profile-text-muted);
+}
+
+/* =========================================================
+   BADGES
+   ========================================================= */
+
+.profile-page .badge,
+.profile-page .role-badge,
+.profile-page .status-badge {
+  background: var(--profile-primary-soft);
+
+  border: 1px solid var(--profile-primary-border);
+
+  color: var(--profile-primary);
+
+  border-radius: var(--profile-radius-sm);
+}
+
+/* =========================================================
+   BUTTON BASE
+   ========================================================= */
+
+.profile-page button {
+  font-family: inherit;
+}
+
+.profile-page button:focus-visible {
+  outline: 2px solid var(--profile-primary);
+
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   PRIMARY BUTTON
+   ========================================================= */
+
+.profile-page .primary-btn,
+.profile-page .edit-profile-btn,
+.profile-page .save-btn {
+  background: var(--profile-primary-dark);
+
+  color: #ffffff;
+
+  border: 1px solid rgba(129, 140, 248, 0.55);
+
+  border-radius: var(--profile-radius-sm);
+
+  box-shadow: 0 6px 16px rgba(79, 70, 229, 0.18);
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease,
+    box-shadow 0.2s ease;
+}
+
+.profile-page .primary-btn:hover,
+.profile-page .edit-profile-btn:hover,
+.profile-page .save-btn:hover {
+  background: var(--profile-primary-hover);
+
+  border-color: var(--profile-primary);
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 8px 22px rgba(79, 70, 229, 0.24);
+}
+
+/* =========================================================
+   SECONDARY BUTTON
+   ========================================================= */
+
+.profile-page .secondary-btn,
+.profile-page .cancel-btn {
+  background: #1b263a;
+
+  color: #dbe4f0;
+
+  border: 1px solid #334155;
+
+  border-radius: var(--profile-radius-sm);
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.profile-page .secondary-btn:hover,
+.profile-page .cancel-btn:hover {
+  background: #243149;
+
+  border-color: #475569;
+
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+   SUCCESS
+   ========================================================= */
+
+.profile-page .success,
+.profile-page .active,
+.profile-page .completed {
+  color: #34d399;
+}
+
+/* =========================================================
+   WARNING
+   ========================================================= */
+
+.profile-page .warning,
+.profile-page .pending {
+  color: #fbbf24;
+}
+
+/* =========================================================
+   DANGER
+   ========================================================= */
+
+.profile-page .danger,
+.profile-page .inactive,
+.profile-page .failed {
+  color: #fca5a5;
+}
+
+/* =========================================================
+   EMPTY STATES
+   ========================================================= */
+
+.profile-page .empty-state,
+.profile-page .empty-text {
+  color: var(--profile-text-muted);
+
+  background: rgba(15, 23, 42, 0.35);
+
+  border: 1px dashed #334155;
+
+  border-radius: 10px;
+}
+
+/* =========================================================
+   LOADING STATE
+   ========================================================= */
+
+.profile-page > div:first-child {
+  color: var(--profile-text-secondary);
+}
+
+/* =========================================================
+   PREVENT WHITE INPUT / CONTENT BACKGROUNDS
+   ========================================================= */
+
+.profile-page input,
+.profile-page textarea,
+.profile-page select {
+  color: var(--profile-text);
+
+  background: var(--profile-surface-soft);
+
+  border-color: var(--profile-border-strong);
+}
+
+.profile-page input::placeholder,
+.profile-page textarea::placeholder {
+  color: var(--profile-text-muted);
+}
+
+/* =========================================================
+   RESPONSIVE — TABLET
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .profile-page {
+    padding: 22px 16px 48px;
+  }
+
+  .profile-page > * {
+    margin-bottom: 16px;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+  .profile-page {
+    padding: 18px 12px 38px;
+  }
+
+  .profile-page > * {
+    margin-bottom: 14px;
+  }
+
+  .profile-page .profile-card,
+  .profile-page .education-card,
+  .profile-page .professional-card,
+  .profile-page .ai-profile-card,
+  .profile-page .placement-card,
+  .profile-page .social-links-card,
+  .profile-page .progress-card {
+    border-radius: 13px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 430px) {
+  .profile-page {
+    padding: 14px 10px 30px;
+  }
+
+  .profile-page > * {
+    margin-bottom: 12px;
+  }
+}
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .profile-page *,
+  .profile-page *::before,
+  .profile-page *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+
+    transition-duration: 0.01ms !important;
+
+    scroll-behavior: auto !important;
+  }
+}

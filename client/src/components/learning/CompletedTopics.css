@@ -1,103 +1,529 @@
+/* =========================================================
+   EduPath-AI — Completed Topics
+   Matches Learning + Roadmap + Resume Analyzer
+   ========================================================= */
+
 .completed-card {
-  background: white;
-  border-radius: 18px;
-  padding: 25px;
-  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+  --completed-bg: #111827;
+  --completed-surface: #151e2f;
+  --completed-surface-hover: #182235;
+
+  --completed-text: #f8fafc;
+  --completed-text-secondary: #cbd5e1;
+  --completed-text-muted: #64748b;
+
+  --completed-border: #273449;
+  --completed-border-strong: #334155;
+
+  --completed-primary: #818cf8;
+  --completed-primary-soft: rgba(99, 102, 241, 0.14);
+  --completed-primary-border: rgba(129, 140, 248, 0.3);
+
+  --completed-success: #10b981;
+  --completed-success-soft: rgba(16, 185, 129, 0.08);
+  --completed-success-border: rgba(16, 185, 129, 0.22);
+
+  --completed-radius-sm: 8px;
+  --completed-radius-md: 12px;
+  --completed-radius-lg: 16px;
+
+  --completed-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --completed-shadow-sm: 0 8px 24px rgba(0, 0, 0, 0.18);
+
+  width: 100%;
+  min-width: 0;
+
+  padding: 22px;
+
+  background: var(--completed-bg);
+
+  border: 1px solid var(--completed-border);
+  border-radius: var(--completed-radius-lg);
+
+  box-shadow: var(--completed-shadow-xs);
+
+  color: var(--completed-text);
+
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
 }
 
-.card-header {
+/* =========================================================
+   Reset
+   ========================================================= */
+
+.completed-card *,
+.completed-card *::before,
+.completed-card *::after {
+  box-sizing: border-box;
+}
+
+.completed-card h2,
+.completed-card h3,
+.completed-card h4,
+.completed-card p {
+  margin-top: 0;
+}
+
+/* =========================================================
+   Header
+   ========================================================= */
+
+.completed-header {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-  gap: 10px;
+
+  gap: 16px;
+
+  margin-bottom: 18px;
+
+  padding-bottom: 17px;
+
+  border-bottom: 1px solid var(--completed-border);
 }
 
-.card-header h2 {
-  color: #1f2937;
-}
+.completed-title {
+  min-width: 0;
 
-.topic-count {
-  background: #dcfce7;
-  color: #15803d;
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.topics-list {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.topic-item {
   display: flex;
   align-items: center;
-  gap: 15px;
-  padding: 16px;
-  border-radius: 12px;
-  transition: 0.3s;
+
+  gap: 12px;
 }
 
-.topic-item:hover {
-  transform: translateX(6px);
-}
+.completed-title-icon {
+  width: 42px;
+  height: 42px;
 
-.completed {
-  background: #f0fdf4;
-  border-left: 5px solid #22c55e;
-}
+  flex: 0 0 42px;
 
-.topic-icon {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #22c55e;
-  color: white;
-  font-size: 20px;
-  font-weight: bold;
+
+  color: var(--completed-success);
+
+  background: var(--completed-success-soft);
+
+  border: 1px solid var(--completed-success-border);
+  border-radius: 10px;
+
+  font-size: 17px;
 }
 
-.topic-content {
-  flex: 1;
+.completed-title h2 {
+  margin-bottom: 3px;
+
+  color: var(--completed-text);
+
+  font-size: 17px;
+  line-height: 1.3;
+  font-weight: 700;
+
+  letter-spacing: -0.01em;
 }
 
-.topic-content h4 {
-  color: #1f2937;
-  margin-bottom: 4px;
+.completed-title p {
+  margin-bottom: 0;
+
+  color: var(--completed-text-muted);
+
+  font-size: 11px;
+  line-height: 1.45;
 }
 
-.topic-content small {
-  color: #6b7280;
+/* =========================================================
+   Topic Count
+   ========================================================= */
+
+.topic-count {
+  min-height: 30px;
+
+  flex: 0 0 auto;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 10px;
+
+  color: #6ee7b7;
+
+  background: var(--completed-success-soft);
+
+  border: 1px solid var(--completed-success-border);
+  border-radius: 8px;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  white-space: nowrap;
 }
 
-.empty-state {
+/* =========================================================
+   Completed Topics List
+   ========================================================= */
+
+.completed-topics-list {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 10px;
+}
+
+/* =========================================================
+   Topic Item
+   ========================================================= */
+
+.completed-topic-item {
+  min-width: 0;
+
+  display: grid;
+
+  grid-template-columns: 34px 34px minmax(0, 1fr);
+
+  align-items: center;
+
+  gap: 10px;
+
+  min-height: 66px;
+
+  padding: 12px 13px;
+
+  background: var(--completed-surface);
+
+  border: 1px solid var(--completed-border);
+  border-radius: var(--completed-radius-md);
+
+  box-shadow: var(--completed-shadow-xs);
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.completed-topic-item:hover {
+  background: var(--completed-surface-hover);
+
+  border-color: var(--completed-border-strong);
+
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+   Number
+   ========================================================= */
+
+.topic-number {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--completed-primary);
+
+  background: var(--completed-primary-soft);
+
+  border: 1px solid var(--completed-primary-border);
+  border-radius: 9px;
+
+  font-size: 11px;
+  font-weight: 750;
+}
+
+/* =========================================================
+   Completed Status
+   ========================================================= */
+
+.completed-status-icon {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #6ee7b7;
+
+  background: var(--completed-success-soft);
+
+  border: 1px solid var(--completed-success-border);
+  border-radius: 9px;
+
+  font-size: 13px;
+  font-weight: 800;
+}
+
+/* =========================================================
+   Topic Content
+   ========================================================= */
+
+.completed-topic-content {
+  min-width: 0;
+}
+
+.completed-topic-content h4 {
+  margin-bottom: 3px;
+
+  color: var(--completed-text);
+
+  font-size: 13px;
+  line-height: 1.4;
+  font-weight: 650;
+
+  overflow-wrap: anywhere;
+}
+
+.completed-topic-content span {
+  display: block;
+
+  color: var(--completed-text-muted);
+
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+/* =========================================================
+   Empty State
+   ========================================================= */
+
+.completed-empty-state {
+  min-height: 180px;
+
+  padding: 25px 20px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
   text-align: center;
-  padding: 50px 20px;
+
+  background: var(--completed-surface);
+
+  border: 1px dashed var(--completed-border-strong);
+
+  border-radius: var(--completed-radius-md);
 }
 
-.empty-state h3 {
-  color: #374151;
-  margin-bottom: 10px;
+.empty-icon {
+  width: 44px;
+  height: 44px;
+
+  margin-bottom: 11px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--completed-text-muted);
+
+  background: var(--completed-primary-soft);
+
+  border: 1px solid var(--completed-primary-border);
+  border-radius: 10px;
+
+  font-size: 18px;
 }
 
-.empty-state p {
-  color: #6b7280;
+.completed-empty-state h3 {
+  margin-bottom: 5px;
+
+  color: var(--completed-text);
+
+  font-size: 15px;
+  line-height: 1.35;
+  font-weight: 700;
 }
 
-@media (max-width: 768px) {
-  .card-header {
-    flex-direction: column;
+.completed-empty-state p {
+  width: min(100%, 480px);
+
+  margin-bottom: 0;
+
+  color: var(--completed-text-muted);
+
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+/* =========================================================
+   Tablet
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .completed-topics-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   Mobile
+   ========================================================= */
+
+@media (max-width: 600px) {
+  .completed-card {
+    padding: 18px;
+  }
+
+  .completed-header {
     align-items: flex-start;
   }
 
-  .topic-item {
-    padding: 14px;
+  .completed-title {
+    align-items: flex-start;
+  }
+
+  .completed-title-icon {
+    width: 38px;
+    height: 38px;
+
+    flex-basis: 38px;
+
+    font-size: 15px;
+  }
+
+  .completed-title h2 {
+    font-size: 16px;
+  }
+
+  .completed-title p {
+    font-size: 10px;
+  }
+
+  .completed-topic-item {
+    grid-template-columns: 32px 32px minmax(0, 1fr);
+
+    gap: 9px;
+
+    padding: 11px;
+  }
+
+  .topic-number,
+  .completed-status-icon {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+/* =========================================================
+   Small Mobile
+   ========================================================= */
+
+@media (max-width: 430px) {
+  .completed-card {
+    padding: 15px;
+  }
+
+  .completed-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .topic-count {
+    align-self: flex-start;
+  }
+
+  .completed-topic-item {
+    grid-template-columns: 30px 30px minmax(0, 1fr);
+
+    gap: 8px;
+
+    min-height: 62px;
+
+    padding: 10px;
+  }
+
+  .topic-number,
+  .completed-status-icon {
+    width: 30px;
+    height: 30px;
+
+    border-radius: 8px;
+
+    font-size: 10px;
+  }
+
+  .completed-topic-content h4 {
+    font-size: 12px;
+  }
+
+  .completed-topic-content span {
+    font-size: 9px;
+  }
+}
+
+/* =========================================================
+   Explicit Light Mode
+   ========================================================= */
+
+.completed-card[data-theme="light"],
+[data-theme="light"] .completed-card,
+[data-mode="light"] .completed-card {
+  --completed-bg: #ffffff;
+  --completed-surface: #f8fafc;
+  --completed-surface-hover: #f1f5f9;
+
+  --completed-text: #0f172a;
+  --completed-text-secondary: #475569;
+  --completed-text-muted: #64748b;
+
+  --completed-border: #e2e8f0;
+  --completed-border-strong: #cbd5e1;
+
+  --completed-primary: #6366f1;
+  --completed-primary-soft: rgba(99, 102, 241, 0.08);
+  --completed-primary-border: rgba(99, 102, 241, 0.22);
+
+  --completed-success: #059669;
+  --completed-success-soft: rgba(16, 185, 129, 0.08);
+  --completed-success-border: rgba(16, 185, 129, 0.2);
+}
+
+/* =========================================================
+   Explicit Dark Mode
+   ========================================================= */
+
+.completed-card.dark,
+.dark .completed-card,
+[data-theme="dark"] .completed-card,
+[data-mode="dark"] .completed-card {
+  --completed-bg: #111827;
+  --completed-surface: #151e2f;
+  --completed-surface-hover: #182235;
+
+  --completed-text: #f8fafc;
+  --completed-text-secondary: #cbd5e1;
+  --completed-text-muted: #64748b;
+
+  --completed-border: #273449;
+  --completed-border-strong: #334155;
+
+  --completed-primary: #818cf8;
+  --completed-primary-soft: rgba(99, 102, 241, 0.14);
+  --completed-primary-border: rgba(129, 140, 248, 0.3);
+}
+
+/* =========================================================
+   Reduced Motion
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .completed-card *,
+  .completed-card *::before,
+  .completed-card *::after {
+    transition-duration: 0.01ms !important;
   }
 }

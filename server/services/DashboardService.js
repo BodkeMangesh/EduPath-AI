@@ -1,107 +1,279 @@
 const User = require("../models/User");
 const LearningProgress = require("../models/LearningProgress");
-const Assessment = require("../models/Assessment");
+const LearningSession = require("../models/LearningSession");
 
-const AIMentorEngine = require("../intelligence/AIMentorEngine");
-const DailyLearningEngine = require("../intelligence/DailyLearningEngine");
-const CareerReadinessEngine = require("../intelligence/CareerReadinessEngine");
-const AIProvider = require("../ai/AIProvider");
-const AIResourceService = require("./AIResourceService");
+/*
+|--------------------------------------------------------------------------
+| Dashboard Service
+|--------------------------------------------------------------------------
+|
+| Provides all important information required by the Dashboard.
+|
+| Data sources:
+| - User
+| - LearningProgress
+| - LearningSession
+|
+|--------------------------------------------------------------------------
+*/
 
 class DashboardService {
-  /**
-   * Get User Dashboard
-   */
-  async getDashboard(userId, careerId) {
-    const user = await User.findById(userId).select("fullName email");
+  getCareerId(user) {
+    if (!user?.selectedCareer) return null;
 
-    console.log("User ID:", userId);
-    console.log("Career ID:", careerId);
-    const progress = await LearningProgress.findOne({
-      user: userId,
-      status: "Active",
-    });
-    console.log("Progress:", progress);
-    const latestAssessment = await Assessment.findOne({
-      user: userId,
-      status: "completed",
-    }).sort({ completedAt: -1 });
+    return user.selectedCareer.slug
+      ? String(user.selectedCareer.slug).trim().toLowerCase()
+      : null;
+  }
 
-    if (!progress) {
-      throw new Error("Learning progress not found.");
+  async getDashboard(userId) {
+    /*
+    |--------------------------------------------------------------------------
+    | 1. Get User
+    |--------------------------------------------------------------------------
+    */
+
+    const user = await User.findById(userId)
+      .select(
+        "fullName email profileImage learningStyle placement aiProfile progress selectedCareer careerStatus achievements onboarding",
+      )
+      .populate("selectedCareer", "name title slug");
+
+    if (!user) {
+      throw new Error("User not found.");
     }
 
-    const readiness = CareerReadinessEngine.calculate(
-      progress,
-      latestAssessment,
-    );
+    /*
+    |--------------------------------------------------------------------------
+    | 2. Determine Career
+    |--------------------------------------------------------------------------
+    */
 
-    // Build Ai Context `
-    const context = {
-      career: progress.careerId,
-      completion: progress.overallCompletion,
-      streak: progress.currentStreak,
-      studyHours: progress.totalStudyHours,
-      readiness: readiness,
-      nextTopic: progress.pendingTopics[0],
-    };
+    const careerId = this.getCareerId(user);
 
-    let mentor;
-    try {
-      mentor = await AIProvider.generate("mentor", context);
-    } catch (error) {
-      console.log(
-        "Using fallback mentor advice due to AI error:",
-        error.message,
-      );
-      mentor = await AIMentorEngine.generate(progress, {
-        careerReadiness: readiness,
-      });
+    /*
+    |--------------------------------------------------------------------------
+    | 3. Get Learning Progress
+    |--------------------------------------------------------------------------
+    */
+
+    let learningProgress = null;
+
+    if (careerId) {
+      learningProgress = await LearningProgress.findOne({
+        user: userId,
+        careerId,
+      }).lean();
     }
 
-    const dailyPlan = await DailyLearningEngine.generate(progress);
+    /*
+    |--------------------------------------------------------------------------
+    | 4. Get Learning Sessions
+    |--------------------------------------------------------------------------
+    */
 
-    const resources = await AIResourceService.generate(
-      progress,
-      latestAssessment,
-    );
+    let completedSessions = [];
+    let activeSession = null;
+
+    if (careerId) {
+      completedSessions = await LearningSession.find({
+        user: userId,
+        careerId,
+        status: "completed",
+      })
+        .sort({ completedAt: -1 })
+        .limit(5)
+        .lean();
+
+      activeSession = await LearningSession.findOne({
+        user: userId,
+        careerId,
+        status: { $in: ["started", "paused"] },
+      })
+        .sort({ updatedAt: -1 })
+        .lean();
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | 5. Calculate Study Time
+    |--------------------------------------------------------------------------
+    |
+    | durationSeconds is the authoritative learning-session value.
+    |
+    */
+
+    let totalSessionSeconds = 0;
+
+    if (careerId) {
+      const studyTimeResult = await LearningSession.aggregate([
+        {
+          $match: {
+            user: user._id,
+            careerId,
+            status: "completed",
+          },
+        },
+        {
+          $group: {
+            _id: null,
+            totalSeconds: {
+              $sum: "$durationSeconds",
+            },
+          },
+        },
+      ]);
+
+      totalSessionSeconds = studyTimeResult[0]?.totalSeconds || 0;
+    }
+
+    const sessionStudyHours = Number((totalSessionSeconds / 3600).toFixed(2));
+
+    /*
+    |--------------------------------------------------------------------------
+    | 6. Learning Progress Data
+    |--------------------------------------------------------------------------
+    */
+
+    const completedTopics = learningProgress?.completedTopics || [];
+    const pendingTopics = learningProgress?.pendingTopics || [];
+
+    const overallCompletion =
+      learningProgress?.overallCompletion ??
+      user.progress?.overallProgress ??
+      0;
+
+    const currentPhase = learningProgress?.currentPhase || 1;
+
+    const currentStreak = learningProgress?.currentStreak || 0;
+
+    const totalStudyHours =
+      learningProgress?.totalStudyHours > 0
+        ? learningProgress.totalStudyHours
+        : sessionStudyHours;
+
+    /*
+    |--------------------------------------------------------------------------
+    | 7. Recently Completed Sessions
+    |--------------------------------------------------------------------------
+    */
+
+    const recentCompletedSessions = completedSessions.map((session) => ({
+      id: session._id,
+      topic: session.topic,
+      phase: session.phase,
+      phaseTitle: session.phaseTitle,
+      type: session.type,
+      durationMinutes: session.durationMinutes,
+      durationSeconds: session.durationSeconds,
+      progress: session.progress,
+      completedAt: session.completedAt,
+      resourceTitle: session.resourceTitle,
+      resourceProvider: session.resourceProvider,
+    }));
+
+    /*
+    |--------------------------------------------------------------------------
+    | 8. Active Learning Session
+    |--------------------------------------------------------------------------
+    */
+
+    let activeLearningSession = null;
+
+    if (activeSession) {
+      activeLearningSession = {
+        id: activeSession._id,
+        topic: activeSession.topic,
+        phase: activeSession.phase,
+        phaseTitle: activeSession.phaseTitle,
+        type: activeSession.type,
+        status: activeSession.status,
+        progress: activeSession.progress,
+        durationSeconds: activeSession.durationSeconds,
+        durationMinutes: activeSession.durationMinutes,
+        plannedDurationMinutes: activeSession.plannedDurationMinutes,
+        learningStyle: activeSession.learningStyle,
+        resourceTitle: activeSession.resourceTitle,
+        resourceProvider: activeSession.resourceProvider,
+        resourceUrl: activeSession.resourceUrl,
+        startedAt: activeSession.startedAt,
+        updatedAt: activeSession.updatedAt,
+      };
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | 9. Dashboard Response
+    |--------------------------------------------------------------------------
+    */
 
     return {
-      user,
+      user: {
+        id: user._id,
+        fullName: user.fullName,
+        email: user.email,
+        profileImage: user.profileImage,
+        learningStyle: user.learningStyle,
+        careerStatus: user.careerStatus,
+      },
 
-      id: user._id,
+      career: user.selectedCareer
+        ? {
+            id: user.selectedCareer._id,
+            name: user.selectedCareer.name || user.selectedCareer.title || "",
+            slug: user.selectedCareer.slug || "",
+          }
+        : null,
 
-      fullName: user.fullName,
+      onboarding: {
+        completed: user.onboardingCompleted,
+        currentSituation: user.onboarding?.currentSituation || "",
+        careerGoal: user.onboarding?.careerGoal || "",
+        interests: user.onboarding?.interests || [],
+      },
 
-      email: user.email,
+      learning: {
+        overallCompletion,
+        currentPhase,
+        completedTopics,
+        pendingTopics,
+        completedProjects: learningProgress?.completedProjects || [],
+        currentStreak,
+        totalStudyHours,
+        nextMilestone:
+          learningProgress?.nextMilestone || "Continue your learning journey",
+        lastStudyDate: learningProgress?.lastStudyDate || null,
+        status: learningProgress?.status || "Active",
+      },
 
-      career: progress.careerId,
+      sessions: {
+        totalCompleted: completedSessions.length,
+        active: activeLearningSession,
+        recentCompleted: recentCompletedSessions,
+        totalSessionStudyHours: sessionStudyHours,
+      },
 
-      overallCompletion: progress.overallCompletion,
+      placement: {
+        targetRole: user.placement?.targetRole || "",
+        dreamCompany: user.placement?.dreamCompany || "",
+        interviewReadiness: user.placement?.interviewReadiness || 0,
+      },
 
-      currentPhase: progress.currentPhase,
+      profileProgress: {
+        overallProgress: user.progress?.overallProgress || 0,
+        careerReadiness: user.progress?.careerReadiness || 0,
+        portfolioScore: user.progress?.portfolioScore || 0,
+        completedRoadmaps: user.progress?.completedRoadmaps || 0,
+      },
 
-      studyStreak: progress.currentStreak,
+      aiProfile: {
+        preferredLanguage: user.aiProfile?.preferredLanguage || "English",
+        dailyStudyHours: user.aiProfile?.dailyStudyHours || 2,
+        careerGoal: user.aiProfile?.careerGoal || "",
+        interests: user.aiProfile?.interests || [],
+      },
 
-      totalStudyHours: progress.totalStudyHours,
-
-      nextMilestone: progress.nextMilestone,
-
-      completedTopics: progress.completedTopics.length,
-
-      pendingTopics: progress.pendingTopics.length,
-
-      todayTask: progress.pendingTopics[0] || "No task",
-
-      careerReadiness: readiness,
-
-      estimatedCompletion: "Coming Soon",
-
-      mentor,
-
-      dailyPlan,
-
-      resources,
+      achievements: user.achievements || [],
     };
   }
 }

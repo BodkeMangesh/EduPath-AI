@@ -4,9 +4,10 @@ const Assessment = require("../models/Assessment");
 
 const asyncHandler = require("../middleware/asyncHandler");
 const ApiError = require("../utils/ApiError");
+const User = require("../models/User");
 
 exports.chat = asyncHandler(async (req, res) => {
-  const { message, careerId } = req.body;
+  const { message, conversation = [] } = req.body;
 
   if (!message) {
     throw new ApiError(400, "Message is required.");
@@ -14,7 +15,7 @@ exports.chat = asyncHandler(async (req, res) => {
 
   const progress = await LearningProgress.findOne({
     user: req.user.id,
-    careerId,
+    status: "Active",
   });
 
   if (!progress) {
@@ -26,12 +27,22 @@ exports.chat = asyncHandler(async (req, res) => {
     status: "completed",
   }).sort({ completedAt: -1 });
 
-  const reply = await ChatService.ask(progress, assessment, message);
+  const user = await User.findById(req.user.id);
+
+  if (!user) {
+    throw new ApiError(404, "User not found.");
+  }
+
+  const result = await ChatService.ask(
+    user,
+    progress,
+    assessment,
+    message,
+    conversation,
+  );
 
   res.status(200).json({
     success: true,
-    data: {
-      reply,
-    },
+    data: { result },
   });
 });

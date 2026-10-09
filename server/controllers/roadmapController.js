@@ -1,37 +1,70 @@
+const asyncHandler = require("../middleware/asyncHandler");
 const RoadmapService = require("../services/RoadmapService");
 
-class RoadmapController {
-  /**
-   * Get User Roadmap
-   */
-  async getRoadmap(req, res) {
-    try {
-      const userId = req.user._id;
-      const { careerId } = req.query;
+/**
+ * ============================================================
+ * GET USER ROADMAP
+ * ============================================================
+ *
+ * GET /api/v1/roadmap?careerId=python-developer
+ *
+ * Returns personalized roadmap based on:
+ *
+ * - User onboarding
+ * - Selected career
+ * - Learning profile
+ * - Learning progress
+ * - Career knowledge base
+ */
+exports.getRoadmap = asyncHandler(async (req, res) => {
+  // ==========================================================
+  // USER
+  // ==========================================================
 
-      if (!careerId) {
-        return res.status(400).json({
-          success: false,
-          message: "careerId is required.",
-        });
-      }
+  const userId = req.user?._id || req.user?.id;
 
-      const roadmap = await RoadmapService.getRoadmap(userId, careerId);
+  // ==========================================================
+  // CAREER
+  // ==========================================================
 
-      return res.status(200).json({
-        success: true,
-        message: "Roadmap retrieved successfully.",
-        data: roadmap,
-      });
-    } catch (error) {
-      console.error("Roadmap Controller Error:", error);
+  const { careerId } = req.query;
 
-      return res.status(500).json({
-        success: false,
-        message: error.message || "Unable to retrieve roadmap.",
-      });
-    }
+  // ==========================================================
+  // VALIDATION
+  // ==========================================================
+
+  if (!userId) {
+    return res.status(401).json({
+      success: false,
+      message: "User authentication is required.",
+    });
   }
-}
 
-module.exports = new RoadmapController();
+  if (!careerId) {
+    return res.status(400).json({
+      success: false,
+      message: "Career ID is required.",
+    });
+  }
+
+  // ==========================================================
+  // GET ROADMAP
+  // ==========================================================
+
+  const roadmap = await RoadmapService.getRoadmap(
+    userId,
+    careerId,
+  );
+
+  // ==========================================================
+  // RESPONSE
+  // ==========================================================
+
+  return res.status(200).json({
+    success: true,
+
+    message: "Roadmap retrieved successfully.",
+
+    data: roadmap,
+  });
+});

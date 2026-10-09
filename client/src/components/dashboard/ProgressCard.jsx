@@ -35,7 +35,7 @@ function ProgressCard({ dashboard, refreshDashboard }) {
         <strong>{completion}%</strong>
       </div>
 
-      {/* Progress */}
+      {/* Fixed Progress Area */}
       <div className="progress-bar">
         <div
           className="progress-fill"
@@ -45,35 +45,43 @@ function ProgressCard({ dashboard, refreshDashboard }) {
         />
       </div>
 
-      <p className="progress-status">
-        {completion === 100
-          ? "🎉 Learning path completed!"
-          : "Keep learning to improve your progress."}
-      </p>
+      {/* Scrollable Content */}
+      <div className="progress-content">
+        <p className="progress-status">
+          {completion === 100
+            ? "🎉 Learning path completed!"
+            : "Keep learning to improve your progress."}
+        </p>
 
-      {/* Statistics */}
-      <div className="progress-stats">
-        <div>
-          <span>Completed Topics</span>
-          <strong>{dashboard.completedTopics || 0}</strong>
+        {/* Statistics */}
+        <div className="progress-stats">
+          <div>
+            <span>Completed Topics</span>
+            <strong>{dashboard.completedTopics?.length || 0}</strong>
+          </div>
+
+          <div>
+            <span>Pending Topics</span>
+            <strong>{dashboard.pendingTopics?.length || 0}</strong>
+          </div>
+
+          <div>
+            <span>Study Streak</span>
+            <strong>🔥 {dashboard.studyStreak || 0} days</strong>
+          </div>
         </div>
 
-        <div>
-          <span>Pending Topics</span>
-          <strong>{dashboard.pendingTopics || 0}</strong>
-        </div>
+        {/* Next Topic */}
+        {dashboard.nextMilestone && completion < 100 && (
+          <div className="next-topic">
+            <p>Next Topic</p>
+
+            <button className="topic-btn" onClick={handleComplete}>
+              ✔ {dashboard.nextMilestone}
+            </button>
+          </div>
+        )}
       </div>
-
-      {/* Next Topic */}
-      {dashboard.nextMilestone && completion < 100 && (
-        <div className="next-topic">
-          <p>Next Topic</p>
-
-          <button className="topic-btn" onClick={handleComplete}>
-            ✔ {dashboard.nextMilestone}
-          </button>
-        </div>
-      )}
     </div>
   );
 }

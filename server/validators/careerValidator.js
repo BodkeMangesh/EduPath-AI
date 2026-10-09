@@ -1,9 +1,5 @@
 const { body } = require("express-validator");
 
-// ==============================
-// Career Validation
-// ==============================
-
 const validateCreateCareer = [
   body("name")
     .trim()
@@ -12,13 +8,22 @@ const validateCreateCareer = [
     .isLength({ min: 3, max: 100 })
     .withMessage("Career name must be between 3 and 100 characters."),
 
+  body("careerId")
+    .trim()
+    .notEmpty()
+    .withMessage("Career ID is required.")
+    .matches(/^[a-z0-9-]+$/)
+    .withMessage(
+      "Career ID can contain only lowercase letters, numbers, and hyphens.",
+    ),
+
   body("slug")
     .trim()
     .notEmpty()
     .withMessage("Career slug is required.")
     .matches(/^[a-z0-9-]+$/)
     .withMessage(
-      "Slug can only contain lowercase letters, numbers and hyphens.",
+      "Career slug can contain only lowercase letters, numbers, and hyphens.",
     ),
 
   body("categorySlug")
@@ -33,12 +38,27 @@ const validateCreateCareer = [
 
   body("skills").optional().isArray().withMessage("Skills must be an array."),
 
+  body("skills.*")
+    .optional()
+    .isString()
+    .withMessage("Each skill must be a string."),
+
   body("eligibility")
     .optional()
     .isArray()
     .withMessage("Eligibility must be an array."),
 
+  body("eligibility.*")
+    .optional()
+    .isString()
+    .withMessage("Each eligibility item must be a string."),
+
   body("tags").optional().isArray().withMessage("Tags must be an array."),
+
+  body("tags.*")
+    .optional()
+    .isString()
+    .withMessage("Each tag must be a string."),
 
   body("averageSalary").optional().trim(),
 
@@ -46,24 +66,63 @@ const validateCreateCareer = [
 
   body("demand").optional().trim(),
 
-  body("roadmapTemplate").optional().trim(),
+  body("roadmap").optional().isArray().withMessage("Roadmap must be an array."),
+
+  body("roadmap.*.phase")
+    .optional()
+    .isInt({ min: 1 })
+    .withMessage("Roadmap phase must be a number greater than or equal to 1."),
+
+  body("roadmap.*.title")
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage("Roadmap phase title is required."),
+
+  body("roadmap.*.duration").optional().trim(),
+
+  body("roadmap.*.topics")
+    .optional()
+    .isArray()
+    .withMessage("Roadmap topics must be an array."),
+
+  body("roadmap.*.topics.*")
+    .optional()
+    .isString()
+    .withMessage("Each roadmap topic must be a string."),
+
+  body("roadmap.*.projects")
+    .optional()
+    .isArray()
+    .withMessage("Roadmap projects must be an array."),
+
+  body("roadmap.*.projects.*")
+    .optional()
+    .isString()
+    .withMessage("Each roadmap project must be a string."),
+
+  body("roadmap.*.interviewTopics")
+    .optional()
+    .isArray()
+    .withMessage("Roadmap interview topics must be an array."),
+
+  body("roadmap.*.interviewTopics.*")
+    .optional()
+    .isString()
+    .withMessage("Each roadmap interview topic must be a string."),
 
   body("assessmentTemplate").optional().trim(),
 
   body("aiPrompt").optional().trim(),
 ];
 
-// ==============================
-// Career Category Validation
-// ==============================
-
 const validateCreateCategory = [
   body("name")
     .trim()
     .notEmpty()
     .withMessage("Category name is required.")
-    .isLength({ min: 3, max: 50 })
-    .withMessage("Category name must be between 3 and 50 characters."),
+    .isLength({ min: 2, max: 100 })
+    .withMessage("Category name must be between 2 and 100 characters."),
 
   body("slug")
     .trim()
@@ -71,10 +130,8 @@ const validateCreateCategory = [
     .withMessage("Category slug is required.")
     .matches(/^[a-z0-9-]+$/)
     .withMessage(
-      "Slug can only contain lowercase letters, numbers and hyphens.",
+      "Category slug can contain only lowercase letters, numbers, and hyphens.",
     ),
-
-  body("icon").optional().trim(),
 
   body("description")
     .optional()

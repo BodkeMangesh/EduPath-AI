@@ -1,128 +1,561 @@
+/* =========================================================
+   CAREER READINESS CARD
+   EduPath AI - Modern + Scrollable + Responsive
+========================================================= */
+
 .readiness-card {
   width: 100%;
-  box-sizing: border-box;
+  height: 100%;
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  background: #ffffff;
+  color: #172033;
+
+  border-radius: 20px;
+
+  overflow: hidden;
 }
 
+/* =========================================================
+   HEADER
+========================================================= */
+
 .readiness-header {
+  flex-shrink: 0;
+
   display: flex;
   align-items: center;
-  gap: 10px;
 
-  margin-bottom: 20px;
+  gap: 14px;
+
+  padding: 24px 28px 18px;
+
+  border-bottom: 1px solid #e8edf4;
+
+  background: #ffffff;
 }
 
 .readiness-header > span {
-  font-size: 24px;
-}
+  width: 48px;
+  height: 48px;
 
-.readiness-header h3 {
-  margin: 0;
-
-  font-size: 18px;
-
-  color: #0f172a;
-}
-
-.readiness-header p {
-  margin: 3px 0 0;
-
-  font-size: 13px;
-
-  color: #64748b;
-}
-
-
-/* =========================
-   SCORE
-========================= */
-
-.score-section {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-
-  margin-bottom: 20px;
-}
-
-.score-circle {
-  width: 90px;
-  height: 90px;
-
-  border-radius: 50%;
+  flex-shrink: 0;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  background: #eff6ff;
+  background: #eef2ff;
 
-  border: 8px solid #2563eb;
+  border-radius: 14px;
 
-  box-sizing: border-box;
+  font-size: 25px;
+
+  box-shadow: 0 4px 10px rgba(79, 70, 229, 0.08);
 }
 
-.score-circle span {
-  font-size: 20px;
+.readiness-header h3 {
+  margin: 0;
 
+  color: #111827;
+
+  font-size: 21px;
   font-weight: 700;
 
-  color: #1d4ed8;
+  line-height: 1.25;
 }
 
+.readiness-header p {
+  margin: 5px 0 0;
+
+  color: #64748b;
+
+  font-size: 14px;
+
+  line-height: 1.4;
+}
+
+/* =========================================================
+   SCORE SECTION
+========================================================= */
+
+.score-section {
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 24px;
+
+  padding: 24px 28px 20px;
+
+  background: #ffffff;
+}
+
+/* =========================================================
+   SCORE CIRCLE
+========================================================= */
+
+.score-circle {
+  width: 120px;
+  height: 120px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  /*
+    Conic gradient gives the circle a
+    modern progress-ring appearance.
+  */
+
+  background: conic-gradient(
+    #4f46e5 0deg,
+    #6366f1 140deg,
+    #e0e7ff 140deg,
+    #e0e7ff 360deg
+  );
+
+  position: relative;
+}
+
+/*
+   Inner white circle
+*/
+
+.score-circle::before {
+  content: "";
+
+  position: absolute;
+
+  width: 92px;
+  height: 92px;
+
+  background: #ffffff;
+
+  border-radius: 50%;
+}
+
+/*
+   Score text
+*/
+
+.score-circle span {
+  position: relative;
+  z-index: 1;
+
+  color: #3730a3;
+
+  font-size: 25px;
+  font-weight: 800;
+}
+
+/* =========================================================
+   READINESS STATUS
+========================================================= */
+
 .readiness-status {
+  min-width: 0;
+
   display: flex;
   flex-direction: column;
 
-  gap: 4px;
+  gap: 6px;
 }
 
 .readiness-status strong {
-  font-size: 18px;
+  color: #111827;
 
-  color: #0f172a;
+  font-size: 21px;
+  font-weight: 700;
+
+  line-height: 1.3;
+
+  word-break: break-word;
 }
 
 .readiness-status span {
-  font-size: 13px;
-
   color: #64748b;
+
+  font-size: 14px;
+
+  line-height: 1.4;
 }
 
-
-/* =========================
-   TIPS
-========================= */
+/* =========================================================
+   TIPS - SCROLLABLE AREA
+========================================================= */
 
 .tips {
-  border-top: 1px solid #e2e8f0;
+  flex: 1;
 
-  padding-top: 15px;
+  min-height: 0;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  padding: 4px 24px 22px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+
+  scrollbar-width: thin;
+
+  scrollbar-color: #cbd5e1 transparent;
 }
 
-.tips p {
-  margin: 8px 0;
+/* Chrome / Edge / Safari */
+
+.tips::-webkit-scrollbar {
+  width: 7px;
+}
+
+.tips::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.tips::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+
+  border-radius: 10px;
+}
+
+.tips::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* =========================================================
+   GENERAL TIP
+========================================================= */
+
+.tips > p {
+  flex-shrink: 0;
+
+  margin: 0;
+
+  padding: 13px 15px;
+
+  background: #f8fafc;
+
+  border: 1px solid #e5eaf1;
+
+  border-radius: 13px;
+
+  color: #64748b;
+
+  font-size: 14px;
+
+  line-height: 1.55;
+
+  word-break: break-word;
+
+  overflow-wrap: anywhere;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.tips > p:hover {
+  background: #f5f8fc;
+
+  border-color: #d9e1eb;
+}
+
+/* =========================================================
+   MESSAGE / MAIN TIP
+========================================================= */
+
+.tips > p:first-child {
+  color: #334155;
+
+  background: #f8fafc;
+
+  font-weight: 500;
+}
+
+/* =========================================================
+   STRENGTHS
+========================================================= */
+
+.readiness-strengths {
+  flex-shrink: 0;
+
+  padding: 15px 16px;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 14px;
+
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+}
+
+.readiness-strengths > strong {
+  display: block;
+
+  margin-bottom: 10px;
+
+  color: #172033;
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+/*
+   Strength items
+*/
+
+.readiness-strengths p {
+  margin: 7px 0 0;
+
+  color: #475569;
 
   font-size: 13px;
 
   line-height: 1.5;
 
-  color: #475569;
+  word-break: break-word;
 }
 
+/* =========================================================
+   PROGRESS / PHASE / STREAK
+========================================================= */
 
-/* =========================
-   MOBILE
-========================= */
+.tips > p:nth-last-child(-n + 3) {
+  background: #f8fafc;
+}
 
-@media (max-width: 480px) {
+/* =========================================================
+   MOBILE SAFE TEXT
+========================================================= */
+
+.tips p,
+.readiness-strengths p,
+.readiness-strengths strong {
+  overflow-wrap: anywhere;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+  .readiness-header {
+    padding: 20px 22px 16px;
+  }
+
+  .readiness-header > span {
+    width: 44px;
+    height: 44px;
+
+    font-size: 23px;
+  }
 
   .readiness-header h3 {
-    font-size: 16px;
+    font-size: 19px;
+  }
+
+  .readiness-header p {
+    font-size: 13px;
+  }
+
+  .score-section {
+    gap: 20px;
+
+    padding: 20px 22px 18px;
   }
 
   .score-circle {
-    width: 80px;
-    height: 80px;
+    width: 105px;
+    height: 105px;
+  }
+
+  .score-circle::before {
+    width: 81px;
+    height: 81px;
+  }
+
+  .score-circle span {
+    font-size: 22px;
+  }
+
+  .readiness-status strong {
+    font-size: 18px;
+  }
+
+  .readiness-status span {
+    font-size: 13px;
+  }
+
+  .tips {
+    padding: 2px 20px 20px;
+  }
+
+  .tips > p {
+    font-size: 13px;
+
+    padding: 12px 14px;
+  }
+
+  .readiness-strengths {
+    padding: 13px 14px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+  .readiness-card {
+    border-radius: 16px;
+  }
+
+  .readiness-header {
+    gap: 12px;
+
+    padding: 18px 18px 15px;
+  }
+
+  .readiness-header > span {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 12px;
+
+    font-size: 22px;
+  }
+
+  .readiness-header h3 {
+    font-size: 18px;
+  }
+
+  .readiness-header p {
+    margin-top: 4px;
+
+    font-size: 12px;
+  }
+
+  /* Score */
+
+  .score-section {
+    gap: 18px;
+
+    padding: 18px 18px 16px;
+  }
+
+  .score-circle {
+    width: 95px;
+    height: 95px;
+  }
+
+  .score-circle::before {
+    width: 73px;
+    height: 73px;
+  }
+
+  .score-circle span {
+    font-size: 20px;
+  }
+
+  .readiness-status {
+    gap: 4px;
+  }
+
+  .readiness-status strong {
+    font-size: 17px;
+  }
+
+  .readiness-status span {
+    font-size: 12px;
+  }
+
+  /* Scroll area */
+
+  .tips {
+    padding: 2px 16px 16px;
+
+    gap: 9px;
+  }
+
+  .tips > p {
+    padding: 12px 13px;
+
+    border-radius: 11px;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+  }
+
+  .readiness-strengths {
+    padding: 12px 13px;
+
+    border-radius: 12px;
+  }
+
+  .readiness-strengths > strong {
+    font-size: 13px;
+
+    margin-bottom: 8px;
+  }
+
+  .readiness-strengths p {
+    font-size: 12px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+  .readiness-header {
+    padding: 16px 15px 13px;
+
+    gap: 10px;
+  }
+
+  .readiness-header > span {
+    width: 40px;
+    height: 40px;
+
+    font-size: 21px;
+  }
+
+  .readiness-header h3 {
+    font-size: 17px;
+  }
+
+  .readiness-header p {
+    font-size: 11px;
+  }
+
+  .score-section {
+    gap: 15px;
+
+    padding: 16px 15px 14px;
+  }
+
+  .score-circle {
+    width: 85px;
+    height: 85px;
+  }
+
+  .score-circle::before {
+    width: 65px;
+    height: 65px;
   }
 
   .score-circle span {
@@ -133,4 +566,106 @@
     font-size: 16px;
   }
 
+  .readiness-status span {
+    font-size: 11px;
+  }
+
+  .tips {
+    padding: 2px 12px 12px;
+
+    gap: 8px;
+  }
+
+  .tips > p {
+    padding: 10px 11px;
+
+    font-size: 11px;
+  }
+
+  .readiness-strengths {
+    padding: 10px 11px;
+  }
+
+  .readiness-strengths > strong {
+    font-size: 12px;
+  }
+
+  .readiness-strengths p {
+    font-size: 11px;
+  }
+}
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 360px) {
+  .readiness-header {
+    padding: 14px 12px 12px;
+  }
+
+  .readiness-header > span {
+    width: 36px;
+    height: 36px;
+
+    font-size: 19px;
+  }
+
+  .readiness-header h3 {
+    font-size: 16px;
+  }
+
+  .readiness-header p {
+    font-size: 10px;
+  }
+
+  .score-section {
+    gap: 12px;
+
+    padding: 14px 12px;
+  }
+
+  .score-circle {
+    width: 78px;
+    height: 78px;
+  }
+
+  .score-circle::before {
+    width: 59px;
+    height: 59px;
+  }
+
+  .score-circle span {
+    font-size: 16px;
+  }
+
+  .readiness-status strong {
+    font-size: 15px;
+  }
+
+  .readiness-status span {
+    font-size: 10px;
+  }
+
+  .tips {
+    padding: 2px 10px 10px;
+  }
+
+  .tips > p {
+    padding: 9px 10px;
+
+    font-size: 10px;
+  }
+
+  .readiness-strengths {
+    padding: 9px 10px;
+  }
+
+  .readiness-strengths > strong {
+    font-size: 11px;
+  }
+
+  .readiness-strengths p {
+    font-size: 10px;
+  }
 }

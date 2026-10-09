@@ -1,11 +1,11 @@
 const careerKnowledgeBase = [
   {
-    id: "backend-developer",
+    id: "python-developer",
 
-    title: "Backend Developer",
+    title: "Python Developer",
 
     description:
-      "Backend Developers build scalable server-side applications, APIs, databases and business logic.",
+      "Python Developers build backend applications, APIs, automation systems and data-driven solutions.",
 
     category: "Software Development",
 
@@ -15,42 +15,26 @@ const careerKnowledgeBase = [
 
     averageStudyHours: 3,
 
-    salary: {
-      fresher: "4-8 LPA",
-      experienced: "10-25 LPA",
-    },
-
     requiredSkills: [
-      "Java",
+      "Python",
       "OOP",
-      "Collections",
       "Exception Handling",
-      "JDBC",
       "SQL",
-      "Spring Boot",
       "REST API",
+      "FastAPI",
       "MongoDB",
       "Git",
     ],
 
-    optionalSkills: ["Redis", "Docker", "AWS", "Kafka", "Microservices"],
-
-    softSkills: [
-      "Communication",
-      "Problem Solving",
-      "Teamwork",
-      "Time Management",
-    ],
+    optionalSkills: ["Django", "Docker", "AWS", "Redis"],
 
     learningOrder: [
-      "Java",
+      "Python",
       "OOP",
-      "Collections",
       "Exception Handling",
-      "JDBC",
       "SQL",
-      "Spring Boot",
       "REST API",
+      "FastAPI",
       "MongoDB",
       "Git",
       "Projects",
@@ -60,9 +44,9 @@ const careerKnowledgeBase = [
     roadmap: [
       {
         phase: 1,
-        title: "Programming Fundamentals",
-        duration: "2 Weeks",
-        topics: ["Java", "OOP", "Collections", "Exception Handling"],
+        title: "Python Fundamentals",
+        duration: "3 Weeks",
+        topics: ["Python", "OOP", "Exception Handling"],
       },
 
       {
@@ -71,41 +55,40 @@ const careerKnowledgeBase = [
         duration: "2 Weeks",
         topics: ["SQL", "MongoDB"],
       },
+
       {
         phase: 3,
         title: "Backend Development",
         duration: "4 Weeks",
-        topics: ["Spring Boot", "REST API"],
+        topics: ["REST API", "FastAPI"],
       },
+
       {
         phase: 4,
         title: "Projects",
         duration: "4 Weeks",
-        topics: ["Authentication System", "Hospital Management System"],
+        topics: ["Authentication System", "E-Commerce Backend"],
       },
     ],
 
     projects: [
       "Authentication System",
       "E-Commerce Backend",
-      "Hospital Management System",
       "Learning Management System",
     ],
 
     interviewTopics: [
-      "Java Core",
-      "Collections",
-      "Multithreading",
-      "JDBC",
-      "Spring Boot",
-      "REST APIs",
+      "Python Core",
+      "OOP",
+      "Exception Handling",
       "SQL",
+      "REST API",
+      "FastAPI",
       "MongoDB",
       "System Design Basics",
     ],
 
-    certifications: ["Oracle Java", "Spring Professional", "MongoDB Associate"],
+    certifications: ["Python Institute", "MongoDB Associate"],
   },
 ];
-
 module.exports = careerKnowledgeBase;
