@@ -5,11 +5,25 @@ import {
   getSettings,
   updateSettings,
   resetSettings,
+  changePassword,
 } from "../../services/settingsService";
 
 import "./Settings.css";
 
 function Settings() {
+  /* =========================================
+     Password State
+     ========================================= */
+
+  const [passwordForm, setPasswordForm] = useState({
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
+
+  const [passwordChanging, setPasswordChanging] = useState(false);
+  const [showPasswordSection, setShowPasswordSection] = useState(false);
+
   /* =========================================
      Loading / Saving State
      ========================================= */
@@ -61,10 +75,9 @@ function Settings() {
   const [placementPreparation, setPlacementPreparation] = useState(true);
 
   /* =========================================
-     Security UI
+     Other Security State
      ========================================= */
 
-  const [showPasswordSection, setShowPasswordSection] = useState(false);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
   /* =========================================
@@ -80,8 +93,7 @@ function Settings() {
      ========================================= */
 
   const applySettings = (settings = {}) => {
-    /* Notifications */
-
+    // Notifications
     setNotifications(settings.notifications ?? true);
     setEmailUpdates(settings.emailUpdates ?? true);
     setStreakReminders(settings.streakReminders ?? true);
@@ -89,35 +101,24 @@ function Settings() {
     setInterviewReminders(settings.interviewReminders ?? true);
     setJobAlerts(settings.jobAlerts ?? true);
 
-    /* Appearance */
-
+    // Appearance
     const savedDarkMode = settings.darkMode ?? false;
-
     setDarkMode(savedDarkMode);
     applyDarkMode(savedDarkMode);
 
-    /* Learning */
-
+    // Learning
     setDailyStudyHours(String(settings.dailyStudyHours ?? 2));
-
     setLearningStyle(settings.learningStyle ?? "Mixed");
-
     setDifficultyPreference(settings.difficultyPreference ?? "Intermediate");
-
     setRevisionReminders(settings.revisionReminders ?? true);
 
-    /* AI Mentor */
-
+    // AI Mentor
     setMentorLanguage(settings.mentorLanguage ?? "English");
-
     setMentorResponseStyle(settings.mentorResponseStyle ?? "Simple");
-
     setStepByStepGuidance(settings.stepByStepGuidance ?? true);
 
-    /* Placement */
-
+    // Placement
     setTargetRole(settings.targetRole ?? "Software Developer");
-
     setPlacementPreparation(settings.placementPreparation ?? true);
   };
 
@@ -133,26 +134,15 @@ function Settings() {
         setLoading(true);
 
         const response = await getSettings();
-
         const settings = response?.data?.data || response?.data || {};
 
         if (!mounted) return;
 
         applySettings(settings);
 
-        /*
-         * Keep a local copy as a fallback so the UI
-         * can restore the last successfully loaded state.
-         */
-
         localStorage.setItem("settings", JSON.stringify(settings));
       } catch (error) {
         console.error("Settings Load Error:", error);
-
-        /*
-         * Backend failed:
-         * try previously cached settings.
-         */
 
         try {
           const cachedSettings = localStorage.getItem("settings");
@@ -196,13 +186,6 @@ function Settings() {
   const handleDarkModeChange = (value) => {
     setDarkMode(value);
     applyDarkMode(value);
-
-    /*
-     * Apply theme immediately.
-     * Final value will also be persisted
-     * when Save Changes is clicked.
-     */
-
     localStorage.setItem("darkMode", String(value));
   };
 
@@ -210,47 +193,31 @@ function Settings() {
      Build Settings Object
      ========================================= */
 
-  const buildSettingsObject = () => {
-    return {
-      /* Notifications */
-
-      notifications,
-      emailUpdates,
-      streakReminders,
-      placementAlerts,
-      interviewReminders,
-      jobAlerts,
-
-      /* Appearance */
-
-      darkMode,
-
-      /* Learning */
-
-      dailyStudyHours: Number(dailyStudyHours),
-      learningStyle,
-      difficultyPreference,
-      revisionReminders,
-
-      /* AI Mentor */
-
-      mentorLanguage,
-      mentorResponseStyle,
-      stepByStepGuidance,
-
-      /* Placement */
-
-      targetRole: targetRole.trim(),
-      placementPreparation,
-    };
-  };
+  const buildSettingsObject = () => ({
+    notifications,
+    emailUpdates,
+    streakReminders,
+    placementAlerts,
+    interviewReminders,
+    jobAlerts,
+    darkMode,
+    dailyStudyHours: Number(dailyStudyHours),
+    learningStyle,
+    difficultyPreference,
+    revisionReminders,
+    mentorLanguage,
+    mentorResponseStyle,
+    stepByStepGuidance,
+    targetRole: targetRole.trim(),
+    placementPreparation,
+  });
 
   /* =========================================
      Save Settings
      ========================================= */
 
   const handleSaveSettings = async () => {
-    if (saving) return;
+    if (saving || resetting) return;
 
     if (!targetRole.trim()) {
       toast.error("Target role cannot be empty.");
@@ -261,23 +228,13 @@ function Settings() {
       setSaving(true);
 
       const settings = buildSettingsObject();
-
       const response = await updateSettings(settings);
 
       const savedSettings = response?.data?.data || response?.data || settings;
 
-      /*
-       * Update UI with backend response.
-       */
-
       applySettings(savedSettings);
 
-      /*
-       * Keep local fallback in sync.
-       */
-
       localStorage.setItem("settings", JSON.stringify(savedSettings));
-
       localStorage.setItem("darkMode", String(savedSettings.darkMode ?? false));
 
       applyDarkMode(savedSettings.darkMode ?? false);
@@ -286,12 +243,11 @@ function Settings() {
     } catch (error) {
       console.error("Save Settings Error:", error);
 
-      const message =
+      toast.error(
         error?.response?.data?.message ||
-        error?.message ||
-        "Unable to save settings.";
-
-      toast.error(message);
+          error?.message ||
+          "Unable to save settings.",
+      );
     } finally {
       setSaving(false);
     }
@@ -302,7 +258,7 @@ function Settings() {
      ========================================= */
 
   const handleResetSettings = async () => {
-    if (resetting) return;
+    if (resetting || saving) return;
 
     const confirmed = window.confirm(
       "Are you sure you want to reset all settings to their default values?",
@@ -330,31 +286,115 @@ function Settings() {
     } catch (error) {
       console.error("Reset Settings Error:", error);
 
-      const message =
+      toast.error(
         error?.response?.data?.message ||
-        error?.message ||
-        "Unable to reset settings.";
-
-      toast.error(message);
+          error?.message ||
+          "Unable to reset settings.",
+      );
     } finally {
       setResetting(false);
     }
   };
 
   /* =========================================
-     Security Actions
+     Password Form Helpers
      ========================================= */
 
-  const handleChangePassword = () => {
-    setShowPasswordSection((current) => !current);
-
-    toast("Password change requires secure account verification.", {
-      icon: "🔐",
+  const resetPasswordForm = () => {
+    setPasswordForm({
+      currentPassword: "",
+      newPassword: "",
+      confirmPassword: "",
     });
   };
 
+  const handleTogglePasswordSection = () => {
+    if (passwordChanging) return;
+
+    if (showPasswordSection) {
+      resetPasswordForm();
+      setShowPasswordSection(false);
+      return;
+    }
+
+    setShowPasswordSection(true);
+  };
+
+  const handlePasswordFieldChange = (e) => {
+    const { name, value } = e.target;
+
+    setPasswordForm((previous) => ({
+      ...previous,
+      [name]: value,
+    }));
+  };
+
+  /* =========================================
+     Change Password
+     ========================================= */
+
+  const handlePasswordChange = async (e) => {
+    e.preventDefault();
+
+    if (passwordChanging) return;
+
+    const { currentPassword, newPassword, confirmPassword } = passwordForm;
+
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      toast.error("Please fill in all password fields.");
+      return;
+    }
+
+    if (newPassword.length < 8) {
+      toast.error("New password must be at least 8 characters.");
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      toast.error("New passwords do not match.");
+      return;
+    }
+
+    if (currentPassword === newPassword) {
+      toast.error("Choose a different password.");
+      return;
+    }
+
+    try {
+      setPasswordChanging(true);
+
+      const response = await changePassword({
+        currentPassword,
+        newPassword,
+      });
+
+      toast.success(
+        response?.data?.message || "Password changed successfully.",
+      );
+
+      resetPasswordForm();
+      setShowPasswordSection(false);
+    } catch (error) {
+      console.error(
+        "Change Password Error:",
+        error?.response?.status || "Request failed",
+      );
+
+      toast.error(
+        error?.response?.data?.message ||
+          "Password change failed. Please try again.",
+      );
+    } finally {
+      setPasswordChanging(false);
+    }
+  };
+
+  /* =========================================
+     Logout All Sessions
+     ========================================= */
+
   const handleLogoutAllSessions = () => {
-    toast("Logout from all sessions will be connected to the security API.", {
+    toast("Logout from all sessions is not connected to the backend yet.", {
       icon: "🔐",
     });
   };
@@ -370,21 +410,9 @@ function Settings() {
 
     if (!confirmed) return;
 
-    /*
-     * Only local learning/session-related data
-     * is cleared here.
-     *
-     * Server-side LearningProgress data will
-     * be handled by its dedicated backend API.
-     */
-
     localStorage.removeItem("settings");
 
     toast.success("Local learning settings cleared.");
-
-    /*
-     * Restore UI defaults without reloading.
-     */
 
     const defaults = {
       notifications: true,
@@ -393,23 +421,20 @@ function Settings() {
       placementAlerts: true,
       interviewReminders: true,
       jobAlerts: true,
-
       darkMode: false,
-
       dailyStudyHours: 2,
       learningStyle: "Mixed",
       difficultyPreference: "Intermediate",
       revisionReminders: true,
-
       mentorLanguage: "English",
       mentorResponseStyle: "Simple",
       stepByStepGuidance: true,
-
       targetRole: "Software Developer",
       placementPreparation: true,
     };
 
     applySettings(defaults);
+    localStorage.setItem("darkMode", "false");
   };
 
   /* =========================================
@@ -422,7 +447,7 @@ function Settings() {
       return;
     }
 
-    toast("Account deletion will be connected to the secure backend API.", {
+    toast("Account deletion is not connected to the backend yet.", {
       icon: "⚠️",
     });
 
@@ -438,9 +463,7 @@ function Settings() {
       <div className="settings-page">
         <div className="settings-header">
           <span className="settings-label">⚙️ Settings</span>
-
           <h1>Account Settings</h1>
-
           <p>Loading your settings...</p>
         </div>
 
@@ -466,9 +489,7 @@ function Settings() {
 
   return (
     <div className="settings-page">
-      {/* =========================================
-          Header
-          ========================================= */}
+      {/* Header */}
 
       <div className="settings-header">
         <span className="settings-label">⚙️ Settings</span>
@@ -482,9 +503,7 @@ function Settings() {
       </div>
 
       <div className="settings-container">
-        {/* =========================================
-            Notifications
-            ========================================= */}
+        {/* Notifications */}
 
         <section className="settings-card">
           <div className="settings-card-header">
@@ -492,132 +511,73 @@ function Settings() {
 
             <div>
               <h2>Notifications</h2>
-
               <p>Control how EduPath AI keeps you updated.</p>
             </div>
           </div>
 
-          <div className="setting-row">
-            <div>
-              <h3>Learning Notifications</h3>
+          {[
+            {
+              title: "Learning Notifications",
+              description:
+                "Receive reminders about your daily learning plan and pending topics.",
+              value: notifications,
+              setter: setNotifications,
+            },
+            {
+              title: "Email Updates",
+              description:
+                "Receive important updates about your learning journey.",
+              value: emailUpdates,
+              setter: setEmailUpdates,
+            },
+            {
+              title: "Streak Reminders",
+              description:
+                "Get reminders when your learning streak needs attention.",
+              value: streakReminders,
+              setter: setStreakReminders,
+            },
+            {
+              title: "Placement Alerts",
+              description:
+                "Receive notifications related to your placement preparation.",
+              value: placementAlerts,
+              setter: setPlacementAlerts,
+            },
+            {
+              title: "Interview Reminders",
+              description:
+                "Get reminders for interview preparation and practice sessions.",
+              value: interviewReminders,
+              setter: setInterviewReminders,
+            },
+            {
+              title: "Job Alerts",
+              description:
+                "Receive relevant job opportunity alerts based on your goals.",
+              value: jobAlerts,
+              setter: setJobAlerts,
+            },
+          ].map((item) => (
+            <div className="setting-row" key={item.title}>
+              <div>
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+              </div>
 
-              <p>
-                Receive reminders about your daily learning plan and pending
-                topics.
-              </p>
+              <label className="switch">
+                <input
+                  type="checkbox"
+                  checked={item.value}
+                  onChange={(e) => item.setter(e.target.checked)}
+                />
+                <span className="slider"></span>
+              </label>
             </div>
-
-            <label className="switch">
-              <input
-                type="checkbox"
-                checked={notifications}
-                onChange={(e) => setNotifications(e.target.checked)}
-              />
-
-              <span className="slider"></span>
-            </label>
-          </div>
-
-          <div className="setting-row">
-            <div>
-              <h3>Email Updates</h3>
-
-              <p>Receive important updates about your learning journey.</p>
-            </div>
-
-            <label className="switch">
-              <input
-                type="checkbox"
-                checked={emailUpdates}
-                onChange={(e) => setEmailUpdates(e.target.checked)}
-              />
-
-              <span className="slider"></span>
-            </label>
-          </div>
-
-          <div className="setting-row">
-            <div>
-              <h3>Streak Reminders</h3>
-
-              <p>Get reminders when your learning streak needs attention.</p>
-            </div>
-
-            <label className="switch">
-              <input
-                type="checkbox"
-                checked={streakReminders}
-                onChange={(e) => setStreakReminders(e.target.checked)}
-              />
-
-              <span className="slider"></span>
-            </label>
-          </div>
-
-          <div className="setting-row">
-            <div>
-              <h3>Placement Alerts</h3>
-
-              <p>
-                Receive notifications related to your placement preparation.
-              </p>
-            </div>
-
-            <label className="switch">
-              <input
-                type="checkbox"
-                checked={placementAlerts}
-                onChange={(e) => setPlacementAlerts(e.target.checked)}
-              />
-
-              <span className="slider"></span>
-            </label>
-          </div>
-
-          <div className="setting-row">
-            <div>
-              <h3>Interview Reminders</h3>
-
-              <p>
-                Get reminders for interview preparation and practice sessions.
-              </p>
-            </div>
-
-            <label className="switch">
-              <input
-                type="checkbox"
-                checked={interviewReminders}
-                onChange={(e) => setInterviewReminders(e.target.checked)}
-              />
-
-              <span className="slider"></span>
-            </label>
-          </div>
-
-          <div className="setting-row">
-            <div>
-              <h3>Job Alerts</h3>
-
-              <p>
-                Receive relevant job opportunity alerts based on your goals.
-              </p>
-            </div>
-
-            <label className="switch">
-              <input
-                type="checkbox"
-                checked={jobAlerts}
-                onChange={(e) => setJobAlerts(e.target.checked)}
-              />
-
-              <span className="slider"></span>
-            </label>
-          </div>
+          ))}
         </section>
 
-        {/* =========================================
-            Appearance
-            ========================================= */}
+        {/* Appearance */}
 
         <section className="settings-card">
           <div className="settings-card-header">
@@ -625,7 +585,6 @@ function Settings() {
 
             <div>
               <h2>Appearance</h2>
-
               <p>Customize how EduPath AI looks.</p>
             </div>
           </div>
@@ -633,7 +592,6 @@ function Settings() {
           <div className="setting-row">
             <div>
               <h3>Dark Mode</h3>
-
               <p>
                 Use a darker interface for comfortable viewing in low-light
                 environments.
@@ -646,15 +604,12 @@ function Settings() {
                 checked={darkMode}
                 onChange={(e) => handleDarkModeChange(e.target.checked)}
               />
-
               <span className="slider"></span>
             </label>
           </div>
         </section>
 
-        {/* =========================================
-            Learning Preferences
-            ========================================= */}
+        {/* Learning Preferences */}
 
         <section className="settings-card">
           <div className="settings-card-header">
@@ -662,7 +617,6 @@ function Settings() {
 
             <div>
               <h2>Learning Preferences</h2>
-
               <p>Personalize your learning experience.</p>
             </div>
           </div>
@@ -670,7 +624,6 @@ function Settings() {
           <div className="setting-row">
             <div>
               <h3>Daily Study Goal</h3>
-
               <p>Your preferred daily learning duration.</p>
             </div>
 
@@ -680,13 +633,9 @@ function Settings() {
               onChange={(e) => setDailyStudyHours(e.target.value)}
             >
               <option value="1">1 Hour</option>
-
               <option value="2">2 Hours</option>
-
               <option value="3">3 Hours</option>
-
               <option value="4">4 Hours</option>
-
               <option value="5">5+ Hours</option>
             </select>
           </div>
@@ -694,7 +643,6 @@ function Settings() {
           <div className="setting-row">
             <div>
               <h3>Learning Style</h3>
-
               <p>Choose your preferred learning approach.</p>
             </div>
 
@@ -704,11 +652,8 @@ function Settings() {
               onChange={(e) => setLearningStyle(e.target.value)}
             >
               <option value="Practical">Practical</option>
-
               <option value="Visual">Visual</option>
-
               <option value="Theoretical">Theoretical</option>
-
               <option value="Mixed">Mixed</option>
             </select>
           </div>
@@ -716,7 +661,6 @@ function Settings() {
           <div className="setting-row">
             <div>
               <h3>Difficulty Preference</h3>
-
               <p>Choose your preferred starting difficulty.</p>
             </div>
 
@@ -726,9 +670,7 @@ function Settings() {
               onChange={(e) => setDifficultyPreference(e.target.value)}
             >
               <option value="Beginner">Beginner</option>
-
               <option value="Intermediate">Intermediate</option>
-
               <option value="Advanced">Advanced</option>
             </select>
           </div>
@@ -736,7 +678,6 @@ function Settings() {
           <div className="setting-row">
             <div>
               <h3>Revision Reminders</h3>
-
               <p>
                 Get reminders when a topic needs revision based on your learning
                 performance.
@@ -749,15 +690,12 @@ function Settings() {
                 checked={revisionReminders}
                 onChange={(e) => setRevisionReminders(e.target.checked)}
               />
-
               <span className="slider"></span>
             </label>
           </div>
         </section>
 
-        {/* =========================================
-            AI Mentor Preferences
-            ========================================= */}
+        {/* AI Mentor Preferences */}
 
         <section className="settings-card">
           <div className="settings-card-header">
@@ -765,7 +703,6 @@ function Settings() {
 
             <div>
               <h2>AI Mentor Preferences</h2>
-
               <p>Customize how your EduPath AI Mentor communicates.</p>
             </div>
           </div>
@@ -773,7 +710,6 @@ function Settings() {
           <div className="setting-row">
             <div>
               <h3>Preferred Language</h3>
-
               <p>Choose the language used by your AI Mentor.</p>
             </div>
 
@@ -783,9 +719,7 @@ function Settings() {
               onChange={(e) => setMentorLanguage(e.target.value)}
             >
               <option value="English">English</option>
-
               <option value="Hindi">Hindi</option>
-
               <option value="Marathi">Marathi</option>
             </select>
           </div>
@@ -793,7 +727,6 @@ function Settings() {
           <div className="setting-row">
             <div>
               <h3>Response Style</h3>
-
               <p>Choose how detailed your AI Mentor responses should be.</p>
             </div>
 
@@ -803,9 +736,7 @@ function Settings() {
               onChange={(e) => setMentorResponseStyle(e.target.value)}
             >
               <option value="Simple">Simple</option>
-
               <option value="Balanced">Balanced</option>
-
               <option value="Detailed">Detailed</option>
             </select>
           </div>
@@ -813,7 +744,6 @@ function Settings() {
           <div className="setting-row">
             <div>
               <h3>Step-by-Step Guidance</h3>
-
               <p>
                 Ask your AI Mentor to explain tasks and solutions step by step.
               </p>
@@ -825,15 +755,12 @@ function Settings() {
                 checked={stepByStepGuidance}
                 onChange={(e) => setStepByStepGuidance(e.target.checked)}
               />
-
               <span className="slider"></span>
             </label>
           </div>
         </section>
 
-        {/* =========================================
-            Placement Preferences
-            ========================================= */}
+        {/* Placement Preferences */}
 
         <section className="settings-card">
           <div className="settings-card-header">
@@ -841,7 +768,6 @@ function Settings() {
 
             <div>
               <h2>Placement Preferences</h2>
-
               <p>Customize your placement preparation experience.</p>
             </div>
           </div>
@@ -849,7 +775,6 @@ function Settings() {
           <div className="setting-row">
             <div>
               <h3>Target Role</h3>
-
               <p>Your preferred role for placement recommendations.</p>
             </div>
 
@@ -859,17 +784,11 @@ function Settings() {
               onChange={(e) => setTargetRole(e.target.value)}
             >
               <option value="Software Developer">Software Developer</option>
-
               <option value="Software Engineer">Software Engineer</option>
-
               <option value="Web Developer">Web Developer</option>
-
               <option value="Frontend Developer">Frontend Developer</option>
-
               <option value="Backend Developer">Backend Developer</option>
-
               <option value="Full Stack Developer">Full Stack Developer</option>
-
               <option value="Data Analyst">Data Analyst</option>
             </select>
           </div>
@@ -877,7 +796,6 @@ function Settings() {
           <div className="setting-row">
             <div>
               <h3>Placement Preparation</h3>
-
               <p>Allow EduPath AI to prioritize placement-focused learning.</p>
             </div>
 
@@ -887,15 +805,12 @@ function Settings() {
                 checked={placementPreparation}
                 onChange={(e) => setPlacementPreparation(e.target.checked)}
               />
-
               <span className="slider"></span>
             </label>
           </div>
         </section>
 
-        {/* =========================================
-            Security
-            ========================================= */}
+        {/* Security */}
 
         <section className="settings-card security-card">
           <div className="settings-card-header">
@@ -903,7 +818,6 @@ function Settings() {
 
             <div>
               <h2>Security</h2>
-
               <p>Manage your account security.</p>
             </div>
           </div>
@@ -911,38 +825,100 @@ function Settings() {
           <div className="security-action">
             <div>
               <h3>Change Password</h3>
-
               <p>Update your account password securely.</p>
             </div>
 
             <button
               type="button"
               className="secondary-settings-btn"
-              onClick={handleChangePassword}
+              onClick={handleTogglePasswordSection}
+              disabled={passwordChanging}
             >
               {showPasswordSection ? "Close" : "Change Password"}
             </button>
           </div>
 
           {showPasswordSection && (
-            <div className="settings-notice">
-              <span>🔒</span>
+            <form
+              className="settings-password-form"
+              onSubmit={handlePasswordChange}
+              autoComplete="on"
+            >
+              <div className="password-field">
+                <label htmlFor="currentPassword">Current Password</label>
 
-              <div>
-                <strong>Secure password update</strong>
-
-                <p>
-                  The password update flow will be connected to the secure
-                  backend authentication API.
-                </p>
+                <input
+                  id="currentPassword"
+                  name="currentPassword"
+                  type="password"
+                  autoComplete="current-password"
+                  value={passwordForm.currentPassword}
+                  onChange={handlePasswordFieldChange}
+                  required
+                  disabled={passwordChanging}
+                />
               </div>
-            </div>
+
+              <div className="password-field">
+                <label htmlFor="newPassword">New Password</label>
+
+                <input
+                  id="newPassword"
+                  name="newPassword"
+                  type="password"
+                  autoComplete="new-password"
+                  minLength={8}
+                  value={passwordForm.newPassword}
+                  onChange={handlePasswordFieldChange}
+                  required
+                  disabled={passwordChanging}
+                />
+
+                <small>Use at least 8 characters.</small>
+              </div>
+
+              <div className="password-field">
+                <label htmlFor="confirmPassword">Confirm New Password</label>
+
+                <input
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  type="password"
+                  autoComplete="new-password"
+                  minLength={8}
+                  value={passwordForm.confirmPassword}
+                  onChange={handlePasswordFieldChange}
+                  required
+                  disabled={passwordChanging}
+                />
+              </div>
+
+              <div className="password-form-actions">
+                <button
+                  type="button"
+                  className="secondary-settings-btn"
+                  onClick={handleTogglePasswordSection}
+                  disabled={passwordChanging}
+                >
+                  Cancel
+                </button>
+
+                <button
+                  type="submit"
+                  className="save-settings-btn"
+                  disabled={passwordChanging}
+                >
+                  {passwordChanging
+                    ? "Updating Password..."
+                    : "Update Password"}
+                </button>
+              </div>
+            </form>
           )}
 
           <div className="security-action">
             <div>
               <h3>Logout from All Sessions</h3>
-
               <p>Sign out your account from all currently active devices.</p>
             </div>
 
@@ -956,9 +932,7 @@ function Settings() {
           </div>
         </section>
 
-        {/* =========================================
-            Data Management
-            ========================================= */}
+        {/* Data Management */}
 
         <section className="settings-card">
           <div className="settings-card-header">
@@ -966,7 +940,6 @@ function Settings() {
 
             <div>
               <h2>Data Management</h2>
-
               <p>Manage your learning-related data.</p>
             </div>
           </div>
@@ -974,7 +947,6 @@ function Settings() {
           <div className="security-action">
             <div>
               <h3>Clear Learning Data</h3>
-
               <p>
                 Clear locally stored learning preferences and session settings.
               </p>
@@ -990,9 +962,7 @@ function Settings() {
           </div>
         </section>
 
-        {/* =========================================
-            Danger Zone
-            ========================================= */}
+        {/* Danger Zone */}
 
         <section className="settings-card danger-zone">
           <div className="settings-card-header">
@@ -1000,7 +970,6 @@ function Settings() {
 
             <div>
               <h2>Danger Zone</h2>
-
               <p>These actions can permanently affect your account.</p>
             </div>
           </div>
@@ -1008,7 +977,6 @@ function Settings() {
           <div className="danger-content">
             <div>
               <h3>Delete Account</h3>
-
               <p>
                 Permanently delete your EduPath AI account and associated
                 account data.
@@ -1026,8 +994,8 @@ function Settings() {
             ) : (
               <div className="delete-confirmation">
                 <p>
-                  Are you sure? This action will permanently delete your account
-                  once the secure backend deletion API is connected.
+                  Are you sure? Account deletion is not connected to the backend
+                  yet, so no account will be deleted.
                 </p>
 
                 <div className="delete-confirmation-actions">
@@ -1044,7 +1012,7 @@ function Settings() {
                     className="delete-confirm-btn"
                     onClick={handleDeleteAccount}
                   >
-                    Confirm Delete
+                    Confirm
                   </button>
                 </div>
               </div>
@@ -1052,9 +1020,7 @@ function Settings() {
           </div>
         </section>
 
-        {/* =========================================
-            Save / Reset Actions
-            ========================================= */}
+        {/* Save / Reset Actions */}
 
         <div className="settings-actions">
           <button

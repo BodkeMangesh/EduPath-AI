@@ -18,6 +18,7 @@ function Navbar({ sidebarOpen, onSidebarToggle, onSidebarClose }) {
   const { logout } = useContext(AuthContext);
 
   const [notifications, setNotifications] = useState([]);
+  const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
   const [notificationOpen, setNotificationOpen] = useState(false);
 
@@ -103,19 +104,63 @@ function Navbar({ sidebarOpen, onSidebarToggle, onSidebarClose }) {
   /* =====================================================
      LOGOUT
   ===================================================== */
-
   const handleLogout = () => {
-    logout();
+    setLogoutConfirmOpen(true);
+  };
 
+  const confirmLogout = () => {
+    logout();
     onSidebarClose();
     setNotificationOpen(false);
+    setLogoutConfirmOpen(false);
 
     toast.success("Logged out successfully.");
-
     navigate("/login");
   };
 
-  return (
+  return(
+  <>
+    {logoutConfirmOpen && (
+      <div
+        className="logout-modal-overlay"
+        onClick={() => setLogoutConfirmOpen(false)}
+      >
+        <div
+          className="logout-modal"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="logout-modal-title"
+          onClick={(event) => event.stopPropagation()}
+        >
+          <div className="logout-modal-icon" aria-hidden="true">
+            ↪
+          </div>
+
+          <h2 id="logout-modal-title">Confirm Logout</h2>
+
+          <p>Are you sure you want to log out of your EduPath AI account?</p>
+
+          <div className="logout-modal-actions">
+            <button
+              type="button"
+              className="logout-cancel-btn"
+              onClick={() => setLogoutConfirmOpen(false)}
+            >
+              Cancel
+            </button>
+
+            <button
+              type="button"
+              className="logout-confirm-btn"
+              onClick={confirmLogout}
+            >
+              Yes, Logout
+            </button>
+          </div>
+        </div>
+      </div>
+    )}
+
     <header className="navbar">
       <div className="navbar-container">
         {/* =================================================
@@ -343,7 +388,7 @@ function Navbar({ sidebarOpen, onSidebarToggle, onSidebarClose }) {
         </div>
       </div>
     </header>
-  );
+  </>);
 }
 
 export default Navbar;

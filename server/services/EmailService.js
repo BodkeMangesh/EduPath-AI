@@ -116,6 +116,72 @@ class EmailService {
       throw new Error("Unable to send welcome email.");
     }
   }
+
+  async sendPasswordResetEmail(user, resetUrl) {
+    try {
+      const mailOptions = {
+        from: `"EduPath AI" <${process.env.EMAIL_USER}>`,
+        to: user.email,
+        subject: "Reset Your EduPath AI Password",
+        html: `
+          <div style="
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: auto;
+            padding: 30px;
+            background: #f8fafc;
+            color: #1e293b;
+            border-radius: 12px;
+          ">
+            <h1 style="color: #4f46e5;">Password Reset</h1>
+
+            <p>Hello ${user.fullName || "there"},</p>
+
+            <p>
+              We received a request to reset your EduPath AI password.
+              Click the button below to choose a new password.
+            </p>
+
+            <p style="text-align: center; margin: 30px 0;">
+              <a
+                href="${resetUrl}"
+                style="
+                  display: inline-block;
+                  padding: 14px 24px;
+                  background: #4f46e5;
+                  color: #ffffff;
+                  text-decoration: none;
+                  border-radius: 8px;
+                  font-weight: bold;
+                "
+              >
+                Reset Password
+              </a>
+            </p>
+
+            <p>
+              This link expires in 15 minutes. If you did not request
+              a password reset, you can safely ignore this email.
+            </p>
+
+            <p>
+              Regards,<br />
+              <strong>EduPath AI Team</strong>
+            </p>
+          </div>
+        `,
+      };
+
+      const result = await this.transporter.sendMail(mailOptions);
+
+      console.log("Password reset email sent:", result.messageId);
+
+      return result;
+    } catch (error) {
+      console.error("Password reset email failed:", error.message);
+      throw new Error("Unable to send password reset email.");
+    }
+  }
 }
 
 module.exports = new EmailService();

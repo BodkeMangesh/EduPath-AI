@@ -1172,3 +1172,44 @@ html:not(.dark-theme) .settings-card {
     background: #0f172a !important;
   }
 }
+
+.settings-password-form {
+  display: grid;
+  gap: 16px;
+  margin: 20px 0;
+  padding: 20px;
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 12px;
+}
+
+.password-field {
+  display: grid;
+  gap: 8px;
+}
+
+.password-field label {
+  font-weight: 600;
+}
+
+.password-field input {
+  width: 100%;
+  min-width: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--border-color, #d1d5db);
+  border-radius: 8px;
+  background: var(--input-bg, #fff);
+  color: var(--text-color, #111827);
+  box-sizing: border-box;
+}
+
+.password-field small {
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+.password-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+}

@@ -77,6 +77,18 @@ const userSchema = new mongoose.Schema(
       default: false,
     },
 
+    passwordResetToken: {
+      type: String,
+      default: null,
+      select: false,
+    },
+
+    passwordResetExpires: {
+      type: Date,
+      default: null,
+      select: false,
+    },
+
     phone: {
       type: String,
       required: [true, "Phone number is required"],

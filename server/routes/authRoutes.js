@@ -1,5 +1,7 @@
 const express = require("express");
-const AuthController = require("../controllers/AuthController");
+const AuthController = require("../controllers/authController");
+
+const protect = require("../middleware/authMiddleware");
 
 const validate = require("../middleware/validationMiddleware");
 
@@ -120,5 +122,9 @@ router.post("/register", registerValidation, validate, AuthController.register);
 router.post("/login", loginValidation, validate, AuthController.login);
 // Logout User
 router.post("/logout", AuthController.logout);
+
+router.post("/forgot-password", AuthController.forgotPassword);
+router.post("/reset-password", AuthController.resetPassword);
+router.patch("/change-password", protect, AuthController.changePassword);
 
 module.exports = router;

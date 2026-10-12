@@ -330,7 +330,7 @@
 
   border-radius: var(--login-radius-lg);
 
-  background: rgba(255, 255, 255, 0.76);
+  background: var(--login-surface-soft);
 
   box-shadow: var(--login-shadow-sm);
 

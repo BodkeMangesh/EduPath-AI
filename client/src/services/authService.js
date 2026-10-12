@@ -21,3 +21,14 @@ export const updateProfile = (data) => {
 export const changePassword = (data) => {
   return api.put("/users/change-password", data);
 };
+
+
+ // Forgot Password
+export const forgotPassword = (email) => {
+  return api.post("/auth/forgot-password", { email });
+};
+
+// Reset Password
+export const resetPassword = (data) => {
+  return api.post("/auth/reset-password", data);
+};

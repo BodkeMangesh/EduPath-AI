@@ -210,7 +210,7 @@ function Login() {
                 <button
                   type="button"
                   className="forgot-password"
-                  onClick={() => toast("Password recovery coming soon.")}
+                  onClick={() => navigate("/forgot-password")}
                 >
                   Forgot password?
                 </button>

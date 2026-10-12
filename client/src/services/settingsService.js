@@ -91,3 +91,7 @@ export const getPlacementPreferences = async () => {
 export const getNotificationPreferences = async () => {
   return await api.get("/settings/notification-preferences");
 };
+
+export const changePassword = async (passwordData) => {
+  return await api.patch("/auth/change-password", passwordData);
+};
