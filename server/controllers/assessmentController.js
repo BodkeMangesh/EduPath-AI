@@ -1,4 +1,4 @@
-const AssessmentService = require("../services/AssessmentService");
+const AssessmentService = require("../services/assessmentService");
 const asyncHandler = require("../middleware/asyncHandler");
 
 class AssessmentController {
