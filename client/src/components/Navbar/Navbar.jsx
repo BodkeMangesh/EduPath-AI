@@ -227,7 +227,7 @@ function Navbar({ sidebarOpen, onSidebarToggle, onSidebarClose }) {
             <span>Learning</span>
           </NavLink>
 
-          <NavLink
+          {/* <NavLink
             to="/resources"
             className="navbar-link"
             onClick={handleNavigation}
@@ -237,7 +237,7 @@ function Navbar({ sidebarOpen, onSidebarToggle, onSidebarClose }) {
             </span>
 
             <span>Resources</span>
-          </NavLink>
+          </NavLink> */}
 
           <NavLink
             to="/progress"

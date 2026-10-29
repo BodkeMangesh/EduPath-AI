@@ -22,7 +22,7 @@ function Sidebar({ sidebarOpen, onSidebarClose }) {
     { path: "/placement", label: "Placement", icon: "🎯" },
     { path: "/progress", label: "Progress", icon: "📊" },
     { path: "/resources", label: "Resources", icon: "📖" },
-    { path: "/settings", label: "Settings", icon: "⚙️" },
+    // { path: "/settings", label: "Settings", icon: "⚙️" },
   ];
 
   const handleLogout = () => {
