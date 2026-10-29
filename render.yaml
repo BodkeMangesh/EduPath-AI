@@ -21,8 +21,9 @@ services:
       - key: FRONTEND_URL
         sync: false
 
-  - type: static
+  - type: web
     name: edupath-ai-client
+    runtime: static
     rootDir: client
     buildCommand: npm ci && npm run build
     staticPublishPath: dist
