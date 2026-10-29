@@ -17,9 +17,9 @@ services:
       - key: GROQ_API_KEY
         sync: false
       - key: CLIENT_URL
-        sync: false
+        value: https://edupath-ai-client.onrender.com
       - key: FRONTEND_URL
-        sync: false
+        value: https://edupath-ai-client.onrender.com
 
   - type: web
     name: edupath-ai-client
@@ -33,4 +33,4 @@ services:
         destination: /index.html
     envVars:
       - key: VITE_API_URL
-        sync: false
+        value: https://edupath-ai-api.onrender.com/api/v1
