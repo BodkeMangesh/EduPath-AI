@@ -1,5 +1,5 @@
 const asyncHandler = require("../middleware/asyncHandler");
-const RoadmapService = require("../services/RoadmapService");
+const RoadmapService = require("../services/roadmapService");
 
 /**
  * ============================================================

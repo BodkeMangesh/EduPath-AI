@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const RoadmapService = require("./RoadmapService");
+const RoadmapService = require("./roadmapService");
 
 class ResourcesService {
   /**

@@ -1,6 +1,6 @@
 const express = require("express");
 
-const RoadmapController = require("../controllers/RoadmapController");
+const RoadmapController = require("../controllers/roadmapController");
 
 const protect = require("../middleware/authMiddleware");
 
