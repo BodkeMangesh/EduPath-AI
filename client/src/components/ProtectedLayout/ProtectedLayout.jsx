@@ -17,7 +17,11 @@ function ProtectedLayout() {
 
   return (
     <div className="app-layout">
-      <Navbar sidebarOpen={sidebarOpen} onSidebarToggle={toggleSidebar} />
+      <Navbar
+        sidebarOpen={sidebarOpen}
+        onSidebarToggle={toggleSidebar}
+        onSidebarClose={closeSidebar}
+      />
 
       <Sidebar sidebarOpen={sidebarOpen} onSidebarClose={closeSidebar} />
 

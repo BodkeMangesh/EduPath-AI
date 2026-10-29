@@ -39,11 +39,25 @@ const resumeAnalyzerRoutes = require("./routes/resumeAnayzerRoutes");
 const profileRoutes = require("./routes/profileRoutes");
 const settingsRoutes = require("./routes/settingsRoutes");
 const app = express();
+const allowedOrigins = (process.env.CLIENT_URL || "http://localhost:5173")
+  .split(",")
+  .map((origin) => origin.trim().replace(/\/$/, ""))
+  .filter(Boolean);
 
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error("Origin is not allowed by CORS."));
+    },
+  }),
+);
 app.use(helmet());
 //app.use(rateLimit());
 app.use(morgan("dev"));

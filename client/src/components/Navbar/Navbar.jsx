@@ -9,7 +9,7 @@ import {
   getUnreadNotificationCount,
   markNotificationAsRead,
   markAllNotificationsAsRead,
-} from "../../services/NotificationService";
+} from "../../services/notificationService";
 
 import "./Navbar.css";
 

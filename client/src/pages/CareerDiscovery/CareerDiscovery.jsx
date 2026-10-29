@@ -34,7 +34,7 @@ function CareerDiscovery() {
       const [careersResponse, categoriesResponse, statisticsResponse] =
         await Promise.all([getCareers(), getCategories(), getStatistics()]);
 
-      setCareers(careersResponse.data.data || []);
+      setCareers(careersResponse.data.data?.careers || []);
       setCategories(categoriesResponse.data.data || []);
       setStatistics(statisticsResponse.data.data || null);
     } catch (err) {

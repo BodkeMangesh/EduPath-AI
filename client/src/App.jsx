@@ -17,8 +17,8 @@ import TermsAndConditions from "./pages/TermsAndConditions/TermsAndConditions";
 import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
 
 import Dashboard from "./pages/Dashboard/Dashboard";
-import Profile from "./pages/profile/Profile";
-import EditProfile from "./pages/profile/EditProfile";
+import Profile from "./pages/Profile/Profile";
+import EditProfile from "./pages/Profile/EditProfile";
 import Learning from "./pages/LearningPath/Learning";
 import Progress from "./pages/Progress/Progress";
 import CareerDiscovery from "./pages/CareerDiscovery/CareerDiscovery";
@@ -38,11 +38,12 @@ function App() {
       <Routes>
         {/* ================= PUBLIC ROUTES ================= */}
 
+        <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/reset-password/:token?" element={<ResetPassword />} />
         <Route path="/onboarding" element={<Onboarding />} />
 
         <Route path="/career-explorer" element={<CareerExplorer />} />
@@ -88,9 +89,14 @@ function App() {
           }
         />
 
-        {/* Existing behavior retained for now; verify its access requirements */}
-
-        <Route path="/learning-session" element={<LearningSession />} />
+        <Route
+          path="/learning-session"
+          element={
+            <ProtectedRoute>
+              <LearningSession />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
